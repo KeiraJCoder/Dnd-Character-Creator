@@ -12,7 +12,10 @@ export const abilities = ["STR", "DEX", "CON", "INT", "WIS", "CHA"];
 
 export const proficiencyBonus = 2;
 
-export const portraitApiUrl = "http://localhost:3001/api/generate-portrait";
+export const portraitApiUrl = window.location.hostname === "localhost" ||
+    window.location.hostname === "127.0.0.1"
+    ? "http://localhost:3001/api/generate-portrait"
+    : "https://dnd-character-creator-0aqj.onrender.com/api/generate-portrait";
 
 
 /* =========================================================
