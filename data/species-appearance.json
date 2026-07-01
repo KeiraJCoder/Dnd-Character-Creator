@@ -1,0 +1,107 @@
+{
+  "speciesAppearance": {
+    "Human": {
+      "heights": ["Short", "Average Height", "Average Height", "Tall", "Very Tall"],
+      "builds": ["Thin", "Lean", "Average Build", "Average Build", "Stocky", "Broad", "Heavy-Set", "Fat", "Muscular"],
+      "eyeColours": ["Amber", "Black", "Blue", "Brown", "Green", "Grey", "Hazel"],
+      "hairColours": ["Ash-Grey", "Auburn", "Black", "Blonde", "Brown", "Copper", "Grey", "Red", "Silver", "White"],
+      "skinTones": ["Bronze", "Deep Brown", "Fair", "Golden", "Olive", "Pale", "Warm Brown"]
+    },
+
+    "Elf": {
+      "heights": ["Average Height", "Tall", "Tall", "Very Tall"],
+      "builds": ["Thin", "Lean", "Lean", "Average Build", "Broad"],
+      "eyeColours": ["Amber", "Blue", "Gold", "Green", "Grey", "Silver", "Violet"],
+      "hairColours": ["Ash-Grey", "Auburn", "Black", "Blonde", "Brown", "Silver", "White"],
+      "skinTones": ["Bronze", "Deep Brown", "Fair", "Golden", "Olive", "Pale", "Warm Brown"]
+    },
+
+    "Dwarf": {
+      "heights": ["Short", "Short", "Short", "Average Height", "Average Height", "Tall"],
+      "builds": ["Average Build", "Stocky", "Stocky", "Broad", "Broad", "Heavy-Set", "Heavy-Set", "Fat", "Muscular"],
+      "eyeColours": ["Amber", "Black", "Blue", "Brown", "Green", "Grey"],
+      "hairColours": ["Auburn", "Black", "Brown", "Grey", "Red", "Silver", "White"],
+      "skinTones": ["Ashen", "Bronze", "Copper-Toned", "Deep Brown", "Fair", "Pale", "Warm Brown"]
+    },
+
+    "Halfling": {
+      "heights": ["Short", "Short", "Short", "Short", "Average Height"],
+      "builds": ["Thin", "Lean", "Average Build", "Average Build", "Stocky", "Broad", "Heavy-Set", "Fat"],
+      "eyeColours": ["Amber", "Blue", "Brown", "Green", "Grey", "Hazel"],
+      "hairColours": ["Auburn", "Black", "Blonde", "Brown", "Grey", "Red"],
+      "skinTones": ["Bronze", "Deep Brown", "Fair", "Golden", "Olive", "Warm Brown"]
+    },
+
+    "Gnome": {
+      "heights": ["Short", "Short", "Average Height", "Average Height", "Tall"],
+      "builds": ["Thin", "Lean", "Lean", "Average Build", "Stocky", "Broad"],
+      "eyeColours": ["Amber", "Blue", "Brown", "Gold", "Green", "Grey", "Violet"],
+      "hairColours": ["Black", "Blonde", "Brown", "Copper", "Dark Blue", "Red", "Silver", "White"],
+      "skinTones": ["Bronze", "Deep Brown", "Fair", "Golden", "Olive", "Pale", "Warm Brown"]
+    },
+
+    "Tiefling": {
+      "heights": ["Short", "Average Height", "Average Height", "Tall", "Very Tall"],
+      "builds": ["Thin", "Lean", "Average Build", "Stocky", "Broad", "Heavy-Set", "Muscular"],
+      "eyeColours": ["Amber", "Black", "Blue", "Gold", "Green", "Red", "Silver", "Violet"],
+      "hairColours": ["Ash-Grey", "Auburn", "Black", "Copper", "Dark Blue", "Red", "Silver", "White"],
+      "skinTones": ["Ashen", "Blue-Grey", "Bronze", "Deep Brown", "Fair", "Pale", "Purple", "Red", "Warm Brown"]
+    },
+
+    "Dragonborn": {
+      "heights": ["Average Height", "Tall", "Tall", "Very Tall", "Very Tall"],
+      "builds": ["Average Build", "Stocky", "Broad", "Heavy-Set", "Fat", "Muscular", "Muscular"],
+      "eyeColours": ["Amber", "Black", "Blue", "Gold", "Green", "Red", "Silver"],
+      "hairColours": ["Bone Crest", "Horned Crest", "No Hair", "Scaled Crest", "Spined Crest"],
+      "skinTones": ["Black Scales", "Blue Scales", "Bronze Scales", "Copper Scales", "Gold Scales", "Green Scales", "Red Scales", "Silver Scales", "White Scales"]
+    },
+
+    "Half-Elf": {
+      "heights": ["Short", "Average Height", "Average Height", "Tall", "Very Tall"],
+      "builds": ["Thin", "Lean", "Average Build", "Stocky", "Broad", "Heavy-Set", "Muscular"],
+      "eyeColours": ["Amber", "Blue", "Brown", "Green", "Grey", "Hazel", "Silver", "Violet"],
+      "hairColours": ["Ash-Grey", "Auburn", "Black", "Blonde", "Brown", "Red", "Silver", "White"],
+      "skinTones": ["Bronze", "Deep Brown", "Fair", "Golden", "Olive", "Pale", "Warm Brown"]
+    },
+
+    "Half-Orc": {
+      "heights": ["Short", "Average Height", "Tall", "Tall", "Very Tall"],
+      "builds": ["Average Build", "Stocky", "Broad", "Heavy-Set", "Fat", "Muscular", "Muscular"],
+      "eyeColours": ["Amber", "Black", "Brown", "Green", "Grey", "Hazel"],
+      "hairColours": ["Auburn", "Black", "Brown", "Dark Blue", "Grey", "No Hair", "White"],
+      "skinTones": ["Ashen", "Bronze", "Copper-Toned", "Deep Brown", "Grey-Green", "Olive", "Warm Brown"]
+    },
+
+    "Aasimar": {
+      "heights": ["Short", "Average Height", "Tall", "Very Tall"],
+      "builds": ["Thin", "Lean", "Average Build", "Stocky", "Broad", "Heavy-Set", "Muscular"],
+      "eyeColours": ["Amber", "Blue", "Gold", "Grey", "Silver", "Violet", "White"],
+      "hairColours": ["Ash-Grey", "Auburn", "Black", "Blonde", "Gold", "Silver", "White"],
+      "skinTones": ["Bronze", "Copper-Toned", "Deep Brown", "Fair", "Golden", "Pale", "Warm Brown"]
+    },
+
+    "Goblin": {
+      "heights": ["Short", "Short", "Short", "Average Height", "Tall"],
+      "builds": ["Thin", "Lean", "Lean", "Average Build", "Stocky", "Broad"],
+      "eyeColours": ["Amber", "Black", "Brown", "Green", "Red", "Yellow"],
+      "hairColours": ["Black", "Brown", "Grey", "No Hair", "Red", "White"],
+      "skinTones": ["Ashen", "Deep Brown", "Green", "Grey-Green", "Olive", "Warm Brown", "Yellow-Green"]
+    },
+
+    "Orc": {
+      "heights": ["Short", "Average Height", "Tall", "Tall", "Very Tall"],
+      "builds": ["Average Build", "Stocky", "Broad", "Heavy-Set", "Fat", "Muscular", "Muscular"],
+      "eyeColours": ["Amber", "Black", "Brown", "Green", "Grey", "Red"],
+      "hairColours": ["Auburn", "Black", "Brown", "Grey", "No Hair", "White"],
+      "skinTones": ["Ashen", "Bronze", "Deep Brown", "Green", "Grey-Green", "Olive", "Warm Brown"]
+    },
+
+    "Goliath": {
+      "heights": ["Average Height", "Tall", "Very Tall", "Very Tall", "Very Tall"],
+      "builds": ["Average Build", "Stocky", "Broad", "Heavy-Set", "Fat", "Muscular", "Muscular"],
+      "eyeColours": ["Amber", "Black", "Blue", "Brown", "Grey", "Silver"],
+      "hairColours": ["Ash-Grey", "Black", "Brown", "Grey", "No Hair", "White"],
+      "skinTones": ["Ashen", "Bronze", "Deep Brown", "Grey", "Pale Grey", "Stone Grey", "Warm Brown"]
+    }
+  }
+}

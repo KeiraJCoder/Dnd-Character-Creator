@@ -1,0 +1,69 @@
+{
+  "species": [
+    {
+      "name": "Human",
+      "description": "Humans are adaptable, ambitious and varied. They are often driven by legacy, survival, curiosity or the desire to prove themselves.",
+      "typicalTraits": ["Adaptable", "Ambitious", "Resourceful", "Versatile"]
+    },
+    {
+      "name": "Elf",
+      "description": "Elves are long-lived, perceptive and often shaped by magic, memory, beauty or the natural world. They may seem calm, distant or intensely curious.",
+      "typicalTraits": ["Perceptive", "Curious", "Graceful", "Ancient-Minded"]
+    },
+    {
+      "name": "Dwarf",
+      "description": "Dwarves are hardy, loyal and deeply tied to craft, clan, memory and tradition. They are often difficult to intimidate or move from a chosen path.",
+      "typicalTraits": ["Hardy", "Loyal", "Traditional", "Stubborn"]
+    },
+    {
+      "name": "Halfling",
+      "description": "Halflings are small, brave and often underestimated. They are commonly warm-hearted, community-minded and surprisingly steady under pressure.",
+      "typicalTraits": ["Brave", "Kind", "Nimble", "Community-Minded"]
+    },
+    {
+      "name": "Gnome",
+      "description": "Gnomes are clever, curious and often drawn to invention, illusion, secrets or strange knowledge. They tend to see puzzles where others see problems.",
+      "typicalTraits": ["Curious", "Inventive", "Clever", "Restless"]
+    },
+    {
+      "name": "Tiefling",
+      "description": "Tieflings carry an otherworldly legacy that often makes others suspicious of them. Many become independent, guarded or sharply self-reliant.",
+      "typicalTraits": ["Striking", "Guarded", "Independent", "Otherworldly"]
+    },
+    {
+      "name": "Dragonborn",
+      "description": "Dragonborn are shaped by draconic ancestry, pride and presence. They often carry themselves with intensity, honour or a need to prove their strength.",
+      "typicalTraits": ["Proud", "Powerful", "Honour-Driven", "Commanding"]
+    },
+    {
+      "name": "Half-Elf",
+      "description": "Half-Elves often stand between cultures, belonging fully to neither and learning to adapt. They are commonly diplomatic, independent and socially perceptive.",
+      "typicalTraits": ["Adaptable", "Diplomatic", "Independent", "Socially Aware"]
+    },
+    {
+      "name": "Half-Orc",
+      "description": "Half-Orcs often live under the weight of other people's assumptions. Many become resilient, direct and fiercely protective of those who earn their trust.",
+      "typicalTraits": ["Resilient", "Intense", "Protective", "Direct"]
+    },
+    {
+      "name": "Aasimar",
+      "description": "Aasimar are touched by celestial power and often carry a sense of purpose, expectation or spiritual burden.",
+      "typicalTraits": ["Purposeful", "Radiant", "Burdened", "Compassionate"]
+    },
+    {
+      "name": "Goblin",
+      "description": "Goblins are quick, scrappy and used to surviving in hostile places. They often rely on speed, wit, opportunism and instinct.",
+      "typicalTraits": ["Quick", "Scrappy", "Clever", "Survival-Driven"]
+    },
+    {
+      "name": "Orc",
+      "description": "Orcs are powerful, enduring and often shaped by harsh lands, fierce traditions or a need to keep moving forward.",
+      "typicalTraits": ["Enduring", "Forceful", "Determined", "Restless"]
+    },
+    {
+      "name": "Goliath",
+      "description": "Goliaths descend from giant ancestry and are often drawn to endurance, challenge, strength and proving themselves against impossible odds.",
+      "typicalTraits": ["Strong", "Competitive", "Enduring", "Challenge-Seeking"]
+    }
+  ]
+}

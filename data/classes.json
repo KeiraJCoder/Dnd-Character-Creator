@@ -1,0 +1,144 @@
+{
+  "classes": {
+    "Fighter": {
+      "description": "A durable warrior trained for direct conflict.",
+      "hitDie": 10,
+      "skills": ["Athletics", "Intimidation"],
+      "saves": ["STR", "CON"],
+      "weapons": [
+        {
+          "name": "Longsword",
+          "damage": "1d8",
+          "ability": "STR"
+        },
+        {
+          "name": "Battleaxe",
+          "damage": "1d8",
+          "ability": "STR"
+        },
+        {
+          "name": "Rapier",
+          "damage": "1d8",
+          "ability": "DEX"
+        },
+        {
+          "name": "Longbow",
+          "damage": "1d8",
+          "ability": "DEX"
+        }
+      ]
+    },
+    "Rogue": {
+      "description": "A quick, skilled character who survives through precision and nerve.",
+      "hitDie": 8,
+      "skills": ["Stealth", "Sleight Of Hand", "Investigation"],
+      "saves": ["DEX", "INT"],
+      "weapons": [
+        {
+          "name": "Dagger",
+          "damage": "1d4",
+          "ability": "DEX"
+        },
+        {
+          "name": "Shortsword",
+          "damage": "1d6",
+          "ability": "DEX"
+        },
+        {
+          "name": "Rapier",
+          "damage": "1d8",
+          "ability": "DEX"
+        },
+        {
+          "name": "Shortbow",
+          "damage": "1d6",
+          "ability": "DEX"
+        }
+      ]
+    },
+    "Ranger": {
+      "description": "A tracker, hunter and survivor who belongs beyond city walls.",
+      "hitDie": 10,
+      "skills": ["Survival", "Perception", "Animal Handling"],
+      "saves": ["STR", "DEX"],
+      "weapons": [
+        {
+          "name": "Longbow",
+          "damage": "1d8",
+          "ability": "DEX"
+        },
+        {
+          "name": "Shortsword",
+          "damage": "1d6",
+          "ability": "DEX"
+        },
+        {
+          "name": "Scimitar",
+          "damage": "1d6",
+          "ability": "DEX"
+        },
+        {
+          "name": "Spear",
+          "damage": "1d6",
+          "ability": "STR"
+        }
+      ]
+    },
+    "Cleric": {
+      "description": "A divine spellcaster shaped by faith, duty and resilience.",
+      "hitDie": 8,
+      "skills": ["Medicine", "Religion", "Insight"],
+      "saves": ["WIS", "CHA"],
+      "weapons": [
+        {
+          "name": "Mace",
+          "damage": "1d6",
+          "ability": "STR"
+        },
+        {
+          "name": "Spear",
+          "damage": "1d6",
+          "ability": "STR"
+        },
+        {
+          "name": "Light Crossbow",
+          "damage": "1d8",
+          "ability": "DEX"
+        },
+        {
+          "name": "Dagger",
+          "damage": "1d4",
+          "ability": "DEX"
+        }
+      ]
+    },
+    "Wizard": {
+      "description": "A scholar of magic who relies on knowledge rather than brute force.",
+      "hitDie": 6,
+      "skills": ["Arcana", "History", "Investigation"],
+      "saves": ["INT", "WIS"],
+      "weapons": [
+        {
+          "name": "Quarterstaff",
+          "damage": "1d6",
+          "ability": "STR"
+        },
+        {
+          "name": "Dagger",
+          "damage": "1d4",
+          "ability": "DEX"
+        },
+        {
+          "name": "Light Crossbow",
+          "damage": "1d8",
+          "ability": "DEX"
+        },
+        {
+          "name": "Sling",
+          "damage": "1d4",
+          "ability": "DEX"
+        }
+      ]
+    }
+  }
+}

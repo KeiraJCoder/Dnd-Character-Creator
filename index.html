@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dicebound Character Generator</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <main class="app">
+        <header class="hero">
+            <p class="eyebrow">DnD Character Generator</p>
+            <h1>Dicebound</h1>
+            <p>Create a complete fantasy character for your next DnD game, including appearance, class, ability scores, personality, roleplay traits and a character portrait.</p>
+        </header>
+
+        <section id="creatorScreen" class="panel">
+            <p class="eyebrow">Step 1</p>
+            <h2>Build Your Character</h2>
+            <p class="hint">Choose the basic details for your character. You can fill these in yourself or use the randomise button to generate a starting point.</p>
+
+            <div class="form-grid">
+                <div>
+                    <label for="characterName">Character name</label>
+                    <input id="characterName" type="text" placeholder="Example: Elowen Ashvale" />
+                </div>
+
+                <div>
+                    <label for="gender">Gender identity</label>
+                    <select id="gender">
+                        <option value="">Choose...</option>
+                        <option value="Female">Female</option>
+                        <option value="Male">Male</option>
+                        <option value="Non Binary">Non Binary</option>
+                        <option value="Non Gendered">Non Gendered</option>
+                        <option value="Prefer Not To Say">Prefer Not To Say</option>
+                        <option value="Unknown">Unknown</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="portraitPresentation">Portrait presentation</label>
+                    <select id="portraitPresentation">
+                        <option value="">Choose...</option>
+                        <option value="Androgynous">Androgynous</option>
+                        <option value="Feminine">Feminine</option>
+                        <option value="Masculine">Masculine</option>
+                        <option value="No Strong Gendered Features">No strong gendered features</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="species">Species</label>
+                    <select id="species" disabled>
+                        <option value="">Loading Species...</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="ageRange">Age range</label>
+                    <select id="ageRange">
+                        <option value="">Choose...</option>
+                        <option value="Young Adult">Young Adult</option>
+                        <option value="Adult">Adult</option>
+                        <option value="Middle-Aged">Middle-Aged</option>
+                        <option value="Elder">Elder</option>
+                        <option value="Unknown">Unknown</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="height">Height</label>
+                    <select id="height">
+                        <option value="">Choose...</option>
+                        <option value="Short">Short</option>
+                        <option value="Average Height">Average Height</option>
+                        <option value="Tall">Tall</option>
+                        <option value="Very Tall">Very Tall</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="build">Build</label>
+                    <select id="build">
+                        <option value="">Choose...</option>
+                        <option value="Average Build">Average build</option>
+                        <option value="Broad">Broad</option>
+                        <option value="Fat">Fat</option>
+                        <option value="Heavy-Set">Heavy-set</option>
+                        <option value="Lean">Lean</option>
+                        <option value="Muscular">Muscular</option>
+                        <option value="Stocky">Stocky</option>
+                        <option value="Thin">Thin</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="eyeColour">Eye colour</label>
+                    <select id="eyeColour">
+                        <option value="">Choose...</option>
+                        <option value="Amber">Amber</option>
+                        <option value="Black">Black</option>
+                        <option value="Blue">Blue</option>
+                        <option value="Gold">Gold</option>
+                        <option value="Green">Green</option>
+                        <option value="Grey">Grey</option>
+                        <option value="Hazel">Hazel</option>
+                        <option value="Red">Red</option>
+                        <option value="Silver">Silver</option>
+                        <option value="Violet">Violet</option>
+                        <option value="White">White</option>
+                        <option value="Yellow">Yellow</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="hairColour">Hair colour</label>
+                    <select id="hairColour">
+                        <option value="">Choose...</option>
+                        <option value="Ash-Grey">Ash-Grey</option>
+                        <option value="Auburn">Auburn</option>
+                        <option value="Black">Black</option>
+                        <option value="Blonde">Blonde</option>
+                        <option value="Bone Crest">Bone Crest</option>
+                        <option value="Brown">Brown</option>
+                        <option value="Copper">Copper</option>
+                        <option value="Dark Blue">Dark Blue</option>
+                        <option value="Gold">Gold</option>
+                        <option value="Grey">Grey</option>
+                        <option value="Horned Crest">Horned Crest</option>
+                        <option value="No Hair">No Hair</option>
+                        <option value="Red">Red</option>
+                        <option value="Scaled Crest">Scaled Crest</option>
+                        <option value="Silver">Silver</option>
+                        <option value="Spined Crest">Spined Crest</option>
+                        <option value="White">White</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="skinTone">Skin colour or tone</label>
+                    <select id="skinTone">
+                        <option value="">Choose...</option>
+                        <option value="Ashen">Ashen</option>
+                        <option value="Black Scales">Black Scales</option>
+                        <option value="Blue-Grey">Blue-Grey</option>
+                        <option value="Blue Scales">Blue Scales</option>
+                        <option value="Bronze">Bronze</option>
+                        <option value="Bronze Scales">Bronze Scales</option>
+                        <option value="Copper Scales">Copper Scales</option>
+                        <option value="Copper-Toned">Copper-Toned</option>
+                        <option value="Deep Brown">Deep Brown</option>
+                        <option value="Fair">Fair</option>
+                        <option value="Gold Scales">Gold Scales</option>
+                        <option value="Golden">Golden</option>
+                        <option value="Green">Green</option>
+                        <option value="Green Scales">Green Scales</option>
+                        <option value="Grey">Grey</option>
+                        <option value="Grey-Green">Grey-Green</option>
+                        <option value="Olive">Olive</option>
+                        <option value="Pale">Pale</option>
+                        <option value="Pale Grey">Pale Grey</option>
+                        <option value="Purple">Purple</option>
+                        <option value="Red">Red</option>
+                        <option value="Red Scales">Red Scales</option>
+                        <option value="Silver Scales">Silver Scales</option>
+                        <option value="Stone Grey">Stone Grey</option>
+                        <option value="Warm Brown">Warm Brown</option>
+                        <option value="White Scales">White Scales</option>
+                        <option value="Yellow-Green">Yellow-Green</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="notableFeature">Visual notable feature</label>
+                    <select id="notableFeature">
+                        <option value="">Loading Visual Features...</option>
+                    </select>
+                </div>
+            </div>
+
+            <h3>Choose Their Class</h3>
+            <p class="hint">The class gives your character their starting role, hit points, skills, saving throws and weapon choices.</p>
+            <div id="classCards" class="cards"></div>
+
+            <div id="weaponSection" class="hidden">
+                <h3>Choose Their Starting Weapon</h3>
+                <p class="hint">Your chosen class controls which weapons are available.</p>
+                <div id="weaponChoices" class="weapon-list"></div>
+            </div>
+
+            <div class="button-row">
+                <button id="randomiseButton" type="button" class="secondary-button" disabled>Loading Data...</button>
+                <button id="beginButton" type="button" disabled>Build Character Profile</button>
+            </div>
+        </section>
+
+        <section id="questionScreen" class="panel hidden">
+            <p class="eyebrow">Step 2</p>
+            <p id="questionCounter" class="eyebrow"></p>
+
+            <div class="progress-shell">
+                <div id="progressFill" class="progress-fill"></div>
+            </div>
+
+            <h2 id="questionText"></h2>
+            <p class="hint">Answer as the character. Your choices will shape their personality, alignment, weakness and roleplay style.</p>
+            <div id="answerChoices" class="choices"></div>
+        </section>
+
+        <section id="summaryScreen" class="game hidden">
+            <aside class="panel character-sheet">
+                <p class="eyebrow">Character Sheet</p>
+                <h2 id="sheetName"></h2>
+
+                <p id="sheetClass"></p>
+                <p id="sheetSpecies"></p>
+                <p id="sheetAppearance"></p>
+                <p id="sheetHP"></p>
+                <p id="sheetWeapon"></p>
+
+                <h3>Ability Scores</h3>
+                <div id="statsGrid" class="stats-grid"></div>
+
+                <h3>Skill Proficiencies</h3>
+                <p id="sheetSkills"></p>
+
+                <h3>Saving Throws</h3>
+                <p id="sheetSaves"></p>
+            </aside>
+
+            <section class="panel profile-card">
+                <p class="eyebrow">Character Portrait</p>
+
+                <div class="portrait-placeholder" id="portraitPlaceholder">
+                    <span id="portraitInitial"></span>
+                    <img id="characterPortrait" class="character-portrait hidden" alt="Generated character portrait" />
+                </div>
+
+                <div class="portrait-controls">
+                    <button id="generatePortraitButton" type="button" class="secondary-button">
+                        Generate Character Portrait
+                    </button>
+                    <p id="portraitStatus" class="hint"></p>
+                </div>
+
+                <p class="eyebrow">Character Profile</p>
+                <h2 id="profileTitle"></h2>
+
+                <div class="profile-section">
+                    <h3>Character Identity</h3>
+                    <p id="profileIdentity"></p>
+                </div>
+
+                <div class="profile-section">
+                    <h3>Species Background</h3>
+                    <p id="profileSpecies"></p>
+                </div>
+
+                <div class="profile-section">
+                    <h3>Core Roleplay Traits</h3>
+                    <p id="profileTraits"></p>
+                </div>
+
+                <div class="profile-section">
+                    <h3>Moral Alignment</h3>
+                    <p id="profileAlignment"></p>
+                </div>
+
+                <div class="profile-section">
+                    <h3>Religious Outlook</h3>
+                    <p id="profileFaith"></p>
+                </div>
+
+                <div class="profile-section">
+                    <h3>Character Weakness</h3>
+                    <p id="profileWeakness"></p>
+                </div>
+
+                <div class="profile-section">
+                    <h3>Roleplay Style</h3>
+                    <p id="profilePlaystyle"></p>
+                </div>
+
+                <div class="profile-section export-section">
+                    <p class="eyebrow">Export Character</p>
+                    <h3>Use This Character In Your DnD Game</h3>
+                    <p class="hint">
+                        Copy the character summary, download the portrait, or print a complete character sheet.
+                        To save as a PDF, choose “Print / Save Character Sheet” and then select “Save as PDF”.
+                    </p>
+
+                    <div class="export-actions">
+                        <button id="copyCharacterSummaryButton" type="button" class="secondary-button">
+                            Copy Character Summary
+                        </button>
+
+                        <button id="copyPortraitPromptButton" type="button" class="secondary-button">
+                            Copy Portrait Prompt
+                        </button>
+
+                        <button id="downloadPortraitButton" type="button" class="secondary-button">
+                            Download Portrait
+                        </button>
+
+                        <button id="printCharacterSheetButton" type="button">
+                            Print / Save Character Sheet
+                        </button>
+                    </div>
+
+                    <p id="exportStatus" class="hint"></p>
+                </div>
+
+                <div class="button-row">
+                    <button id="restartButton" type="button">Create Another Character</button>
+                </div>
+            </section>
+        </section>
+
+        <section id="printableCharacterSheet" class="printable-character-sheet hidden" aria-hidden="true">
+            <div class="print-sheet">
+                <header class="print-header">
+                    <div>
+                        <p class="print-eyebrow">Dicebound Character Sheet</p>
+                        <h1 id="printName"></h1>
+                        <p id="printSubtitle"></p>
+                    </div>
+
+                    <div class="print-portrait-frame">
+                        <img id="printPortrait" alt="Character portrait for exported sheet" />
+                    </div>
+                </header>
+
+                <section class="print-grid">
+                    <div class="print-panel">
+                        <h2>Core Details</h2>
+                        <p><strong>Species:</strong> <span id="printSpecies"></span></p>
+                        <p><strong>Class:</strong> <span id="printClass"></span></p>
+                        <p><strong>Gender:</strong> <span id="printGender"></span></p>
+                        <p><strong>Portrait Presentation:</strong> <span id="printPortraitPresentation"></span></p>
+                        <p><strong>Age Range:</strong> <span id="printAgeRange"></span></p>
+                        <p><strong>Height:</strong> <span id="printHeight"></span></p>
+                        <p><strong>Build:</strong> <span id="printBuild"></span></p>
+                        <p><strong>Eyes:</strong> <span id="printEyes"></span></p>
+                        <p><strong>Hair:</strong> <span id="printHair"></span></p>
+                        <p><strong>Skin:</strong> <span id="printSkin"></span></p>
+                        <p><strong>Notable Feature:</strong> <span id="printFeature"></span></p>
+                    </div>
+
+                    <div class="print-panel">
+                        <h2>Combat Basics</h2>
+                        <p><strong>Hit Points:</strong> <span id="printHP"></span></p>
+                        <p><strong>Weapon:</strong> <span id="printWeapon"></span></p>
+                        <p><strong>Skill Proficiencies:</strong> <span id="printSkills"></span></p>
+                        <p><strong>Saving Throws:</strong> <span id="printSaves"></span></p>
+                    </div>
+                </section>
+
+                <section class="print-panel">
+                    <h2>Ability Scores</h2>
+                    <div id="printStatsGrid" class="print-stats-grid"></div>
+                </section>
+
+                <section class="print-panel">
+                    <h2>Character Identity</h2>
+                    <p id="printIdentity"></p>
+                </section>
+
+                <section class="print-grid">
+                    <div class="print-panel">
+                        <h2>Roleplay Profile</h2>
+                        <p><strong>Core Traits:</strong> <span id="printTraits"></span></p>
+                        <p><strong>Moral Alignment:</strong> <span id="printAlignment"></span></p>
+                        <p><strong>Religious Outlook:</strong> <span id="printFaith"></span></p>
+                        <p><strong>Character Weakness:</strong> <span id="printWeakness"></span></p>
+                        <p><strong>Roleplay Style:</strong> <span id="printPlaystyle"></span></p>
+                    </div>
+
+                    <div class="print-panel">
+                        <h2>Species Background</h2>
+                        <p id="printSpeciesBackground"></p>
+                    </div>
+                </section>
+            </div>
+        </section>
+    </main>
+
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>
