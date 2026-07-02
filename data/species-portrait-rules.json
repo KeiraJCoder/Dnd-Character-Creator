@@ -1,0 +1,83 @@
+{
+    "speciesPortraitRules": {
+        "Dragonborn": {
+            "priority": "Species anatomy must be correct before beauty styling, clothing, class styling or pose.",
+            "baseLook": [
+                "Wingless bipedal dragon person",
+                "Fully draconic reptilian head",
+                "Blunt dragon snout",
+                "Strong brow ridges",
+                "Dragon-like jaws",
+                "Sharp predator teeth",
+                "Tough visible scales across face, neck, shoulders and torso",
+                "Thick-boned powerful humanoid body",
+                "Horns, crest ridges, head spikes or frills are appropriate",
+                "Clawed or talon-like hands if hands are visible"
+            ],
+            "mustNotShow": [
+                "Human face",
+                "Human nose",
+                "Human ears",
+                "Elf ears",
+                "Smooth human skin",
+                "Human hair",
+                "Pretty human face",
+                "Tiefling face",
+                "Wings unless specifically listed",
+                "Tail unless specifically listed"
+            ],
+            "skinInstruction": "Treat the listed skin tone as scale colour. Dragonborn skin must appear as full visible scales, not smooth skin.",
+            "hairInstruction": "Dragonborn should not have human hair. Use horns, crest ridges, frills, spines or scaled crests instead.",
+            "negativePrompt": [
+                "human face",
+                "human nose",
+                "human ears",
+                "elf ears",
+                "smooth skin",
+                "human skin",
+                "human hair",
+                "long hair",
+                "pretty human",
+                "fashion model",
+                "tiefling",
+                "wings",
+                "tail"
+            ]
+        },
+
+        "Goblin": {
+            "priority": "Goblin anatomy must be correct before beauty styling, clothing, class styling or pose.",
+            "baseLook": [
+                "Small goblinoid body",
+                "Short wiry frame",
+                "Flat pushed-in face",
+                "Broad nose",
+                "Sloped-back forehead",
+                "Wide mouth",
+                "Small sharp fangs",
+                "Large long pointed goblin ears",
+                "Beady or dull eyes",
+                "Non-human goblin skin tone"
+            ],
+            "mustNotShow": [
+                "Beautiful elf face",
+                "Elegant elf ears",
+                "Tall elf body",
+                "Human face",
+                "Smooth fashion-model features",
+                "Normal human proportions"
+            ],
+            "skinInstruction": "Goblin skin should look non-human. Use the listed skin tone where possible, but keep the face and body clearly goblinoid.",
+            "hairInstruction": "Goblin hair may be bald, wispy, messy, greasy or dark depending on the character sheet.",
+            "negativePrompt": [
+                "beautiful elf",
+                "elegant elf",
+                "tall elf",
+                "human face",
+                "normal human proportions",
+                "smooth perfect skin",
+                "fashion model"
+            ]
+        }
+    }
+}

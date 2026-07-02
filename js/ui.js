@@ -66,9 +66,9 @@ export const uiElements = {
     profilePlaystyle: document.getElementById("profilePlaystyle"),
 
     restartButton: document.getElementById("restartButton")
-    };
+};
 
-    const {
+const {
     creatorScreen,
     questionScreen,
     summaryScreen,
@@ -96,26 +96,26 @@ export const uiElements = {
     profileFaith,
     profileWeakness,
     profilePlaystyle
-    } = uiElements;
+} = uiElements;
 
 
-    /* =========================================================
+/* =========================================================
     2. Screen Helpers
-    ========================================================= */
+   ========================================================= */
 
-    export function showCreatorScreen() {
+export function showCreatorScreen() {
     showElement(creatorScreen);
     hideElement(questionScreen);
     hideElement(summaryScreen);
-    }
+}
 
-    export function showQuestionScreen() {
+export function showQuestionScreen() {
     hideElement(creatorScreen);
     showElement(questionScreen);
     hideElement(summaryScreen);
-    }
+}
 
-    export function showSummaryScreen() {
+export function showSummaryScreen() {
     hideElement(creatorScreen);
     hideElement(questionScreen);
     showElement(summaryScreen);
@@ -137,9 +137,9 @@ export function setSheetRow(element, label, value) {
         <span class="sheet-label">${escapeHtml(label)}</span>
         <span class="sheet-value">${escapeHtml(String(value))}</span>
     `;
-    }
+}
 
-    export function setAppearanceRow() {
+export function setAppearanceRow() {
     if (!sheetAppearance || !state.character) {
         return;
     }
@@ -155,18 +155,22 @@ export function setSheetRow(element, label, value) {
         ["Build", character.build],
         ["Eyes", character.eyeColour],
         ["Hair", character.hairColour],
+        ["Hair Style", character.hairStyle],
         ["Skin", character.skinTone],
         ["Feature", character.notableFeature || "No Obvious Unusual Feature"]
     ];
 
     const tags = appearanceItems
+        .filter(([, value]) => {
+            return String(value || "").trim().length > 0;
+        })
         .map(([label, value]) => {
-        return `
-            <span class="sheet-tag">
-            <strong>${escapeHtml(label)}</strong>
-            ${escapeHtml(String(value))}
-            </span>
-        `;
+            return `
+                <span class="sheet-tag">
+                    <strong>${escapeHtml(label)}</strong>
+                    ${escapeHtml(String(value))}
+                </span>
+            `;
         })
         .join("");
 
@@ -174,9 +178,9 @@ export function setSheetRow(element, label, value) {
         <span class="sheet-label">Appearance</span>
         <span class="sheet-value sheet-tags">${tags}</span>
     `;
-    }
+}
 
-    export function renderCharacterSheet() {
+export function renderCharacterSheet() {
     if (!state.character) {
         return;
     }
@@ -215,9 +219,9 @@ export function setSheetRow(element, label, value) {
         stat.className = "stat";
 
         stat.innerHTML = `
-        <strong>${escapeHtml(ability)}</strong>
-        <span>Score ${escapeHtml(String(score))}</span>
-        <span>Modifier ${escapeHtml(formatModifier(modifier))}</span>
+            <strong>${escapeHtml(ability)}</strong>
+            <span>Score ${escapeHtml(String(score))}</span>
+            <span>Modifier ${escapeHtml(formatModifier(modifier))}</span>
         `;
 
         statsGrid.appendChild(stat);
@@ -229,7 +233,7 @@ export function setSheetRow(element, label, value) {
     4. Portrait Display
    ========================================================= */
 
-    export function resetPortraitDisplay() {
+export function resetPortraitDisplay() {
     if (portraitInitial) {
         portraitInitial.classList.remove("hidden");
     }
@@ -247,9 +251,9 @@ export function setSheetRow(element, label, value) {
         generatePortraitButton.disabled = false;
         generatePortraitButton.textContent = "Generate Character Portrait";
     }
-    }
+}
 
-    export function showPortraitImage(imageUrl) {
+export function showPortraitImage(imageUrl) {
     if (characterPortrait) {
         characterPortrait.src = imageUrl;
         characterPortrait.classList.remove("hidden");
@@ -258,9 +262,9 @@ export function setSheetRow(element, label, value) {
     if (portraitInitial) {
         portraitInitial.classList.add("hidden");
     }
-    }
+}
 
-    export async function generateCharacterPortrait(onPortraitGenerated) {
+export async function generateCharacterPortrait(onPortraitGenerated) {
     if (!state.character) {
         return;
     }
@@ -276,23 +280,23 @@ export function setSheetRow(element, label, value) {
 
     try {
         const response = await fetch(portraitApiUrl, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            character: state.character
-        })
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                character: state.character
+            })
         });
 
         const data = await response.json().catch(() => ({}));
 
         if (!response.ok) {
-        throw new Error(data.detail || data.error || "Portrait generation failed.");
+            throw new Error(data.detail || data.error || "Portrait generation failed.");
         }
 
         if (!data.imageUrl) {
-        throw new Error("No image URL was returned by the server.");
+            throw new Error("No image URL was returned by the server.");
         }
 
         state.character.portraitUrl = data.imageUrl;
@@ -301,7 +305,7 @@ export function setSheetRow(element, label, value) {
         showPortraitImage(data.imageUrl);
 
         if (typeof onPortraitGenerated === "function") {
-        onPortraitGenerated();
+            onPortraitGenerated();
         }
 
         portraitStatus.textContent = "Portrait generated.";

@@ -1,48 +1,406 @@
 {
     "notableFeatures": [
-        "No Obvious Unusual Feature",
-        "Small Scar On Face",
-        "Large Scar On Face",
-        "Scar Across One Eyebrow",
-        "Scar Across The Nose",
-        "Scar Across One Cheek",
-        "Jagged Scar Along The Jaw",
-        "Burn Scar On Face",
-        "Burn Scar On One Hand",
-        "One Clouded Eye",
-        "One Missing Eye",
-        "Blind In One Eye",
-        "Distinctive Birthmark On Face",
-        "Distinctive Birthmark On Neck",
-        "Freckles Across The Nose And Cheeks",
-        "Small Face Tattoo",
-        "Full Face Tattoo",
-        "Tattoo Around One Eye",
-        "Ritual Mark On Forehead",
-        "Ritual Mark On Cheek",
-        "Ritual Mark On Wrist",
-        "Broken Nose",
-        "Crooked Nose",
-        "Split Lip Scar",
-        "Missing Fingertip",
-        "Missing Finger",
-        "Missing Ear Tip",
-        "Notched Ear",
-        "Eyebrow Piercing",
-        "Nose Piercing",
-        "Lip Piercing",
-        "Several Ear Piercings",
-        "Silver Streak Through The Hair",
-        "White Streak Through The Hair",
-        "Glowing Eyes",
-        "Unusually Bright Eyes",
-        "Sharp Fangs",
-        "Broken Horn",
-        "Chipped Horn",
-        "One Shortened Horn",
-        "Cracked Horn",
-        "Gold Tooth",
-        "Ink-Stained Fingers",
-        "Calloused Hands"
+        {
+            "name": "No Obvious Unusual Feature",
+            "allowedSpecies": "all"
+        },
+        {
+            "name": "Small Scar On Face",
+            "allowedSpecies": "all"
+        },
+        {
+            "name": "Large Scar On Face",
+            "allowedSpecies": "all"
+        },
+        {
+            "name": "Scar Across One Eyebrow",
+            "allowedSpecies": "all"
+        },
+        {
+            "name": "Scar Across The Nose",
+            "allowedSpecies": [
+                "Human",
+                "Elf",
+                "Dwarf",
+                "Halfling",
+                "Gnome",
+                "Tiefling",
+                "Half-Elf",
+                "Half-Orc",
+                "Aasimar",
+                "Goblin",
+                "Orc",
+                "Goliath"
+            ]
+        },
+        {
+            "name": "Scar Across One Cheek",
+            "allowedSpecies": "all"
+        },
+        {
+            "name": "Jagged Scar Along The Jaw",
+            "allowedSpecies": "all"
+        },
+        {
+            "name": "Burn Scar On Face",
+            "allowedSpecies": "all"
+        },
+        {
+            "name": "Burn Scar On One Hand",
+            "allowedSpecies": "all"
+        },
+        {
+            "name": "One Clouded Eye",
+            "allowedSpecies": "all"
+        },
+        {
+            "name": "One Missing Eye",
+            "allowedSpecies": "all"
+        },
+        {
+            "name": "Blind In One Eye",
+            "allowedSpecies": "all"
+        },
+        {
+            "name": "Distinctive Birthmark On Face",
+            "allowedSpecies": [
+                "Human",
+                "Elf",
+                "Dwarf",
+                "Halfling",
+                "Gnome",
+                "Tiefling",
+                "Half-Elf",
+                "Half-Orc",
+                "Aasimar",
+                "Goblin",
+                "Orc",
+                "Goliath"
+            ]
+        },
+        {
+            "name": "Distinctive Birthmark On Neck",
+            "allowedSpecies": [
+                "Human",
+                "Elf",
+                "Dwarf",
+                "Halfling",
+                "Gnome",
+                "Tiefling",
+                "Half-Elf",
+                "Half-Orc",
+                "Aasimar",
+                "Goblin",
+                "Orc",
+                "Goliath"
+            ]
+        },
+        {
+            "name": "Freckles Across The Nose And Cheeks",
+            "allowedSpecies": [
+                "Human",
+                "Elf",
+                "Dwarf",
+                "Halfling",
+                "Gnome",
+                "Tiefling",
+                "Half-Elf",
+                "Half-Orc",
+                "Aasimar",
+                "Goblin",
+                "Orc",
+                "Goliath"
+            ]
+        },
+        {
+            "name": "Small Face Tattoo",
+            "allowedSpecies": "all"
+        },
+        {
+            "name": "Full Face Tattoo",
+            "allowedSpecies": "all"
+        },
+        {
+            "name": "Tattoo Around One Eye",
+            "allowedSpecies": "all"
+        },
+        {
+            "name": "Ritual Mark On Forehead",
+            "allowedSpecies": "all"
+        },
+        {
+            "name": "Ritual Mark On Cheek",
+            "allowedSpecies": "all"
+        },
+        {
+            "name": "Ritual Mark On Wrist",
+            "allowedSpecies": "all"
+        },
+        {
+            "name": "Broken Nose",
+            "allowedSpecies": [
+                "Human",
+                "Elf",
+                "Dwarf",
+                "Halfling",
+                "Gnome",
+                "Tiefling",
+                "Half-Elf",
+                "Half-Orc",
+                "Aasimar",
+                "Goblin",
+                "Orc",
+                "Goliath"
+            ]
+        },
+        {
+            "name": "Crooked Nose",
+            "allowedSpecies": [
+                "Human",
+                "Elf",
+                "Dwarf",
+                "Halfling",
+                "Gnome",
+                "Tiefling",
+                "Half-Elf",
+                "Half-Orc",
+                "Aasimar",
+                "Goblin",
+                "Orc",
+                "Goliath"
+            ]
+        },
+        {
+            "name": "Split Lip Scar",
+            "allowedSpecies": [
+                "Human",
+                "Elf",
+                "Dwarf",
+                "Halfling",
+                "Gnome",
+                "Tiefling",
+                "Half-Elf",
+                "Half-Orc",
+                "Aasimar",
+                "Goblin",
+                "Orc",
+                "Goliath"
+            ]
+        },
+        {
+            "name": "Missing Fingertip",
+            "allowedSpecies": "all"
+        },
+        {
+            "name": "Missing Finger",
+            "allowedSpecies": "all"
+        },
+        {
+            "name": "Missing Ear Tip",
+            "allowedSpecies": [
+                "Human",
+                "Elf",
+                "Dwarf",
+                "Halfling",
+                "Gnome",
+                "Tiefling",
+                "Half-Elf",
+                "Half-Orc",
+                "Aasimar",
+                "Goblin",
+                "Orc",
+                "Goliath"
+            ]
+        },
+        {
+            "name": "Notched Ear",
+            "allowedSpecies": [
+                "Human",
+                "Elf",
+                "Dwarf",
+                "Halfling",
+                "Gnome",
+                "Tiefling",
+                "Half-Elf",
+                "Half-Orc",
+                "Aasimar",
+                "Goblin",
+                "Orc",
+                "Goliath"
+            ]
+        },
+        {
+            "name": "Eyebrow Piercing",
+            "allowedSpecies": [
+                "Human",
+                "Elf",
+                "Dwarf",
+                "Halfling",
+                "Gnome",
+                "Tiefling",
+                "Half-Elf",
+                "Half-Orc",
+                "Aasimar",
+                "Goblin",
+                "Orc",
+                "Goliath"
+            ]
+        },
+        {
+            "name": "Nose Piercing",
+            "allowedSpecies": [
+                "Human",
+                "Elf",
+                "Dwarf",
+                "Halfling",
+                "Gnome",
+                "Tiefling",
+                "Half-Elf",
+                "Half-Orc",
+                "Aasimar",
+                "Goblin",
+                "Orc",
+                "Goliath"
+            ]
+        },
+        {
+            "name": "Lip Piercing",
+            "allowedSpecies": [
+                "Human",
+                "Elf",
+                "Dwarf",
+                "Halfling",
+                "Gnome",
+                "Tiefling",
+                "Half-Elf",
+                "Half-Orc",
+                "Aasimar",
+                "Goblin",
+                "Orc",
+                "Goliath"
+            ]
+        },
+        {
+            "name": "Several Ear Piercings",
+            "allowedSpecies": [
+                "Human",
+                "Elf",
+                "Dwarf",
+                "Halfling",
+                "Gnome",
+                "Tiefling",
+                "Half-Elf",
+                "Half-Orc",
+                "Aasimar",
+                "Goblin",
+                "Orc",
+                "Goliath"
+            ]
+        },
+        {
+            "name": "Silver Streak Through The Hair",
+            "allowedSpecies": [
+                "Human",
+                "Elf",
+                "Dwarf",
+                "Halfling",
+                "Gnome",
+                "Tiefling",
+                "Half-Elf",
+                "Half-Orc",
+                "Aasimar",
+                "Goblin",
+                "Orc",
+                "Goliath"
+            ]
+        },
+        {
+            "name": "White Streak Through The Hair",
+            "allowedSpecies": [
+                "Human",
+                "Elf",
+                "Dwarf",
+                "Halfling",
+                "Gnome",
+                "Tiefling",
+                "Half-Elf",
+                "Half-Orc",
+                "Aasimar",
+                "Goblin",
+                "Orc",
+                "Goliath"
+            ]
+        },
+        {
+            "name": "Glowing Eyes",
+            "allowedSpecies": "all"
+        },
+        {
+            "name": "Unusually Bright Eyes",
+            "allowedSpecies": "all"
+        },
+        {
+            "name": "Sharp Fangs",
+            "allowedSpecies": [
+                "Tiefling",
+                "Dragonborn",
+                "Goblin",
+                "Half-Orc",
+                "Orc"
+            ]
+        },
+        {
+            "name": "Broken Horn",
+            "allowedSpecies": [
+                "Tiefling",
+                "Dragonborn"
+            ]
+        },
+        {
+            "name": "Chipped Horn",
+            "allowedSpecies": [
+                "Tiefling",
+                "Dragonborn"
+            ]
+        },
+        {
+            "name": "One Shortened Horn",
+            "allowedSpecies": [
+                "Tiefling",
+                "Dragonborn"
+            ]
+        },
+        {
+            "name": "Cracked Horn",
+            "allowedSpecies": [
+                "Tiefling",
+                "Dragonborn"
+            ]
+        },
+        {
+            "name": "Gold Tooth",
+            "allowedSpecies": [
+                "Human",
+                "Elf",
+                "Dwarf",
+                "Halfling",
+                "Gnome",
+                "Tiefling",
+                "Half-Elf",
+                "Half-Orc",
+                "Aasimar",
+                "Goblin",
+                "Orc",
+                "Goliath"
+            ]
+        },
+        {
+            "name": "Ink-Stained Fingers",
+            "allowedSpecies": "all"
+        },
+        {
+            "name": "Calloused Hands",
+            "allowedSpecies": "all"
+        }
     ]
 }

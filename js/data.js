@@ -66,6 +66,38 @@ export function getValidPool(pool, fallbackPool) {
     return hasItems(pool) ? pool : fallbackPool;
 }
 
+function getFallbackHairStyles() {
+    return getValidPool(
+        defaultPhysicalTraits.hairStyles,
+        [
+            "Long Loose Hair",
+            "Shoulder-Length Hair",
+            "Short Hair",
+            "Short Back And Sides",
+            "Ponytail",
+            "Single Plait",
+            "Twin Plaits",
+            "Braided Hair",
+            "Messy Hair",
+            "Curly Hair",
+            "Shaved Sides",
+            "Shaved Head",
+            "Bald",
+            "No Hair",
+            "Smooth Scaled Head",
+            "Horned Crest",
+            "Bone Crest",
+            "Scaled Crest",
+            "Spined Crest",
+            "Short Head Spines",
+            "Long Head Spines",
+            "Crown Of Horns",
+            "Swept-Back Horns",
+            "Head Frill"
+        ]
+    );
+}
+
 export function normalisePhysicalTraits(physicalTraits = {}) {
     return {
         heights: getValidPool(
@@ -88,6 +120,11 @@ export function normalisePhysicalTraits(physicalTraits = {}) {
             defaultPhysicalTraits.hairColours
         ),
 
+        hairStyles: getValidPool(
+            physicalTraits.hairStyles,
+            getFallbackHairStyles()
+        ),
+
         skinTones: getValidPool(
             physicalTraits.skinTones,
             defaultPhysicalTraits.skinTones
@@ -107,8 +144,74 @@ function cleanStringList(items) {
     )];
 }
 
+function normaliseFeatureName(featureName) {
+    return String(featureName || "").trim();
+}
+
+function normaliseAllowedSpecies(allowedSpecies) {
+    if (!allowedSpecies || allowedSpecies === "all") {
+        return "all";
+    }
+
+    if (!Array.isArray(allowedSpecies)) {
+        return "all";
+    }
+
+    const cleanedSpecies = cleanStringList(allowedSpecies);
+
+    return cleanedSpecies.length > 0
+        ? cleanedSpecies
+        : "all";
+}
+
+function normaliseNotableFeatureItem(feature) {
+    if (typeof feature === "string") {
+        const name = normaliseFeatureName(feature);
+
+        if (!name) {
+            return null;
+        }
+
+        return {
+            name,
+            allowedSpecies: "all"
+        };
+    }
+
+    if (typeof feature === "object" && feature !== null) {
+        const name = normaliseFeatureName(feature.name);
+
+        if (!name) {
+            return null;
+        }
+
+        return {
+            name,
+            allowedSpecies: normaliseAllowedSpecies(feature.allowedSpecies)
+        };
+    }
+
+    return null;
+}
+
 function getFallbackNotableFeatures() {
-    return cleanStringList(defaultPhysicalTraits.notableFeatures);
+    const fallbackFeatures = cleanStringList(defaultPhysicalTraits.notableFeatures);
+
+    if (fallbackFeatures.length > 0) {
+        return fallbackFeatures.map(feature => {
+            return {
+                name: feature,
+                allowedSpecies: "all"
+            };
+        });
+    }
+
+    return [
+        {
+            name: defaultText.noNotableFeature,
+            allowedSpecies: "all"
+        }
+    ];
 }
 
 export function normaliseNotableFeatures(notableFeatureData) {
@@ -116,7 +219,25 @@ export function normaliseNotableFeatures(notableFeatureData) {
         ? notableFeatureData
         : notableFeatureData?.notableFeatures;
 
-    const cleanedFeatures = cleanStringList(notableFeatures);
+    if (!hasItems(notableFeatures)) {
+        return getFallbackNotableFeatures();
+    }
+
+    const seenFeatures = new Set();
+
+    const cleanedFeatures = notableFeatures
+        .map(normaliseNotableFeatureItem)
+        .filter(Boolean)
+        .filter(feature => {
+            const key = feature.name.toLowerCase();
+
+            if (seenFeatures.has(key)) {
+                return false;
+            }
+
+            seenFeatures.add(key);
+            return true;
+        });
 
     if (hasItems(cleanedFeatures)) {
         return cleanedFeatures;

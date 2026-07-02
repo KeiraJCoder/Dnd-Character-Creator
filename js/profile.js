@@ -369,6 +369,51 @@ export function getGenderDescription(character = state.character) {
     return `who is ${character.gender}`;
 }
 
+function getHairDescription(character) {
+    const speciesName = String(character.species?.name || "").toLowerCase();
+    const hairColour = String(character.hairColour || "").trim();
+    const hairStyle = String(character.hairStyle || "").trim();
+
+    if (speciesName === "dragonborn") {
+        if (hairStyle && hairColour) {
+            return `${hairColour.toLowerCase()} head detail in a ${hairStyle.toLowerCase()} style`;
+        }
+
+        if (hairStyle) {
+            return `${hairStyle.toLowerCase()} head detail`;
+        }
+
+        if (hairColour) {
+            return `${hairColour.toLowerCase()} head detail`;
+        }
+
+        return "species-appropriate draconic head detail";
+    }
+
+    if (
+        hairStyle.toLowerCase() === "no hair" ||
+        hairStyle.toLowerCase() === "bald" ||
+        hairStyle.toLowerCase() === "shaved head" ||
+        hairColour.toLowerCase() === "no hair"
+    ) {
+        return hairStyle || hairColour || "no hair";
+    }
+
+    if (hairColour && hairStyle) {
+        return `${hairColour} ${hairStyle.toLowerCase()}`;
+    }
+
+    if (hairColour) {
+        return `${hairColour} hair`;
+    }
+
+    if (hairStyle) {
+        return hairStyle.toLowerCase();
+    }
+
+    return "unspecified hair";
+}
+
 export function getIdentityText(alignment, traits, character = state.character) {
     if (!character) {
         return "";
@@ -378,7 +423,9 @@ export function getIdentityText(alignment, traits, character = state.character) 
         ? ` Their portrait presentation is ${character.portraitPresentation}.`
         : "";
 
-    const appearance = `${character.name} is a ${character.ageRange} ${character.species.name} ${character.className} ${getGenderDescription(character)}, with a ${character.height}, ${character.build} frame, ${character.eyeColour} eyes, ${character.hairColour} hair and ${character.skinTone} skin. Their notable feature is: ${character.notableFeature}.${portraitPresentation}`;
+    const hairDescription = getHairDescription(character);
+
+    const appearance = `${character.name} is a ${character.ageRange} ${character.species.name} ${character.className} ${getGenderDescription(character)}, with a ${character.height}, ${character.build} frame, ${character.eyeColour} eyes, ${hairDescription} and ${character.skinTone} skin. Their notable feature is: ${character.notableFeature}.${portraitPresentation}`;
 
     const traitText = `They appear most strongly defined by ${traits.join(", ")}.`;
 

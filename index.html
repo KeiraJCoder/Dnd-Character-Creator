@@ -20,14 +20,27 @@
             <p class="hint">Choose the basic details for your character. You can fill these in yourself or use the randomise button to generate a starting point.</p>
 
             <div class="form-grid">
+
+                <div>
+                    <label for="species">Species</label>
+                    <select id="species" disabled>
+                        <option value="">Loading Species...</option>
+                    </select>
+                </div>
+
                 <div>
                     <label for="characterName">Character name</label>
-                    <input id="characterName" type="text" placeholder="Example: Elowen Ashvale" />
+                    <div class="name-input-row">
+                        <input id="characterName" type="text" placeholder="Example: Elowen Ashvale" />
+                        <button id="randomiseNameButton" type="button" class="secondary-button name-randomise-button" disabled>
+                            Randomise Name
+                        </button>
+                    </div>
                 </div>
 
                 <div>
                     <label for="gender">Gender identity</label>
-                    <select id="gender">
+                    <select id="gender" disabled>
                         <option value="">Choose...</option>
                         <option value="Female">Female</option>
                         <option value="Male">Male</option>
@@ -39,20 +52,13 @@
                 </div>
 
                 <div>
-                    <label for="portraitPresentation">Portrait presentation</label>
-                    <select id="portraitPresentation">
+                    <label for="portraitPresentation">Gender presentation</label>
+                    <select id="portraitPresentation" disabled>
                         <option value="">Choose...</option>
                         <option value="Androgynous">Androgynous</option>
                         <option value="Feminine">Feminine</option>
                         <option value="Masculine">Masculine</option>
                         <option value="No Strong Gendered Features">No strong gendered features</option>
-                    </select>
-                </div>
-
-                <div>
-                    <label for="species">Species</label>
-                    <select id="species" disabled>
-                        <option value="">Loading Species...</option>
                     </select>
                 </div>
 
@@ -128,12 +134,42 @@
                         <option value="Gold">Gold</option>
                         <option value="Grey">Grey</option>
                         <option value="Horned Crest">Horned Crest</option>
-                        <option value="No Hair">No Hair</option>
                         <option value="Red">Red</option>
                         <option value="Scaled Crest">Scaled Crest</option>
                         <option value="Silver">Silver</option>
                         <option value="Spined Crest">Spined Crest</option>
                         <option value="White">White</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="hairStyle">Hair style</label>
+                    <select id="hairStyle">
+                        <option value="">Choose...</option>
+                        <option value="Bald">Bald</option>
+                        <option value="Bone Crest">Bone Crest</option>
+                        <option value="Braided Hair">Braided Hair</option>
+                        <option value="Crown Of Horns">Crown Of Horns</option>
+                        <option value="Curly Hair">Curly Hair</option>
+                        <option value="Head Frill">Head Frill</option>
+                        <option value="Horned Crest">Horned Crest</option>
+                        <option value="Long Head Spines">Long Head Spines</option>
+                        <option value="Long Loose Hair">Long Loose Hair</option>
+                        <option value="Messy Hair">Messy Hair</option>
+                        <option value="No Hair">No Hair</option>
+                        <option value="Ponytail">Ponytail</option>
+                        <option value="Scaled Crest">Scaled Crest</option>
+                        <option value="Shaved Head">Shaved Head</option>
+                        <option value="Shaved Sides">Shaved Sides</option>
+                        <option value="Short Back And Sides">Short Back And Sides</option>
+                        <option value="Short Hair">Short Hair</option>
+                        <option value="Short Head Spines">Short Head Spines</option>
+                        <option value="Shoulder-Length Hair">Shoulder-Length Hair</option>
+                        <option value="Single Plait">Single Plait</option>
+                        <option value="Smooth Scaled Head">Smooth Scaled Head</option>
+                        <option value="Spined Crest">Spined Crest</option>
+                        <option value="Swept-Back Horns">Swept-Back Horns</option>
+                        <option value="Twin Plaits">Twin Plaits</option>
                     </select>
                 </div>
 
@@ -343,6 +379,7 @@
                         <p><strong>Build:</strong> <span id="printBuild"></span></p>
                         <p><strong>Eyes:</strong> <span id="printEyes"></span></p>
                         <p><strong>Hair:</strong> <span id="printHair"></span></p>
+                        <p><strong>Hair Style:</strong> <span id="printHairStyle"></span></p>
                         <p><strong>Skin:</strong> <span id="printSkin"></span></p>
                         <p><strong>Notable Feature:</strong> <span id="printFeature"></span></p>
                     </div>

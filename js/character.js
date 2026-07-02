@@ -38,6 +38,7 @@ import {
 
 export const characterFormElements = {
     characterNameInput: document.getElementById("characterName"),
+    randomiseNameButton: document.getElementById("randomiseNameButton"),
     genderInput: document.getElementById("gender"),
     portraitPresentationInput: document.getElementById("portraitPresentation"),
     speciesInput: document.getElementById("species"),
@@ -46,6 +47,7 @@ export const characterFormElements = {
     buildInput: document.getElementById("build"),
     eyeColourInput: document.getElementById("eyeColour"),
     hairColourInput: document.getElementById("hairColour"),
+    hairStyleInput: document.getElementById("hairStyle"),
     skinToneInput: document.getElementById("skinTone"),
     notableFeatureInput: document.getElementById("notableFeature"),
 
@@ -59,6 +61,7 @@ export const characterFormElements = {
 
 const {
     characterNameInput,
+    randomiseNameButton,
     genderInput,
     portraitPresentationInput,
     speciesInput,
@@ -67,6 +70,7 @@ const {
     buildInput,
     eyeColourInput,
     hairColourInput,
+    hairStyleInput,
     skinToneInput,
     notableFeatureInput,
     classCards,
@@ -81,7 +85,30 @@ const {
     2. Loading And Button Status
      ========================================================= */
 
+export function updateNameRandomiseButtonStatus() {
+    if (!randomiseNameButton) {
+        return;
+    }
+
+    if (state.loaded.error) {
+        randomiseNameButton.disabled = true;
+        randomiseNameButton.textContent = "Data Missing";
+        return;
+    }
+
+    if (!state.loaded.names) {
+        randomiseNameButton.disabled = true;
+        randomiseNameButton.textContent = "Loading Names...";
+        return;
+    }
+
+    randomiseNameButton.disabled = false;
+    randomiseNameButton.textContent = "Randomise Name";
+}
+
 export function updateRandomiseButtonStatus() {
+    updateNameRandomiseButtonStatus();
+
     if (!randomiseButton) {
         return;
     }
@@ -108,7 +135,31 @@ export function updateRandomiseButtonStatus() {
     randomiseButton.textContent = loadingText.randomiseCharacter;
 }
 
+export function updateGenderFieldStatus() {
+    const hasName = String(characterNameInput?.value || "").trim().length > 0;
+    const hasSpecies = String(speciesInput?.value || "").trim().length > 0;
+    const canChooseGenderDetails = hasName && hasSpecies;
+
+    if (genderInput) {
+        genderInput.disabled = !canChooseGenderDetails;
+
+        if (!canChooseGenderDetails) {
+            genderInput.value = "";
+        }
+    }
+
+    if (portraitPresentationInput) {
+        portraitPresentationInput.disabled = !canChooseGenderDetails;
+
+        if (!canChooseGenderDetails) {
+            portraitPresentationInput.value = "";
+        }
+    }
+}
+
 export function updateBeginButton() {
+    updateGenderFieldStatus();
+
     if (!beginButton) {
         return;
     }
@@ -123,6 +174,7 @@ export function updateBeginButton() {
         buildInput?.value,
         eyeColourInput?.value.trim(),
         hairColourInput?.value.trim(),
+        hairStyleInput?.value.trim(),
         skinToneInput?.value.trim()
     ];
 
@@ -139,8 +191,99 @@ export function updateBeginButton() {
 
 
 /* =========================================================
-    3. Species And Notable Feature Dropdowns
+    3. Species, Appearance And Notable Feature Dropdowns
      ========================================================= */
+
+function normaliseOption(value) {
+    return String(value || "").trim().toLowerCase();
+}
+
+function normaliseKey(value) {
+    return normaliseOption(value).replace(/[^a-z0-9]/g, "");
+}
+
+function getUniqueOptions(options) {
+    const seen = new Set();
+
+    return (Array.isArray(options) ? options : [])
+        .map(option => String(option || "").trim())
+        .filter(Boolean)
+        .filter(option => {
+            const key = normaliseKey(option);
+
+            if (seen.has(key)) {
+                return false;
+            }
+
+            seen.add(key);
+            return true;
+        });
+}
+
+function findMatchingOption(options, value) {
+    const key = normaliseKey(value);
+
+    return options.find(option => {
+        return normaliseKey(option) === key;
+    }) || "";
+}
+
+function populateSelectOptions(
+    selectElement,
+    options,
+    preserveCurrentValue = true,
+    sortOptions = false
+) {
+    if (!selectElement) {
+        return;
+    }
+
+    const currentValue = selectElement.value;
+    const uniqueOptions = getUniqueOptions(options);
+
+    const finalOptions = sortOptions
+        ? [...uniqueOptions].sort((a, b) => {
+            return String(a || "").localeCompare(String(b || ""), "en-GB", {
+                sensitivity: "base"
+            });
+        })
+        : uniqueOptions;
+
+    selectElement.innerHTML = "";
+
+    const placeholder = document.createElement("option");
+    placeholder.value = "";
+    placeholder.textContent = loadingText.choose;
+    selectElement.appendChild(placeholder);
+
+    finalOptions.forEach(optionValue => {
+        const option = document.createElement("option");
+        option.value = optionValue;
+        option.textContent = optionValue;
+        selectElement.appendChild(option);
+    });
+
+    if (preserveCurrentValue) {
+        const matchedOption = findMatchingOption(finalOptions, currentValue);
+
+        if (matchedOption) {
+            selectElement.value = matchedOption;
+            return;
+        }
+    }
+
+    selectElement.value = "";
+}
+
+function getSpeciesByName(speciesName) {
+    return state.speciesData.find(species => {
+        return normaliseKey(species.name) === normaliseKey(speciesName);
+    }) || null;
+}
+
+function getSelectedSpeciesName() {
+    return speciesInput?.value || "";
+}
 
 export function setSpeciesLoadingState() {
     if (!speciesInput) {
@@ -206,10 +349,67 @@ export function setNotableFeatureErrorState() {
     notableFeatureInput.innerHTML = `<option value="">${escapeHtml(loadingText.notableFeaturesMissing)}</option>`;
 }
 
-export function populateNotableFeatureOptions() {
+function getNotableFeatureName(feature) {
+    if (typeof feature === "string") {
+        return feature;
+    }
+
+    return feature?.name || "";
+}
+
+function isNotableFeatureAllowedForSpecies(feature, speciesName) {
+    if (typeof feature === "string") {
+        return true;
+    }
+
+    const allowedSpecies = feature?.allowedSpecies;
+
+    if (!allowedSpecies || allowedSpecies === "all") {
+        return true;
+    }
+
+    if (!Array.isArray(allowedSpecies)) {
+        return false;
+    }
+
+    return allowedSpecies.some(species => {
+        return normaliseKey(species) === normaliseKey(speciesName);
+    });
+}
+
+export function getValidNotableFeaturesForSpecies(speciesName = getSelectedSpeciesName()) {
+    const fallbackFeatures = [defaultText.noNotableFeature];
+
+    if (!Array.isArray(state.notableFeatures) || state.notableFeatures.length === 0) {
+        return fallbackFeatures;
+    }
+
+    const validFeatures = state.notableFeatures
+        .filter(feature => {
+            return isNotableFeatureAllowedForSpecies(feature, speciesName);
+        })
+        .map(getNotableFeatureName)
+        .filter(Boolean);
+
+    const uniqueFeatures = getUniqueOptions(validFeatures);
+
+    if (uniqueFeatures.length === 0) {
+        return fallbackFeatures;
+    }
+
+    return uniqueFeatures;
+}
+
+export function populateNotableFeatureOptions(
+    speciesName = getSelectedSpeciesName(),
+    preserveCurrentValue = true
+) {
     if (!notableFeatureInput) {
         return;
     }
+
+    const currentValue = notableFeatureInput.value;
+    const notableFeatures = getValidNotableFeaturesForSpecies(speciesName);
 
     notableFeatureInput.innerHTML = "";
 
@@ -218,24 +418,103 @@ export function populateNotableFeatureOptions() {
     placeholder.textContent = loadingText.choose;
     notableFeatureInput.appendChild(placeholder);
 
-    const notableFeatures = state.notableFeatures.length > 0
-        ? state.notableFeatures
-        : [defaultText.noNotableFeature];
-
-    [...notableFeatures]
+    const noFeature = findMatchingOption(notableFeatures, defaultText.noNotableFeature);
+    const otherFeatures = notableFeatures
+        .filter(feature => {
+            return normaliseKey(feature) !== normaliseKey(defaultText.noNotableFeature);
+        })
         .sort((a, b) => {
             return String(a || "").localeCompare(String(b || ""), "en-GB", {
                 sensitivity: "base"
             });
-        })
-        .forEach(feature => {
-            const option = document.createElement("option");
-            option.value = feature;
-            option.textContent = feature;
-            notableFeatureInput.appendChild(option);
         });
 
+    const orderedFeatures = noFeature
+        ? [noFeature, ...otherFeatures]
+        : otherFeatures;
+
+    orderedFeatures.forEach(feature => {
+        const option = document.createElement("option");
+        option.value = feature;
+        option.textContent = feature;
+        notableFeatureInput.appendChild(option);
+    });
+
     notableFeatureInput.disabled = false;
+
+    if (preserveCurrentValue) {
+        const matchedFeature = findMatchingOption(orderedFeatures, currentValue);
+
+        if (matchedFeature) {
+            notableFeatureInput.value = matchedFeature;
+            return;
+        }
+    }
+
+    notableFeatureInput.value = noFeature || "";
+}
+
+function getPhysicalTraitOptionsForSpecies(species, traitName) {
+    const physicalTraits = species?.physicalTraits || normalisePhysicalTraits();
+    const fallbackTraits = normalisePhysicalTraits();
+    const fallbackPool = fallbackTraits[traitName] || [];
+    const pool = getValidPool(physicalTraits[traitName], fallbackPool);
+
+    return getUniqueOptions(pool);
+}
+
+export function populatePhysicalTraitOptionsForSpecies(
+    species = getSelectedSpecies(),
+    preserveCurrentValues = true
+) {
+    populateSelectOptions(
+        heightInput,
+        getPhysicalTraitOptionsForSpecies(species, "heights"),
+        preserveCurrentValues
+    );
+
+    populateSelectOptions(
+        buildInput,
+        getPhysicalTraitOptionsForSpecies(species, "builds"),
+        preserveCurrentValues
+    );
+
+    populateSelectOptions(
+        eyeColourInput,
+        getPhysicalTraitOptionsForSpecies(species, "eyeColours"),
+        preserveCurrentValues
+    );
+
+    populateSelectOptions(
+        hairColourInput,
+        getPhysicalTraitOptionsForSpecies(species, "hairColours"),
+        preserveCurrentValues
+    );
+
+    populateSelectOptions(
+        hairStyleInput,
+        getPhysicalTraitOptionsForSpecies(species, "hairStyles"),
+        preserveCurrentValues,
+        true
+    );
+
+    populateSelectOptions(
+        skinToneInput,
+        getPhysicalTraitOptionsForSpecies(species, "skinTones"),
+        preserveCurrentValues
+    );
+}
+
+export function handleSpeciesChange() {
+    const selectedSpecies = getSelectedSpecies();
+
+    populatePhysicalTraitOptionsForSpecies(selectedSpecies, true);
+    populateNotableFeatureOptions(selectedSpecies.name, true);
+    updateBeginButton();
+}
+
+if (speciesInput) {
+    speciesInput.addEventListener("change", handleSpeciesChange);
 }
 
 
@@ -359,11 +638,23 @@ export function createRandomName() {
     return `${firstName} ${lastName}`;
 }
 
+export function randomiseNameOnly() {
+    if (!state.loaded.names || !characterNameInput) {
+        return;
+    }
+
+    characterNameInput.value = createRandomName();
+
+    updateGenderFieldStatus();
+    updateBeginButton();
+}
+
 export function getSelectedSpecies() {
-    return state.speciesData.find(species => {
-        return species.name === speciesInput.value;
-    }) || {
-        name: speciesInput.value,
+    const selectedSpeciesName = getSelectedSpeciesName();
+    const matchedSpecies = getSpeciesByName(selectedSpeciesName);
+
+    return matchedSpecies || {
+        name: selectedSpeciesName,
         description: defaultText.noSpeciesBackground,
         typicalTraits: [],
         physicalTraits: normalisePhysicalTraits(),
@@ -375,18 +666,21 @@ export function getSelectedSpecies() {
 
 export function getRandomPhysicalTrait(species, traitName) {
     const physicalTraits = species.physicalTraits || normalisePhysicalTraits();
-    const fallbackPool = normalisePhysicalTraits()[traitName];
+    const fallbackTraits = normalisePhysicalTraits();
+    const fallbackPool = fallbackTraits[traitName] || [];
     const pool = getValidPool(physicalTraits[traitName], fallbackPool);
 
-    return getRandomItem(pool);
+    return getRandomItem(Array.isArray(pool) ? pool : fallbackPool);
 }
 
-export function getRandomNotableFeature() {
-    if (state.notableFeatures.length === 0) {
+export function getRandomNotableFeature(speciesName = getSelectedSpeciesName()) {
+    const validFeatures = getValidNotableFeaturesForSpecies(speciesName);
+
+    if (validFeatures.length === 0) {
         return defaultText.noNotableFeature;
     }
 
-    return getRandomItem(state.notableFeatures);
+    return getRandomItem(validFeatures);
 }
 
 export function randomiseCharacter() {
@@ -407,17 +701,24 @@ export function randomiseCharacter() {
     }
 
     characterNameInput.value = createRandomName();
+    speciesInput.value = randomSpecies.name;
+
+    populatePhysicalTraitOptionsForSpecies(randomSpecies, false);
+    populateNotableFeatureOptions(randomSpecies.name, false);
+
+    updateGenderFieldStatus();
+
     genderInput.value = getRandomSelectValue(genderInput);
     portraitPresentationInput.value = getRandomSelectValue(portraitPresentationInput);
-    speciesInput.value = randomSpecies.name;
     ageRangeInput.value = getRandomSelectValue(ageRangeInput);
 
     setSelectValue(heightInput, getRandomPhysicalTrait(randomSpecies, "heights"));
     setSelectValue(buildInput, getRandomPhysicalTrait(randomSpecies, "builds"));
     setSelectValue(eyeColourInput, getRandomPhysicalTrait(randomSpecies, "eyeColours"));
     setSelectValue(hairColourInput, getRandomPhysicalTrait(randomSpecies, "hairColours"));
+    setSelectValue(hairStyleInput, getRandomPhysicalTrait(randomSpecies, "hairStyles"));
     setSelectValue(skinToneInput, getRandomPhysicalTrait(randomSpecies, "skinTones"));
-    setSelectValue(notableFeatureInput, getRandomNotableFeature());
+    setSelectValue(notableFeatureInput, getRandomNotableFeature(randomSpecies.name));
 
     const classNames = Object.keys(state.classes);
     const randomClassName = getRandomItem(classNames);
@@ -471,6 +772,7 @@ export function createCharacter() {
         build: buildInput.value,
         eyeColour: toTitleCase(eyeColourInput.value),
         hairColour: toTitleCase(hairColourInput.value),
+        hairStyle: toTitleCase(hairStyleInput.value),
         skinTone: toTitleCase(skinToneInput.value),
 
         notableFeature: notableFeatureInput.value.trim()
@@ -504,10 +806,19 @@ export function clearCharacterForm() {
     if (portraitPresentationInput) portraitPresentationInput.value = "";
     if (speciesInput) speciesInput.value = "";
     if (ageRangeInput) ageRangeInput.value = "";
+
+    populatePhysicalTraitOptionsForSpecies({
+        name: "",
+        physicalTraits: normalisePhysicalTraits()
+    }, false);
+
+    populateNotableFeatureOptions("", false);
+
     if (heightInput) heightInput.value = "";
     if (buildInput) buildInput.value = "";
     if (eyeColourInput) eyeColourInput.value = "";
     if (hairColourInput) hairColourInput.value = "";
+    if (hairStyleInput) hairStyleInput.value = "";
     if (skinToneInput) skinToneInput.value = "";
     if (notableFeatureInput) notableFeatureInput.value = "";
 
@@ -523,6 +834,7 @@ export function clearCharacterForm() {
         weaponChoices.innerHTML = "";
     }
 
+    updateGenderFieldStatus();
     updateBeginButton();
 }
 
@@ -537,6 +849,7 @@ export function getCharacterFormInputs() {
         buildInput,
         eyeColourInput,
         hairColourInput,
+        hairStyleInput,
         skinToneInput,
         notableFeatureInput
     ].filter(Boolean);

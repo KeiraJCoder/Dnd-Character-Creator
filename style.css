@@ -154,6 +154,23 @@ p {
     gap: 18px;
 }
 
+.name-input-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 10px;
+    align-items: stretch;
+}
+
+.name-input-row input {
+    min-width: 0;
+}
+
+.name-randomise-button {
+    min-height: 50px;
+    padding-inline: 16px;
+    white-space: nowrap;
+}
+
 label {
     display: block;
     margin-bottom: 8px;
@@ -784,6 +801,14 @@ button:active:not(:disabled) {
     .stats-grid,
     .export-actions {
         grid-template-columns: 1fr;
+    }
+
+    .name-input-row {
+    grid-template-columns: 1fr;
+    }
+
+    .name-randomise-button {
+        width: 100%;
     }
 
     .button-row {

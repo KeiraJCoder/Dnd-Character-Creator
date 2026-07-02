@@ -19,12 +19,14 @@ import {
     populateNotableFeatureOptions,
     populateSpeciesOptions,
     randomiseCharacter,
+    randomiseNameOnly,
     renderClassCards,
     setNotableFeatureErrorState,
     setNotableFeatureLoadingState,
     setSpeciesErrorState,
     setSpeciesLoadingState,
     updateBeginButton,
+    updateNameRandomiseButtonStatus,
     updateRandomiseButtonStatus
 } from "./character.js";
 
@@ -56,7 +58,8 @@ import {
 
 const {
     beginButton,
-    randomiseButton
+    randomiseButton,
+    randomiseNameButton
 } = characterFormElements;
 
 const {
@@ -91,6 +94,10 @@ function attachMainButtonEventListeners() {
                 });
             });
         });
+    }
+
+    if (randomiseNameButton) {
+        randomiseNameButton.addEventListener("click", randomiseNameOnly);
     }
 
     if (randomiseButton) {
@@ -174,6 +181,7 @@ function renderLoadedData() {
     }
 
     updateRandomiseButtonStatus();
+    updateNameRandomiseButtonStatus();
     updateBeginButton();
 }
 

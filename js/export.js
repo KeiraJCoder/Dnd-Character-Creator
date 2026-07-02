@@ -40,11 +40,13 @@ export const exportElements = {
     printSpecies: document.getElementById("printSpecies"),
     printClass: document.getElementById("printClass"),
     printGender: document.getElementById("printGender"),
+    printPortraitPresentation: document.getElementById("printPortraitPresentation"),
     printAgeRange: document.getElementById("printAgeRange"),
     printHeight: document.getElementById("printHeight"),
     printBuild: document.getElementById("printBuild"),
     printEyes: document.getElementById("printEyes"),
     printHair: document.getElementById("printHair"),
+    printHairStyle: document.getElementById("printHairStyle"),
     printSkin: document.getElementById("printSkin"),
     printFeature: document.getElementById("printFeature"),
     printHP: document.getElementById("printHP"),
@@ -74,11 +76,13 @@ const {
     printSpecies,
     printClass,
     printGender,
+    printPortraitPresentation,
     printAgeRange,
     printHeight,
     printBuild,
     printEyes,
     printHair,
+    printHairStyle,
     printSkin,
     printFeature,
     printHP,
@@ -194,11 +198,13 @@ export function populatePrintableCharacterSheet() {
     setText(printSpecies, character.species.name);
     setText(printClass, `Level 1 ${character.className}`);
     setText(printGender, character.gender);
+    setText(printPortraitPresentation, character.portraitPresentation || character.gender || "");
     setText(printAgeRange, character.ageRange);
     setText(printHeight, character.height);
     setText(printBuild, character.build);
     setText(printEyes, character.eyeColour);
     setText(printHair, character.hairColour);
+    setText(printHairStyle, character.hairStyle || "");
     setText(printSkin, character.skinTone);
     setText(printFeature, character.notableFeature);
 
@@ -224,7 +230,7 @@ export function populatePrintableCharacterSheet() {
 
             stat.innerHTML = `
                 <strong>${escapeHtml(ability)}</strong>
-                <span>Score ${escapeHtml(score)}</span>
+                <span>Score ${escapeHtml(String(score))}</span>
                 <span>Mod ${escapeHtml(formatModifier(modifier))}</span>
             `;
 
@@ -255,6 +261,7 @@ export function buildCharacterSummaryText() {
 
     const profile = character.generatedProfile || {};
     const title = profileTitle?.textContent || `${character.name}, ${character.species.name} ${character.className}`;
+    const portraitPresentation = character.portraitPresentation || character.gender || "";
 
     return `
 DICEBOUND CHARACTER SUMMARY
@@ -263,6 +270,7 @@ Name: ${character.name}
 Species: ${character.species.name}
 Class: Level 1 ${character.className}
 Gender: ${character.gender}
+Portrait Presentation: ${portraitPresentation}
 Age Range: ${character.ageRange}
 
 APPEARANCE
@@ -270,6 +278,7 @@ Height: ${character.height}
 Build: ${character.build}
 Eyes: ${character.eyeColour}
 Hair: ${character.hairColour}
+Hair Style: ${character.hairStyle || ""}
 Skin: ${character.skinTone}
 Notable Feature: ${character.notableFeature}
 
