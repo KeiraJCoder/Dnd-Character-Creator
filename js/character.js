@@ -700,7 +700,12 @@ export function randomiseCharacter() {
         return;
     }
 
-    characterNameInput.value = createRandomName();
+    const currentName = String(characterNameInput?.value || "").trim();
+
+    if (!currentName) {
+        characterNameInput.value = createRandomName();
+    }
+
     speciesInput.value = randomSpecies.name;
 
     populatePhysicalTraitOptionsForSpecies(randomSpecies, false);
