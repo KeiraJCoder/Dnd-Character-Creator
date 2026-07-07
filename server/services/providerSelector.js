@@ -1,25 +1,25 @@
 /* =========================================================
-   Dicebound
-   Portrait Provider Selector
-   ---------------------------------------------------------
-   This file decides which portrait provider the backend should
-   use.
+    Dicebound
+    Portrait Provider Selector
+    ---------------------------------------------------------
+    This file decides which portrait provider the backend should
+    use.
 
-   Supported providers:
-   - cloudflare: real image generation through Cloudflare Workers AI
-   - demo: local SVG fallback portrait generation
+    Supported providers:
+    - cloudflare: real image generation through Cloudflare Workers AI
+    - demo: local SVG fallback portrait generation
 
-   IMAGE_PROVIDER can be:
-   - "cloudflare"
-   - "demo"
-   - "auto"
+    IMAGE_PROVIDER can be:
+    - "cloudflare"
+    - "demo"
+    - "auto"
 
-   In auto mode, Cloudflare is used when valid Cloudflare
-   credentials are present. Otherwise the server falls back to
-   demo mode.
+    In auto mode, Cloudflare is used when valid Cloudflare
+    credentials are present. Otherwise the server falls back to
+    demo mode.
 
-   OpenAI is intentionally not supported in this project to avoid
-   paid image generation costs.
+    OpenAI is intentionally not supported in this project to avoid
+    paid image generation costs.
    ========================================================= */
 
 const dotenv = require("dotenv");
@@ -28,33 +28,60 @@ dotenv.config();
 
 const allowedProviders = [
     "auto",
+    "openai",
     "cloudflare",
     "demo"
 ];
 
-const requestedProvider = normaliseProvider(
-    process.env.IMAGE_PROVIDER || "auto"
-);
+const requestedProvider = normaliseProvider(process.env.IMAGE_PROVIDER || "auto");
 
-const cloudflareAccountId = process.env.CLOUDFLARE_ACCOUNT_ID;
-const cloudflareApiToken = process.env.CLOUDFLARE_API_TOKEN;
+const openaiApiKey = cleanSecret(process.env.OPENAI_API_KEY);
+const openaiImageModel = cleanSecret(process.env.OPENAI_IMAGE_MODEL) || "gpt-image-1-mini";
+const openaiImageQuality = cleanSecret(process.env.OPENAI_IMAGE_QUALITY) || "low";
+const openaiImageSize = cleanSecret(process.env.OPENAI_IMAGE_SIZE) || "1024x1024";
+const openaiImageFormat = cleanSecret(process.env.OPENAI_IMAGE_FORMAT) || "png";
+const openaiImageModeration = cleanSecret(process.env.OPENAI_IMAGE_MODERATION) || "auto";
 
-const hasCloudflareCredentials =
-    Boolean(cloudflareAccountId) &&
-    Boolean(cloudflareApiToken) &&
-    cloudflareAccountId !== "paste_your_account_id_here" &&
-    cloudflareApiToken !== "paste_your_cloudflare_api_token_here";
+const cloudflareAccountId = cleanSecret(process.env.CLOUDFLARE_ACCOUNT_ID);
+const cloudflareApiToken = cleanSecret(process.env.CLOUDFLARE_API_TOKEN);
+
+function cleanSecret(value) {
+    return String(value || "").trim();
+}
 
 function normaliseProvider(provider) {
-    const normalisedProvider = String(provider)
+    const cleanedProvider = String(provider || "")
         .trim()
         .toLowerCase();
 
-    if (allowedProviders.includes(normalisedProvider)) {
-        return normalisedProvider;
-    }
+    return allowedProviders.includes(cleanedProvider)
+        ? cleanedProvider
+        : "auto";
+}
 
-    return "auto";
+function looksLikePlaceholder(value) {
+    const cleanedValue = String(value || "")
+        .trim()
+        .toLowerCase();
+
+    return (
+        !cleanedValue ||
+        cleanedValue.includes("your_") ||
+        cleanedValue.includes("replace_") ||
+        cleanedValue.includes("example") ||
+        cleanedValue.includes("placeholder")
+    );
+}
+
+function hasOpenAiCredentials() {
+    return !looksLikePlaceholder(openaiApiKey);
+}
+
+function hasCloudflareCredentials() {
+    return (
+        !looksLikePlaceholder(cloudflareAccountId) &&
+        !looksLikePlaceholder(cloudflareApiToken)
+    );
 }
 
 function getActiveProvider() {
@@ -62,13 +89,23 @@ function getActiveProvider() {
         return "demo";
     }
 
+    if (requestedProvider === "openai") {
+        return hasOpenAiCredentials()
+            ? "openai"
+            : "demo";
+    }
+
     if (requestedProvider === "cloudflare") {
-        return hasCloudflareCredentials
+        return hasCloudflareCredentials()
             ? "cloudflare"
             : "demo";
     }
 
-    if (hasCloudflareCredentials) {
+    if (hasOpenAiCredentials()) {
+        return "openai";
+    }
+
+    if (hasCloudflareCredentials()) {
         return "cloudflare";
     }
 
@@ -76,22 +113,38 @@ function getActiveProvider() {
 }
 
 function getProviderStatus() {
-    const activeProvider = getActiveProvider();
-
     return {
         requestedProvider,
-        activeProvider,
-        cloudflareConnected: hasCloudflareCredentials,
-        mode: activeProvider
+        activeProvider: getActiveProvider(),
+
+        openAiConnected: hasOpenAiCredentials(),
+        openaiImageModel,
+        openaiImageQuality,
+        openaiImageSize,
+        openaiImageFormat,
+
+        cloudflareConnected: hasCloudflareCredentials(),
+
+        demoAvailable: true
     };
 }
 
 module.exports = {
     imageProvider: requestedProvider,
     requestedProvider,
+
+    openaiApiKey,
+    openaiImageModel,
+    openaiImageQuality,
+    openaiImageSize,
+    openaiImageFormat,
+    openaiImageModeration,
+    hasOpenAiCredentials,
+
     cloudflareAccountId,
     cloudflareApiToken,
     hasCloudflareCredentials,
+
     getActiveProvider,
     getProviderStatus
 };
