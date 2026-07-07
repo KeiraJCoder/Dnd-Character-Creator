@@ -1,7 +1,25 @@
 /* =========================================================
     Dicebound
     Main Initialisation And Event Wiring
-     ========================================================= */
+    ---------------------------------------------------------
+    This file is the frontend entry point for the modular
+    Dicebound browser app.
+
+    Responsibilities:
+    - prepare the initial loading state
+    - load JSON data through data.js
+    - render species, notable feature and class options
+    - attach form, portrait, export and restart event listeners
+    - start the question flow and summary flow
+    - keep printable export data refreshed after summary or
+      portrait generation
+
+    This file should not contain character creation logic,
+    species anatomy rules, portrait prompt logic, data
+    normalisation or export formatting. Those responsibilities
+    belong in character.js, data.js, promptBuilder.js,
+    speciesPromptService.js, ui.js and export.js.
+   ========================================================= */
 
 import {
     state
@@ -54,7 +72,7 @@ import {
 
 /* =========================================================
     1. Destructure DOM Elements
-     ========================================================= */
+   ========================================================= */
 
 const {
     beginButton,
@@ -72,10 +90,13 @@ const {
 const generatePortraitButton = document.getElementById("generatePortraitButton");
 const restartButton = document.getElementById("restartButton");
 
+let eventListenersAttached = false;
+let gameInitialised = false;
+
 
 /* =========================================================
     2. Event Listeners
-     ========================================================= */
+   ========================================================= */
 
 function attachFormEventListeners() {
     getCharacterFormInputs().forEach(input => {
@@ -86,14 +107,7 @@ function attachFormEventListeners() {
 
 function attachMainButtonEventListeners() {
     if (beginButton) {
-        beginButton.addEventListener("click", () => {
-            beginQuestions(() => {
-                showSummary(() => {
-                    populatePrintableCharacterSheet();
-                    setExportStatus("");
-                });
-            });
-        });
+        beginButton.addEventListener("click", handleBeginButtonClick);
     }
 
     if (randomiseNameButton) {
@@ -105,21 +119,13 @@ function attachMainButtonEventListeners() {
     }
 
     if (restartButton) {
-        restartButton.addEventListener("click", () => {
-            restart(() => {
-                setExportStatus("");
-            });
-        });
+        restartButton.addEventListener("click", handleRestartButtonClick);
     }
 }
 
 function attachPortraitEventListeners() {
     if (generatePortraitButton) {
-        generatePortraitButton.addEventListener("click", () => {
-            generateCharacterPortrait(() => {
-                populatePrintableCharacterSheet();
-            });
-        });
+        generatePortraitButton.addEventListener("click", handleGeneratePortraitButtonClick);
     }
 }
 
@@ -142,16 +148,48 @@ function attachExportEventListeners() {
 }
 
 function attachEventListeners() {
+    if (eventListenersAttached) {
+        return;
+    }
+
     attachFormEventListeners();
     attachMainButtonEventListeners();
     attachPortraitEventListeners();
     attachExportEventListeners();
+
+    eventListenersAttached = true;
 }
 
 
 /* =========================================================
-    3. Initial UI State
-     ========================================================= */
+    3. Event Handlers
+   ========================================================= */
+
+function handleBeginButtonClick() {
+    beginQuestions(() => {
+        showSummary(() => {
+            populatePrintableCharacterSheet();
+            setExportStatus("");
+        });
+    });
+}
+
+function handleGeneratePortraitButtonClick() {
+    generateCharacterPortrait(() => {
+        populatePrintableCharacterSheet();
+    });
+}
+
+function handleRestartButtonClick() {
+    restart(() => {
+        setExportStatus("");
+    });
+}
+
+
+/* =========================================================
+    4. Initial UI State
+   ========================================================= */
 
 function prepareLoadingState() {
     setSpeciesLoadingState();
@@ -185,6 +223,15 @@ function renderLoadedData() {
     updateBeginButton();
 }
 
+function renderFailedDataState() {
+    setSpeciesErrorState();
+    setNotableFeatureErrorState();
+
+    updateRandomiseButtonStatus();
+    updateNameRandomiseButtonStatus();
+    updateBeginButton();
+}
+
 function logDataStatus() {
     if (isAllDataLoaded()) {
         console.log("Dicebound data loaded successfully.");
@@ -201,17 +248,39 @@ function logDataStatus() {
 
 
 /* =========================================================
-    4. Initialisation
-     ========================================================= */
+    5. Initialisation
+   ========================================================= */
 
 async function initialiseGame() {
-    prepareLoadingState();
-    attachEventListeners();
+    if (gameInitialised) {
+        return;
+    }
 
-    await loadAllData();
+    gameInitialised = true;
 
-    renderLoadedData();
-    logDataStatus();
+    try {
+        prepareLoadingState();
+        attachEventListeners();
+
+        await loadAllData();
+
+        renderLoadedData();
+        logDataStatus();
+    } catch (error) {
+        console.error("Dicebound initialisation failed.", error);
+
+        renderFailedDataState();
+        setExportStatus("Dicebound could not load the required data files.");
+    }
 }
 
-initialiseGame();
+function initialiseWhenDomIsReady() {
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", initialiseGame);
+        return;
+    }
+
+    initialiseGame();
+}
+
+initialiseWhenDomIsReady();

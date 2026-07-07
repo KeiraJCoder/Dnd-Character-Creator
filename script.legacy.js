@@ -1,11 +1,25 @@
 /* =========================================================
-   Dicebound
-   Main Script
+    Dicebound
+    Legacy Monolithic Frontend Script
+  ---------------------------------------------------------
+    This file is the old all-in-one version of the Dicebound
+    frontend.
+
+    It has been replaced by the modular JavaScript files in
+    the js/ directory, with js/main.js acting as the current
+    frontend entry point.
+
+    This file should not be loaded by index.html and should not
+    be used for new development. It is kept only as a temporary
+    reference while checking that all old behaviour has been
+    moved into the modular files.
+
+    Safe to delete once the modular app has been tested.
    ========================================================= */
 
 
 /* =========================================================
-   1. Core Data And State
+    1. Core Data And State
    ========================================================= */
 
 const abilities = ["STR", "DEX", "CON", "INT", "WIS", "CHA"];

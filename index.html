@@ -1,4 +1,35 @@
 <!DOCTYPE html>
+<!--
+    Dicebound Character Generator
+    ---------------------------------------------------------
+    This file defines the main HTML structure for the Dicebound
+    web app.
+
+    It provides the visible screens used by the frontend:
+    - the character creation form
+    - the personality question flow
+    - the generated character summary
+    - the portrait display and export controls
+    - the hidden printable character sheet used for printing or PDF export
+
+    The file does not contain the main app logic itself. Behaviour such as
+    loading JSON data, randomising characters, handling questions, generating
+    portraits, updating the summary and exporting the sheet is handled by the
+    modular JavaScript entry point loaded at the bottom of the page:
+
+        js/main.js
+
+    Styling is handled separately by:
+
+        style.css
+
+    Keep this file focused on page structure and DOM elements. Any element IDs
+    used here are expected by the JavaScript modules, so rename IDs carefully.
+
+    Species-specific appearance options are loaded from JSON data, especially
+    data/species-appearance.json. Do not hardcode Dragonborn scale, horn, crest
+    or head-style options here.
+-->
 <html lang="en-GB">
 <head>
     <meta charset="UTF-8" />
@@ -20,7 +51,6 @@
             <p class="hint">Choose the basic details for your character. You can fill these in yourself or use the randomise button to generate a starting point.</p>
 
             <div class="form-grid">
-
                 <div>
                     <label for="species">Species</label>
                     <select id="species" disabled>
@@ -58,7 +88,7 @@
                         <option value="Androgynous">Androgynous</option>
                         <option value="Feminine">Feminine</option>
                         <option value="Masculine">Masculine</option>
-                        <option value="No Strong Gendered Features">No strong gendered features</option>
+                        <option value="No Strong Gendered Features">No Strong Gendered Features</option>
                     </select>
                 </div>
 
@@ -77,133 +107,42 @@
                 <div>
                     <label for="height">Height</label>
                     <select id="height">
-                        <option value="">Choose...</option>
-                        <option value="Short">Short</option>
-                        <option value="Average Height">Average Height</option>
-                        <option value="Tall">Tall</option>
-                        <option value="Very Tall">Very Tall</option>
+                        <option value="">Choose species first...</option>
                     </select>
                 </div>
 
                 <div>
                     <label for="build">Build</label>
                     <select id="build">
-                        <option value="">Choose...</option>
-                        <option value="Average Build">Average build</option>
-                        <option value="Broad">Broad</option>
-                        <option value="Fat">Fat</option>
-                        <option value="Heavy-Set">Heavy-set</option>
-                        <option value="Lean">Lean</option>
-                        <option value="Muscular">Muscular</option>
-                        <option value="Stocky">Stocky</option>
-                        <option value="Thin">Thin</option>
+                        <option value="">Choose species first...</option>
                     </select>
                 </div>
 
                 <div>
                     <label for="eyeColour">Eye colour</label>
                     <select id="eyeColour">
-                        <option value="">Choose...</option>
-                        <option value="Amber">Amber</option>
-                        <option value="Black">Black</option>
-                        <option value="Blue">Blue</option>
-                        <option value="Gold">Gold</option>
-                        <option value="Green">Green</option>
-                        <option value="Grey">Grey</option>
-                        <option value="Hazel">Hazel</option>
-                        <option value="Red">Red</option>
-                        <option value="Silver">Silver</option>
-                        <option value="Violet">Violet</option>
-                        <option value="White">White</option>
-                        <option value="Yellow">Yellow</option>
+                        <option value="">Choose species first...</option>
                     </select>
                 </div>
 
                 <div>
                     <label for="hairColour">Hair colour</label>
                     <select id="hairColour">
-                        <option value="">Choose...</option>
-                        <option value="Ash-Grey">Ash-Grey</option>
-                        <option value="Auburn">Auburn</option>
-                        <option value="Black">Black</option>
-                        <option value="Blonde">Blonde</option>
-                        <option value="Bone Crest">Bone Crest</option>
-                        <option value="Brown">Brown</option>
-                        <option value="Copper">Copper</option>
-                        <option value="Dark Blue">Dark Blue</option>
-                        <option value="Gold">Gold</option>
-                        <option value="Grey">Grey</option>
-                        <option value="Horned Crest">Horned Crest</option>
-                        <option value="Red">Red</option>
-                        <option value="Scaled Crest">Scaled Crest</option>
-                        <option value="Silver">Silver</option>
-                        <option value="Spined Crest">Spined Crest</option>
-                        <option value="White">White</option>
+                        <option value="">Choose species first...</option>
                     </select>
                 </div>
 
                 <div>
                     <label for="hairStyle">Hair style</label>
                     <select id="hairStyle">
-                        <option value="">Choose...</option>
-                        <option value="Bald">Bald</option>
-                        <option value="Bone Crest">Bone Crest</option>
-                        <option value="Braided Hair">Braided Hair</option>
-                        <option value="Crown Of Horns">Crown Of Horns</option>
-                        <option value="Curly Hair">Curly Hair</option>
-                        <option value="Head Frill">Head Frill</option>
-                        <option value="Horned Crest">Horned Crest</option>
-                        <option value="Long Head Spines">Long Head Spines</option>
-                        <option value="Long Loose Hair">Long Loose Hair</option>
-                        <option value="Messy Hair">Messy Hair</option>
-                        <option value="No Hair">No Hair</option>
-                        <option value="Ponytail">Ponytail</option>
-                        <option value="Scaled Crest">Scaled Crest</option>
-                        <option value="Shaved Head">Shaved Head</option>
-                        <option value="Shaved Sides">Shaved Sides</option>
-                        <option value="Short Back And Sides">Short Back And Sides</option>
-                        <option value="Short Hair">Short Hair</option>
-                        <option value="Short Head Spines">Short Head Spines</option>
-                        <option value="Shoulder-Length Hair">Shoulder-Length Hair</option>
-                        <option value="Single Plait">Single Plait</option>
-                        <option value="Smooth Scaled Head">Smooth Scaled Head</option>
-                        <option value="Spined Crest">Spined Crest</option>
-                        <option value="Swept-Back Horns">Swept-Back Horns</option>
-                        <option value="Twin Plaits">Twin Plaits</option>
+                        <option value="">Choose species first...</option>
                     </select>
                 </div>
 
                 <div>
-                    <label for="skinTone">Skin colour or tone</label>
+                    <label for="skinTone">Skin tone</label>
                     <select id="skinTone">
-                        <option value="">Choose...</option>
-                        <option value="Ashen">Ashen</option>
-                        <option value="Black Scales">Black Scales</option>
-                        <option value="Blue-Grey">Blue-Grey</option>
-                        <option value="Blue Scales">Blue Scales</option>
-                        <option value="Bronze">Bronze</option>
-                        <option value="Bronze Scales">Bronze Scales</option>
-                        <option value="Copper Scales">Copper Scales</option>
-                        <option value="Copper-Toned">Copper-Toned</option>
-                        <option value="Deep Brown">Deep Brown</option>
-                        <option value="Fair">Fair</option>
-                        <option value="Gold Scales">Gold Scales</option>
-                        <option value="Golden">Golden</option>
-                        <option value="Green">Green</option>
-                        <option value="Green Scales">Green Scales</option>
-                        <option value="Grey">Grey</option>
-                        <option value="Grey-Green">Grey-Green</option>
-                        <option value="Olive">Olive</option>
-                        <option value="Pale">Pale</option>
-                        <option value="Pale Grey">Pale Grey</option>
-                        <option value="Purple">Purple</option>
-                        <option value="Red">Red</option>
-                        <option value="Red Scales">Red Scales</option>
-                        <option value="Silver Scales">Silver Scales</option>
-                        <option value="Stone Grey">Stone Grey</option>
-                        <option value="Warm Brown">Warm Brown</option>
-                        <option value="White Scales">White Scales</option>
-                        <option value="Yellow-Green">Yellow-Green</option>
+                        <option value="">Choose species first...</option>
                     </select>
                 </div>
 
@@ -378,9 +317,9 @@
                         <p><strong>Height:</strong> <span id="printHeight"></span></p>
                         <p><strong>Build:</strong> <span id="printBuild"></span></p>
                         <p><strong>Eyes:</strong> <span id="printEyes"></span></p>
-                        <p><strong>Hair:</strong> <span id="printHair"></span></p>
-                        <p><strong>Hair Style:</strong> <span id="printHairStyle"></span></p>
-                        <p><strong>Skin:</strong> <span id="printSkin"></span></p>
+                        <p><span id="printHair"></span></p>
+                        <p><span id="printHairStyle"></span></p>
+                        <p><span id="printSkin"></span></p>
                         <p><strong>Notable Feature:</strong> <span id="printFeature"></span></p>
                     </div>
 

@@ -1,7 +1,27 @@
 /* =========================================================
     Dicebound
     Character Creation
-     ========================================================= */
+    ---------------------------------------------------------
+    This file controls the frontend character creation form.
+
+    Responsibilities:
+    - populate species, class, weapon and appearance options
+    - keep species-specific physical traits in sync
+    - randomise character creation fields
+    - create the final character object used by the question flow,
+      summary screen, export tools and portrait generation
+    - keep rich notable feature data attached to the character so
+      backend portrait prompts can describe scars, horns, tattoos,
+      eyes, hands and other visible details accurately
+
+    DnD mechanical notes:
+    - Level 1 hit points are calculated from class hit die plus CON
+      modifier.
+    - Ability scores use a class-aware Standard Array arrangement.
+    - Species do not apply ability score bonuses here.
+    - Background ability score bonuses should be added later through
+      a dedicated backgrounds data file.
+   ========================================================= */
 
 import {
     abilities,
@@ -34,7 +54,7 @@ import {
 
 /* =========================================================
     1. DOM References
-     ========================================================= */
+   ========================================================= */
 
 export const characterFormElements = {
     characterNameInput: document.getElementById("characterName"),
@@ -50,6 +70,10 @@ export const characterFormElements = {
     hairStyleInput: document.getElementById("hairStyle"),
     skinToneInput: document.getElementById("skinTone"),
     notableFeatureInput: document.getElementById("notableFeature"),
+
+    hairColourLabel: document.querySelector('label[for="hairColour"]'),
+    hairStyleLabel: document.querySelector('label[for="hairStyle"]'),
+    skinToneLabel: document.querySelector('label[for="skinTone"]'),
 
     classCards: document.getElementById("classCards"),
     weaponSection: document.getElementById("weaponSection"),
@@ -73,6 +97,9 @@ const {
     hairStyleInput,
     skinToneInput,
     notableFeatureInput,
+    hairColourLabel,
+    hairStyleLabel,
+    skinToneLabel,
     classCards,
     weaponSection,
     weaponChoices,
@@ -82,8 +109,112 @@ const {
 
 
 /* =========================================================
-    2. Loading And Button Status
-     ========================================================= */
+    2. Rules Helpers
+   ========================================================= */
+
+const standardArrayByClass = {
+    Barbarian: {
+        STR: 15,
+        DEX: 13,
+        CON: 14,
+        INT: 8,
+        WIS: 12,
+        CHA: 10
+    },
+    Bard: {
+        STR: 8,
+        DEX: 14,
+        CON: 13,
+        INT: 12,
+        WIS: 10,
+        CHA: 15
+    },
+    Cleric: {
+        STR: 13,
+        DEX: 10,
+        CON: 14,
+        INT: 8,
+        WIS: 15,
+        CHA: 12
+    },
+    Druid: {
+        STR: 8,
+        DEX: 12,
+        CON: 14,
+        INT: 13,
+        WIS: 15,
+        CHA: 10
+    },
+    Fighter: {
+        STR: 15,
+        DEX: 14,
+        CON: 13,
+        INT: 8,
+        WIS: 10,
+        CHA: 12
+    },
+    Monk: {
+        STR: 10,
+        DEX: 15,
+        CON: 13,
+        INT: 8,
+        WIS: 14,
+        CHA: 12
+    },
+    Paladin: {
+        STR: 15,
+        DEX: 8,
+        CON: 13,
+        INT: 10,
+        WIS: 12,
+        CHA: 14
+    },
+    Ranger: {
+        STR: 10,
+        DEX: 15,
+        CON: 13,
+        INT: 8,
+        WIS: 14,
+        CHA: 12
+    },
+    Rogue: {
+        STR: 8,
+        DEX: 15,
+        CON: 13,
+        INT: 14,
+        WIS: 12,
+        CHA: 10
+    },
+    Sorcerer: {
+        STR: 8,
+        DEX: 13,
+        CON: 14,
+        INT: 10,
+        WIS: 12,
+        CHA: 15
+    },
+    Warlock: {
+        STR: 8,
+        DEX: 14,
+        CON: 13,
+        INT: 12,
+        WIS: 10,
+        CHA: 15
+    },
+    Wizard: {
+        STR: 8,
+        DEX: 12,
+        CON: 13,
+        INT: 15,
+        WIS: 14,
+        CHA: 10
+    }
+};
+
+
+/* =========================================================
+    3. Loading And Button Status
+   ========================================================= */
 
 export function updateNameRandomiseButtonStatus() {
     if (!randomiseNameButton) {
@@ -175,7 +306,8 @@ export function updateBeginButton() {
         eyeColourInput?.value.trim(),
         hairColourInput?.value.trim(),
         hairStyleInput?.value.trim(),
-        skinToneInput?.value.trim()
+        skinToneInput?.value.trim(),
+        notableFeatureInput?.value.trim()
     ];
 
     const fieldsComplete = requiredFields.every(value => {
@@ -191,8 +323,8 @@ export function updateBeginButton() {
 
 
 /* =========================================================
-    3. Species, Appearance And Notable Feature Dropdowns
-     ========================================================= */
+    4. Species, Appearance And Notable Feature Dropdowns
+   ========================================================= */
 
 function normaliseOption(value) {
     return String(value || "").trim().toLowerCase();
@@ -285,6 +417,32 @@ function getSelectedSpeciesName() {
     return speciesInput?.value || "";
 }
 
+function isDragonbornSpecies(speciesName) {
+    return normaliseKey(speciesName) === "dragonborn";
+}
+
+function updateSpeciesSpecificAppearanceLabels(speciesName = getSelectedSpeciesName()) {
+    const isDragonborn = isDragonbornSpecies(speciesName);
+
+    if (hairColourLabel) {
+        hairColourLabel.textContent = isDragonborn
+            ? "Head, horn or crest colour"
+            : "Hair colour";
+    }
+
+    if (hairStyleLabel) {
+        hairStyleLabel.textContent = isDragonborn
+            ? "Head style"
+            : "Hair style";
+    }
+
+    if (skinToneLabel) {
+        skinToneLabel.textContent = isDragonborn
+            ? "Scale colour"
+            : "Skin tone";
+    }
+}
+
 export function setSpeciesLoadingState() {
     if (!speciesInput) {
         return;
@@ -329,6 +487,7 @@ export function populateSpeciesOptions() {
         });
 
     speciesInput.disabled = false;
+    updateSpeciesSpecificAppearanceLabels();
 }
 
 export function setNotableFeatureLoadingState() {
@@ -357,6 +516,20 @@ function getNotableFeatureName(feature) {
     return feature?.name || "";
 }
 
+function cloneNotableFeature(feature, fallbackName = defaultText.noNotableFeature) {
+    if (feature && typeof feature === "object") {
+        return {
+            ...feature,
+            name: getNotableFeatureName(feature) || fallbackName
+        };
+    }
+
+    return {
+        name: String(feature || fallbackName),
+        allowedSpecies: "all"
+    };
+}
+
 function isNotableFeatureAllowedForSpecies(feature, speciesName) {
     if (typeof feature === "string") {
         return true;
@@ -377,27 +550,47 @@ function isNotableFeatureAllowedForSpecies(feature, speciesName) {
     });
 }
 
-export function getValidNotableFeaturesForSpecies(speciesName = getSelectedSpeciesName()) {
-    const fallbackFeatures = [defaultText.noNotableFeature];
+export function getValidNotableFeatureObjectsForSpecies(speciesName = getSelectedSpeciesName()) {
+    const fallbackFeature = cloneNotableFeature(defaultText.noNotableFeature);
 
     if (!Array.isArray(state.notableFeatures) || state.notableFeatures.length === 0) {
-        return fallbackFeatures;
+        return [fallbackFeature];
     }
 
     const validFeatures = state.notableFeatures
         .filter(feature => {
             return isNotableFeatureAllowedForSpecies(feature, speciesName);
         })
-        .map(getNotableFeatureName)
-        .filter(Boolean);
+        .map(feature => {
+            return cloneNotableFeature(feature);
+        })
+        .filter(feature => {
+            return Boolean(feature.name);
+        });
 
-    const uniqueFeatures = getUniqueOptions(validFeatures);
-
-    if (uniqueFeatures.length === 0) {
-        return fallbackFeatures;
+    if (validFeatures.length === 0) {
+        return [fallbackFeature];
     }
 
-    return uniqueFeatures;
+    const seen = new Set();
+
+    return validFeatures.filter(feature => {
+        const key = normaliseKey(feature.name);
+
+        if (seen.has(key)) {
+            return false;
+        }
+
+        seen.add(key);
+        return true;
+    });
+}
+
+export function getValidNotableFeaturesForSpecies(speciesName = getSelectedSpeciesName()) {
+    return getValidNotableFeatureObjectsForSpecies(speciesName)
+        .map(feature => {
+            return feature.name;
+        });
 }
 
 export function populateNotableFeatureOptions(
@@ -454,6 +647,21 @@ export function populateNotableFeatureOptions(
     notableFeatureInput.value = noFeature || "";
 }
 
+function getSelectedNotableFeature(speciesName = getSelectedSpeciesName()) {
+    const selectedFeatureName = notableFeatureInput?.value?.trim() || defaultText.noNotableFeature;
+    const validFeatures = getValidNotableFeatureObjectsForSpecies(speciesName);
+
+    const matchedFeature = validFeatures.find(feature => {
+        return normaliseKey(feature.name) === normaliseKey(selectedFeatureName);
+    });
+
+    if (matchedFeature) {
+        return cloneNotableFeature(matchedFeature, selectedFeatureName);
+    }
+
+    return cloneNotableFeature(selectedFeatureName);
+}
+
 function getPhysicalTraitOptionsForSpecies(species, traitName) {
     const physicalTraits = species?.physicalTraits || normalisePhysicalTraits();
     const fallbackTraits = normalisePhysicalTraits();
@@ -503,13 +711,17 @@ export function populatePhysicalTraitOptionsForSpecies(
         getPhysicalTraitOptionsForSpecies(species, "skinTones"),
         preserveCurrentValues
     );
+
+    updateSpeciesSpecificAppearanceLabels(species?.name || getSelectedSpeciesName());
 }
 
 export function handleSpeciesChange() {
     const selectedSpecies = getSelectedSpecies();
+    const selectedSpeciesName = selectedSpecies?.name || "";
 
     populatePhysicalTraitOptionsForSpecies(selectedSpecies, true);
-    populateNotableFeatureOptions(selectedSpecies.name, true);
+    populateNotableFeatureOptions(selectedSpeciesName, true);
+    updateSpeciesSpecificAppearanceLabels(selectedSpeciesName);
     updateBeginButton();
 }
 
@@ -519,8 +731,8 @@ if (speciesInput) {
 
 
 /* =========================================================
-    4. Class And Weapon Selection
-     ========================================================= */
+    5. Class And Weapon Selection
+   ========================================================= */
 
 export function renderClassCards() {
     if (!classCards) {
@@ -620,8 +832,8 @@ export function renderWeaponChoices() {
 
 
 /* =========================================================
-    5. Random Character Helpers
-     ========================================================= */
+    6. Random Character Helpers
+   ========================================================= */
 
 export function createRandomName() {
     if (
@@ -748,10 +960,10 @@ export function randomiseCharacter() {
 
 
 /* =========================================================
-    6. Character Object Creation
-     ========================================================= */
+    7. Character Object Creation
+   ========================================================= */
 
-export function createStats() {
+function createRandomStats() {
     const stats = {};
 
     abilities.forEach(ability => {
@@ -761,10 +973,32 @@ export function createStats() {
     return stats;
 }
 
+export function createStats(className = state.selectedClassName) {
+    const standardStats = standardArrayByClass[className];
+
+    if (standardStats) {
+        return { ...standardStats };
+    }
+
+    return createRandomStats();
+}
+
 export function createCharacter() {
     const classInfo = state.classes[state.selectedClassName];
     const species = getSelectedSpecies();
-    const stats = createStats();
+
+    if (!classInfo) {
+        throw new Error("No class has been selected.");
+    }
+
+    if (!state.selectedWeapon) {
+        throw new Error("No starting weapon has been selected.");
+    }
+
+    const selectedNotableFeature = getSelectedNotableFeature(species.name);
+    const notableFeatureName = selectedNotableFeature.name || defaultText.noNotableFeature;
+
+    const stats = createStats(state.selectedClassName);
     const hp = Math.max(1, classInfo.hitDie + getModifier(stats.CON));
 
     const createdCharacter = {
@@ -780,9 +1014,8 @@ export function createCharacter() {
         hairStyle: toTitleCase(hairStyleInput.value),
         skinTone: toTitleCase(skinToneInput.value),
 
-        notableFeature: notableFeatureInput.value.trim()
-            ? toTitleCase(notableFeatureInput.value)
-            : defaultText.noNotableFeature,
+        notableFeature: selectedNotableFeature,
+        notableFeatureName,
 
         className: state.selectedClassName,
         classInfo,
@@ -802,8 +1035,8 @@ export function createCharacter() {
 
 
 /* =========================================================
-    7. Form Reset
-     ========================================================= */
+    8. Form Reset
+   ========================================================= */
 
 export function clearCharacterForm() {
     if (characterNameInput) characterNameInput.value = "";
@@ -818,6 +1051,7 @@ export function clearCharacterForm() {
     }, false);
 
     populateNotableFeatureOptions("", false);
+    updateSpeciesSpecificAppearanceLabels("");
 
     if (heightInput) heightInput.value = "";
     if (buildInput) buildInput.value = "";

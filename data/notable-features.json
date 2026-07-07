@@ -1,20 +1,65 @@
 {
+    "_description": "Dicebound notable feature data. This file stores visual notable features used by the frontend character builder and backend portrait prompt system. Each feature includes species availability and prompt-specific instructions so portrait generation can describe the selected feature clearly instead of relying on vague feature names. JavaScript should preserve all fields on each feature object. The name field is used for dropdown display, while promptInstruction, visibilityInstruction and negativePrompt are used during portrait prompt construction.",
     "notableFeatures": [
         {
             "name": "No Obvious Unusual Feature",
-            "allowedSpecies": "all"
+            "allowedSpecies": "all",
+            "category": "none",
+            "visibility": "none",
+            "promptInstruction": "Do not add any unusual scar, tattoo, piercing, missing body part, glowing feature or distinctive mark.",
+            "visibilityInstruction": "Keep the face, head and upper body clear, but do not invent a notable feature.",
+            "negativePrompt": [
+                "scar",
+                "tattoo",
+                "face mark",
+                "missing eye",
+                "missing finger",
+                "piercing",
+                "glowing eyes",
+                "broken horn"
+            ]
         },
         {
             "name": "Small Scar On Face",
-            "allowedSpecies": "all"
+            "allowedSpecies": "all",
+            "category": "scar",
+            "visibility": "face",
+            "promptInstruction": "Show one small realistic healed scar on the face. It should look like healed skin damage, not a tattoo, face paint, dirt or shadow.",
+            "visibilityInstruction": "The face must be close, clear and well lit so the small facial scar is visible.",
+            "negativePrompt": [
+                "tattoo instead of scar",
+                "face paint",
+                "blood",
+                "open wound"
+            ]
         },
         {
             "name": "Large Scar On Face",
-            "allowedSpecies": "all"
+            "allowedSpecies": "all",
+            "category": "scar",
+            "visibility": "face",
+            "promptInstruction": "Show one large realistic healed scar across part of the face. It should look like old healed skin damage, not a tattoo, face paint, dirt or shadow.",
+            "visibilityInstruction": "The face must be close, clear and unobstructed so the large scar is immediately noticeable.",
+            "negativePrompt": [
+                "tattoo instead of scar",
+                "face paint",
+                "blood",
+                "fresh wound"
+            ]
         },
         {
             "name": "Scar Across One Eyebrow",
-            "allowedSpecies": "all"
+            "allowedSpecies": "all",
+            "category": "scar",
+            "visibility": "face",
+            "promptInstruction": "Show a realistic healed scar cutting through one eyebrow. The scar should interrupt the eyebrow clearly.",
+            "visibilityInstruction": "The eyes and eyebrows must be visible and unobstructed.",
+            "negativePrompt": [
+                "tattoo instead of scar",
+                "face paint",
+                "covered eyebrows",
+                "hair covering eyes"
+            ]
         },
         {
             "name": "Scar Across The Nose",
@@ -25,41 +70,118 @@
                 "Halfling",
                 "Gnome",
                 "Tiefling",
-                "Half-Elf",
-                "Half-Orc",
                 "Aasimar",
-                "Goblin",
                 "Orc",
                 "Goliath"
+            ],
+            "category": "scar",
+            "visibility": "face",
+            "promptInstruction": "Show a realistic healed scar crossing the bridge or side of the nose. The scar should follow the shape of the nose.",
+            "visibilityInstruction": "The nose must be visible from a clear front or three-quarter angle.",
+            "negativePrompt": [
+                "perfect nose",
+                "covered nose",
+                "mask",
+                "tattoo instead of scar"
             ]
         },
         {
             "name": "Scar Across One Cheek",
-            "allowedSpecies": "all"
+            "allowedSpecies": "all",
+            "category": "scar",
+            "visibility": "face",
+            "promptInstruction": "Show a realistic healed scar across one cheek. It should look like old skin damage, not paint, dirt or decorative makeup.",
+            "visibilityInstruction": "At least one cheek must be clearly visible and well lit.",
+            "negativePrompt": [
+                "tattoo instead of scar",
+                "face paint",
+                "hair covering cheeks"
+            ]
         },
         {
             "name": "Jagged Scar Along The Jaw",
-            "allowedSpecies": "all"
+            "allowedSpecies": "all",
+            "category": "scar",
+            "visibility": "face",
+            "promptInstruction": "Show a jagged realistic healed scar following the jawline. It should be uneven and visibly healed.",
+            "visibilityInstruction": "The jawline must be visible; do not hide it with a high collar, beard, scarf, hand or shadow.",
+            "negativePrompt": [
+                "smooth perfect jaw",
+                "beard hiding jaw",
+                "scarf covering jaw",
+                "tattoo instead of scar"
+            ]
         },
         {
             "name": "Burn Scar On Face",
-            "allowedSpecies": "all"
+            "allowedSpecies": "all",
+            "category": "scar",
+            "visibility": "face",
+            "promptInstruction": "Show a visible healed burn scar on part of the face, with uneven texture and old damaged skin. It should not look like paint or a fresh injury.",
+            "visibilityInstruction": "The affected part of the face must be clear and not hidden by hair, helmet, hood or shadow.",
+            "negativePrompt": [
+                "fresh burn",
+                "blood",
+                "face paint",
+                "smooth perfect skin"
+            ]
         },
         {
             "name": "Burn Scar On One Hand",
-            "allowedSpecies": "all"
+            "allowedSpecies": "all",
+            "category": "scar",
+            "visibility": "hand",
+            "promptInstruction": "Show one hand with a visible healed burn scar, with uneven old scar texture across the hand.",
+            "visibilityInstruction": "Show one hand clearly near the chest or shoulder so the burn scar is visible in the portrait.",
+            "negativePrompt": [
+                "hands hidden",
+                "gloves",
+                "fresh burn",
+                "blood",
+                "smooth unmarked hands"
+            ]
         },
         {
             "name": "One Clouded Eye",
-            "allowedSpecies": "all"
+            "allowedSpecies": "all",
+            "category": "eye",
+            "visibility": "face",
+            "promptInstruction": "Show one eye visibly clouded, pale, milky or blind-looking while the other eye remains normal.",
+            "visibilityInstruction": "Both eyes must be clearly visible and close enough to see that only one eye is clouded.",
+            "negativePrompt": [
+                "both eyes clouded",
+                "closed eyes",
+                "hair covering eyes",
+                "glowing eyes instead of clouded eye"
+            ]
         },
         {
             "name": "One Missing Eye",
-            "allowedSpecies": "all"
+            "allowedSpecies": "all",
+            "category": "eye",
+            "visibility": "face",
+            "promptInstruction": "Show one eye missing or covered by a simple eyepatch. The other eye should remain visible.",
+            "visibilityInstruction": "The face must be clear and frontal enough that the missing eye or eyepatch is obvious.",
+            "negativePrompt": [
+                "two normal eyes",
+                "two missing eyes",
+                "closed eyes",
+                "hair covering eyes"
+            ]
         },
         {
             "name": "Blind In One Eye",
-            "allowedSpecies": "all"
+            "allowedSpecies": "all",
+            "category": "eye",
+            "visibility": "face",
+            "promptInstruction": "Show one eye visibly blind, pale or unfocused, while the other eye looks normal and alert.",
+            "visibilityInstruction": "Both eyes must be visible and not hidden by hair, shadow, helmet or pose.",
+            "negativePrompt": [
+                "both eyes blind",
+                "closed eyes",
+                "covered eyes",
+                "glowing eyes"
+            ]
         },
         {
             "name": "Distinctive Birthmark On Face",
@@ -70,12 +192,19 @@
                 "Halfling",
                 "Gnome",
                 "Tiefling",
-                "Half-Elf",
-                "Half-Orc",
                 "Aasimar",
-                "Goblin",
                 "Orc",
                 "Goliath"
+            ],
+            "category": "skin mark",
+            "visibility": "face",
+            "promptInstruction": "Show a distinctive natural birthmark on the face. It should look like natural skin pigmentation, not a tattoo, scar, dirt or paint.",
+            "visibilityInstruction": "The birthmark must be visible on the face in the portrait.",
+            "negativePrompt": [
+                "tattoo",
+                "scar",
+                "face paint",
+                "dirt mark"
             ]
         },
         {
@@ -87,12 +216,19 @@
                 "Halfling",
                 "Gnome",
                 "Tiefling",
-                "Half-Elf",
-                "Half-Orc",
                 "Aasimar",
-                "Goblin",
                 "Orc",
                 "Goliath"
+            ],
+            "category": "skin mark",
+            "visibility": "neck",
+            "promptInstruction": "Show a distinctive natural birthmark on the neck. It should look like natural skin pigmentation, not a tattoo, scar, dirt or paint.",
+            "visibilityInstruction": "The neck must be visible; do not hide it with a scarf, high collar, beard, armour or shadow.",
+            "negativePrompt": [
+                "tattoo",
+                "scar",
+                "covered neck",
+                "high collar"
             ]
         },
         {
@@ -104,37 +240,101 @@
                 "Halfling",
                 "Gnome",
                 "Tiefling",
-                "Half-Elf",
-                "Half-Orc",
                 "Aasimar",
-                "Goblin",
                 "Orc",
                 "Goliath"
+            ],
+            "category": "skin mark",
+            "visibility": "face",
+            "promptInstruction": "Show visible freckles scattered across the nose and cheeks. The freckles should look natural and subtle but clearly present.",
+            "visibilityInstruction": "The nose and cheeks must be clear and well lit.",
+            "negativePrompt": [
+                "smooth unmarked face",
+                "face paint",
+                "tattoo"
             ]
         },
         {
             "name": "Small Face Tattoo",
-            "allowedSpecies": "all"
+            "allowedSpecies": "all",
+            "category": "tattoo",
+            "visibility": "face",
+            "promptInstruction": "Show a small intentional face tattoo. It should look like ink under the skin, not a scar, dirt, shadow or war paint.",
+            "visibilityInstruction": "Place the tattoo on a visible part of the face, such as cheek, temple or below one eye.",
+            "negativePrompt": [
+                "scar instead of tattoo",
+                "face paint",
+                "dirt",
+                "hidden tattoo"
+            ]
         },
         {
             "name": "Full Face Tattoo",
-            "allowedSpecies": "all"
+            "allowedSpecies": "all",
+            "category": "tattoo",
+            "visibility": "face",
+            "promptInstruction": "Show a large full-face tattoo covering much of the face with deliberate ink patterns.",
+            "visibilityInstruction": "The face must be unobstructed so the full-face tattoo is visible.",
+            "negativePrompt": [
+                "scar instead of tattoo",
+                "face paint only",
+                "hair covering face",
+                "mask"
+            ]
         },
         {
             "name": "Tattoo Around One Eye",
-            "allowedSpecies": "all"
+            "allowedSpecies": "all",
+            "category": "tattoo",
+            "visibility": "face",
+            "promptInstruction": "Show a visible tattoo encircling or framing one eye. It should be deliberate ink, not bruising, shadow or a scar.",
+            "visibilityInstruction": "Both eyes and the tattooed eye area must be visible.",
+            "negativePrompt": [
+                "scar around eye",
+                "bruise",
+                "covered eye",
+                "hair over eyes"
+            ]
         },
         {
             "name": "Ritual Mark On Forehead",
-            "allowedSpecies": "all"
+            "allowedSpecies": "all",
+            "category": "ritual mark",
+            "visibility": "face",
+            "promptInstruction": "Show a deliberate ritual mark or symbol on the forehead. It may look painted, inked or branded, but must be clearly intentional.",
+            "visibilityInstruction": "The forehead must be visible; do not cover it with hair, helmet, hood or shadow.",
+            "negativePrompt": [
+                "covered forehead",
+                "random dirt",
+                "accidental smudge"
+            ]
         },
         {
             "name": "Ritual Mark On Cheek",
-            "allowedSpecies": "all"
+            "allowedSpecies": "all",
+            "category": "ritual mark",
+            "visibility": "face",
+            "promptInstruction": "Show a deliberate ritual mark or symbol on one cheek. It may look painted, inked or branded, but must be clearly intentional.",
+            "visibilityInstruction": "At least one cheek must be visible and unobstructed.",
+            "negativePrompt": [
+                "random dirt",
+                "scar instead of mark",
+                "covered cheek"
+            ]
         },
         {
             "name": "Ritual Mark On Wrist",
-            "allowedSpecies": "all"
+            "allowedSpecies": "all",
+            "category": "ritual mark",
+            "visibility": "hand",
+            "promptInstruction": "Show a deliberate ritual mark or symbol on one wrist.",
+            "visibilityInstruction": "Show one wrist or forearm clearly near the chest so the ritual mark is visible.",
+            "negativePrompt": [
+                "hands hidden",
+                "wrists hidden",
+                "gloves",
+                "long sleeves covering wrists"
+            ]
         },
         {
             "name": "Broken Nose",
@@ -145,12 +345,18 @@
                 "Halfling",
                 "Gnome",
                 "Tiefling",
-                "Half-Elf",
-                "Half-Orc",
                 "Aasimar",
-                "Goblin",
                 "Orc",
                 "Goliath"
+            ],
+            "category": "facial structure",
+            "visibility": "face",
+            "promptInstruction": "Show a visibly broken nose that healed slightly crooked or uneven. The nose should not look perfectly straight.",
+            "visibilityInstruction": "Use a clear front or three-quarter face angle so the nose shape is visible.",
+            "negativePrompt": [
+                "perfect straight nose",
+                "covered nose",
+                "mask"
             ]
         },
         {
@@ -162,12 +368,18 @@
                 "Halfling",
                 "Gnome",
                 "Tiefling",
-                "Half-Elf",
-                "Half-Orc",
                 "Aasimar",
-                "Goblin",
                 "Orc",
                 "Goliath"
+            ],
+            "category": "facial structure",
+            "visibility": "face",
+            "promptInstruction": "Show a visibly crooked or slightly bent nose. The nose should look naturally asymmetrical, not perfectly straight.",
+            "visibilityInstruction": "The face must be angled so the nose shape is easy to see.",
+            "negativePrompt": [
+                "perfect straight nose",
+                "covered nose",
+                "mask"
             ]
         },
         {
@@ -179,21 +391,50 @@
                 "Halfling",
                 "Gnome",
                 "Tiefling",
-                "Half-Elf",
-                "Half-Orc",
                 "Aasimar",
-                "Goblin",
                 "Orc",
                 "Goliath"
+            ],
+            "category": "scar",
+            "visibility": "face",
+            "promptInstruction": "Show a small healed split-lip scar on the upper or lower lip.",
+            "visibilityInstruction": "The mouth and lips must be visible and unobstructed.",
+            "negativePrompt": [
+                "covered mouth",
+                "mask",
+                "fresh blood",
+                "perfect lips"
             ]
         },
         {
             "name": "Missing Fingertip",
-            "allowedSpecies": "all"
+            "allowedSpecies": "all",
+            "category": "missing body part",
+            "visibility": "hand",
+            "promptInstruction": "Show one fingertip missing from one visible hand. The missing fingertip should be clearly visible but not graphic.",
+            "visibilityInstruction": "Show one bare hand clearly near the chest with fingers visible. Do not use gloves.",
+            "negativePrompt": [
+                "hands hidden",
+                "gloves",
+                "all fingers intact",
+                "graphic injury",
+                "blood"
+            ]
         },
         {
             "name": "Missing Finger",
-            "allowedSpecies": "all"
+            "allowedSpecies": "all",
+            "category": "missing body part",
+            "visibility": "hand",
+            "promptInstruction": "Show one missing finger on one visible hand. The missing finger should be clear but not graphic.",
+            "visibilityInstruction": "Show one bare hand clearly near the chest with fingers visible. Do not use gloves.",
+            "negativePrompt": [
+                "hands hidden",
+                "gloves",
+                "all fingers intact",
+                "graphic injury",
+                "blood"
+            ]
         },
         {
             "name": "Missing Ear Tip",
@@ -204,12 +445,20 @@
                 "Halfling",
                 "Gnome",
                 "Tiefling",
-                "Half-Elf",
-                "Half-Orc",
                 "Aasimar",
-                "Goblin",
                 "Orc",
                 "Goliath"
+            ],
+            "category": "ear",
+            "visibility": "head",
+            "promptInstruction": "Show the tip of one ear missing or shortened. It should look like an old healed injury, not a different species trait.",
+            "visibilityInstruction": "At least one ear must be visible and not covered by hair, helmet, hood or shadow.",
+            "negativePrompt": [
+                "ears hidden",
+                "helmet",
+                "hood",
+                "hair covering ears",
+                "blood"
             ]
         },
         {
@@ -221,12 +470,20 @@
                 "Halfling",
                 "Gnome",
                 "Tiefling",
-                "Half-Elf",
-                "Half-Orc",
                 "Aasimar",
-                "Goblin",
                 "Orc",
                 "Goliath"
+            ],
+            "category": "ear",
+            "visibility": "head",
+            "promptInstruction": "Show one ear with a visible notch cut into the edge. It should look like an old healed notch, not jewellery.",
+            "visibilityInstruction": "At least one ear must be visible and not covered by hair, helmet, hood or shadow.",
+            "negativePrompt": [
+                "ears hidden",
+                "helmet",
+                "hood",
+                "hair covering ears",
+                "earring instead of notch"
             ]
         },
         {
@@ -238,12 +495,18 @@
                 "Halfling",
                 "Gnome",
                 "Tiefling",
-                "Half-Elf",
-                "Half-Orc",
                 "Aasimar",
-                "Goblin",
                 "Orc",
                 "Goliath"
+            ],
+            "category": "piercing",
+            "visibility": "face",
+            "promptInstruction": "Show a small metal eyebrow piercing on one eyebrow.",
+            "visibilityInstruction": "The eyebrow area must be close, clear and not hidden by hair.",
+            "negativePrompt": [
+                "covered eyebrows",
+                "hair over eyes",
+                "scar instead of piercing"
             ]
         },
         {
@@ -255,12 +518,18 @@
                 "Halfling",
                 "Gnome",
                 "Tiefling",
-                "Half-Elf",
-                "Half-Orc",
                 "Aasimar",
-                "Goblin",
                 "Orc",
                 "Goliath"
+            ],
+            "category": "piercing",
+            "visibility": "face",
+            "promptInstruction": "Show a small metal nose piercing, such as a nose ring or nostril stud.",
+            "visibilityInstruction": "The nose must be visible and close enough for the piercing to be seen.",
+            "negativePrompt": [
+                "covered nose",
+                "mask",
+                "scar instead of piercing"
             ]
         },
         {
@@ -272,12 +541,18 @@
                 "Halfling",
                 "Gnome",
                 "Tiefling",
-                "Half-Elf",
-                "Half-Orc",
                 "Aasimar",
-                "Goblin",
                 "Orc",
                 "Goliath"
+            ],
+            "category": "piercing",
+            "visibility": "face",
+            "promptInstruction": "Show a small metal lip piercing on the upper or lower lip.",
+            "visibilityInstruction": "The mouth and lips must be visible and unobstructed.",
+            "negativePrompt": [
+                "covered mouth",
+                "mask",
+                "scar instead of piercing"
             ]
         },
         {
@@ -289,12 +564,19 @@
                 "Halfling",
                 "Gnome",
                 "Tiefling",
-                "Half-Elf",
-                "Half-Orc",
                 "Aasimar",
-                "Goblin",
                 "Orc",
                 "Goliath"
+            ],
+            "category": "piercing",
+            "visibility": "head",
+            "promptInstruction": "Show several visible metal piercings along one or both ears.",
+            "visibilityInstruction": "At least one ear must be visible and not hidden by hair, helmet, hood or shadow.",
+            "negativePrompt": [
+                "ears hidden",
+                "helmet",
+                "hood",
+                "hair covering ears"
             ]
         },
         {
@@ -306,12 +588,19 @@
                 "Halfling",
                 "Gnome",
                 "Tiefling",
-                "Half-Elf",
-                "Half-Orc",
                 "Aasimar",
-                "Goblin",
                 "Orc",
                 "Goliath"
+            ],
+            "category": "hair",
+            "visibility": "head",
+            "promptInstruction": "Show a distinct silver streak running through the character's hair. It should be a visible section of silver hair, not grey lighting.",
+            "visibilityInstruction": "The hair must be visible and not hidden by a helmet, hood or heavy shadow.",
+            "negativePrompt": [
+                "helmet",
+                "hood",
+                "hair hidden",
+                "all hair same colour"
             ]
         },
         {
@@ -323,30 +612,65 @@
                 "Halfling",
                 "Gnome",
                 "Tiefling",
-                "Half-Elf",
-                "Half-Orc",
                 "Aasimar",
-                "Goblin",
                 "Orc",
                 "Goliath"
+            ],
+            "category": "hair",
+            "visibility": "head",
+            "promptInstruction": "Show a distinct white streak running through the character's hair. It should be a visible section of white hair, not a lighting effect.",
+            "visibilityInstruction": "The hair must be visible and not hidden by a helmet, hood or heavy shadow.",
+            "negativePrompt": [
+                "helmet",
+                "hood",
+                "hair hidden",
+                "all hair same colour"
             ]
         },
         {
             "name": "Glowing Eyes",
-            "allowedSpecies": "all"
+            "allowedSpecies": "all",
+            "category": "eye",
+            "visibility": "face",
+            "promptInstruction": "Show both eyes with a controlled supernatural glow. The glow should come from the eyes, not from the whole face or background.",
+            "visibilityInstruction": "The eyes must be visible, sharp and unobstructed.",
+            "negativePrompt": [
+                "closed eyes",
+                "covered eyes",
+                "whole face glowing",
+                "background glow only"
+            ]
         },
         {
             "name": "Unusually Bright Eyes",
-            "allowedSpecies": "all"
+            "allowedSpecies": "all",
+            "category": "eye",
+            "visibility": "face",
+            "promptInstruction": "Show unusually bright, vivid eyes that stand out clearly without making the entire face glow.",
+            "visibilityInstruction": "The eyes must be visible, sharp and close enough to see their colour clearly.",
+            "negativePrompt": [
+                "dull eyes",
+                "closed eyes",
+                "covered eyes",
+                "whole face glowing"
+            ]
         },
         {
             "name": "Sharp Fangs",
             "allowedSpecies": [
                 "Tiefling",
                 "Dragonborn",
-                "Goblin",
-                "Half-Orc",
                 "Orc"
+            ],
+            "category": "teeth",
+            "visibility": "face",
+            "promptInstruction": "Show small visible sharp fangs or tusk-like teeth appropriate to the character's species. The fangs should be visible without turning the character into a monster unless their species supports it.",
+            "visibilityInstruction": "The mouth must be slightly open or shaped so the fangs are visible.",
+            "negativePrompt": [
+                "normal human teeth",
+                "closed mouth",
+                "animal muzzle unless species requires it",
+                "vampire transformation"
             ]
         },
         {
@@ -354,6 +678,17 @@
             "allowedSpecies": [
                 "Tiefling",
                 "Dragonborn"
+            ],
+            "category": "horn",
+            "visibility": "head",
+            "promptInstruction": "Show one horn visibly broken with a blunt damaged end. The other horn or horn structure should make the damage clear.",
+            "visibilityInstruction": "The horns must be visible and not hidden by hair, helmet, hood or cropping.",
+            "negativePrompt": [
+                "horns hidden",
+                "helmet",
+                "hood",
+                "perfect symmetrical horns",
+                "blood"
             ]
         },
         {
@@ -361,6 +696,16 @@
             "allowedSpecies": [
                 "Tiefling",
                 "Dragonborn"
+            ],
+            "category": "horn",
+            "visibility": "head",
+            "promptInstruction": "Show one horn with a visible chip or damaged notch. The horn should remain mostly intact.",
+            "visibilityInstruction": "The horns must be visible and close enough to see the chipped area.",
+            "negativePrompt": [
+                "horns hidden",
+                "helmet",
+                "hood",
+                "perfect horns"
             ]
         },
         {
@@ -368,6 +713,16 @@
             "allowedSpecies": [
                 "Tiefling",
                 "Dragonborn"
+            ],
+            "category": "horn",
+            "visibility": "head",
+            "promptInstruction": "Show one horn visibly shorter than the other. The asymmetry must be clear.",
+            "visibilityInstruction": "Show both horns clearly so the difference in length is obvious.",
+            "negativePrompt": [
+                "symmetrical horns",
+                "horns hidden",
+                "helmet",
+                "hood"
             ]
         },
         {
@@ -375,6 +730,17 @@
             "allowedSpecies": [
                 "Tiefling",
                 "Dragonborn"
+            ],
+            "category": "horn",
+            "visibility": "head",
+            "promptInstruction": "Show a visible crack running through one horn. The horn should remain attached and recognisable.",
+            "visibilityInstruction": "The cracked horn must be visible and not hidden by hair, helmet, hood or cropping.",
+            "negativePrompt": [
+                "perfect horns",
+                "horns hidden",
+                "helmet",
+                "hood",
+                "broken off horn"
             ]
         },
         {
@@ -386,21 +752,47 @@
                 "Halfling",
                 "Gnome",
                 "Tiefling",
-                "Half-Elf",
-                "Half-Orc",
                 "Aasimar",
-                "Goblin",
                 "Orc",
                 "Goliath"
+            ],
+            "category": "teeth",
+            "visibility": "face",
+            "promptInstruction": "Show one visible gold tooth. The mouth should be slightly open or smiling enough to reveal it.",
+            "visibilityInstruction": "The mouth and teeth must be close and visible enough for the gold tooth to be seen.",
+            "negativePrompt": [
+                "closed mouth",
+                "normal teeth only",
+                "covered mouth",
+                "mask"
             ]
         },
         {
             "name": "Ink-Stained Fingers",
-            "allowedSpecies": "all"
+            "allowedSpecies": "all",
+            "category": "hand",
+            "visibility": "hand",
+            "promptInstruction": "Show visible dark ink stains on the fingertips and fingers of one hand.",
+            "visibilityInstruction": "Show one bare hand clearly near the chest or face so the ink-stained fingers are visible.",
+            "negativePrompt": [
+                "hands hidden",
+                "gloves",
+                "clean fingers",
+                "black claws instead of ink"
+            ]
         },
         {
             "name": "Calloused Hands",
-            "allowedSpecies": "all"
+            "allowedSpecies": "all",
+            "category": "hand",
+            "visibility": "hand",
+            "promptInstruction": "Show rough, calloused hands with worn skin from labour, weapons or travel.",
+            "visibilityInstruction": "Show one or both bare hands clearly near the chest or weapon grip.",
+            "negativePrompt": [
+                "hands hidden",
+                "gloves",
+                "smooth delicate hands"
+            ]
         }
     ]
 }

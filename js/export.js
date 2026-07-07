@@ -1,10 +1,28 @@
 /* =========================================================
     Dicebound
     Export And Printable Character Sheet
-     ========================================================= */
+    ---------------------------------------------------------
+    This file handles character export tools.
+
+    Responsibilities:
+    - build copyable character summary text
+    - copy the portrait prompt
+    - download the generated portrait image
+    - populate the printable character sheet
+    - open the browser print dialog for PDF export
+
+    This file should only format existing character data for
+    display or export. It should not create characters, generate
+    portrait prompts, apply species rules or duplicate backend
+    prompt logic.
+
+    Notable features may now be stored as full objects, so this
+    file uses helper functions to display their names safely.
+   ========================================================= */
 
 import {
-    abilities
+    abilities,
+    defaultText
 } from "./config.js";
 
 import {
@@ -24,7 +42,7 @@ import {
 
 /* =========================================================
     1. DOM References
-     ========================================================= */
+   ========================================================= */
 
 export const exportElements = {
     copyCharacterSummaryButton: document.getElementById("copyCharacterSummaryButton"),
@@ -104,8 +122,98 @@ const {
 
 
 /* =========================================================
-    2. Export Status
-     ========================================================= */
+    2. Display Helpers
+   ========================================================= */
+
+function normaliseKey(value) {
+    return String(value || "")
+        .trim()
+        .toLowerCase()
+        .replace(/[^a-z0-9]/g, "");
+}
+
+function getSpeciesName(character) {
+    if (typeof character?.species === "string") {
+        return character.species;
+    }
+
+    return character?.species?.name || "Unknown Species";
+}
+
+function isDragonborn(character) {
+    return normaliseKey(getSpeciesName(character)) === "dragonborn";
+}
+
+function getNotableFeatureName(character) {
+    const notableFeature = character?.notableFeature;
+
+    if (typeof notableFeature === "string") {
+        return notableFeature || defaultText.noNotableFeature;
+    }
+
+    return (
+        notableFeature?.name ||
+        character?.notableFeatureName ||
+        defaultText.noNotableFeature
+    );
+}
+
+function getAppearanceLabels(character) {
+    if (isDragonborn(character)) {
+        return {
+            skin: "Scale Colour",
+            hair: "Head, Horn Or Crest Colour",
+            hairStyle: "Head Style"
+        };
+    }
+
+    return {
+        skin: "Skin",
+        hair: "Hair",
+        hairStyle: "Hair Style"
+    };
+}
+
+function getWeaponText(character) {
+    if (!character?.weapon) {
+        return "No weapon selected";
+    }
+
+    return `${character.weapon.name}, ${character.weapon.damage}, uses ${character.weapon.ability}`;
+}
+
+function getSkillText(character) {
+    const skills = character?.classInfo?.skills;
+
+    return Array.isArray(skills) && skills.length > 0
+        ? skills.join(", ")
+        : "";
+}
+
+function getSaveText(character) {
+    const saves = character?.classInfo?.saves;
+
+    return Array.isArray(saves) && saves.length > 0
+        ? saves.join(", ")
+        : "";
+}
+
+function getProfileTraitsText(profile) {
+    return Array.isArray(profile?.traits) && profile.traits.length > 0
+        ? profile.traits.join(", ")
+        : "";
+}
+
+function getPortraitPromptText(character) {
+    return typeof character?.portraitPrompt === "string"
+        ? character.portraitPrompt
+        : "";
+}
+
+
+/* =========================================================
+    3. Export Status
+   ========================================================= */
 
 export function setExportStatus(message) {
     if (exportStatus) {
@@ -115,8 +223,8 @@ export function setExportStatus(message) {
 
 
 /* =========================================================
-    3. Printable Portrait Helpers
-     ========================================================= */
+    4. Printable Portrait Helpers
+   ========================================================= */
 
 export function createPrintableFallbackPortrait() {
     const character = state.character;
@@ -125,9 +233,11 @@ export function createPrintableFallbackPortrait() {
         return "";
     }
 
-    const initial = escapeHtml(character.name.charAt(0).toUpperCase());
-    const name = escapeHtml(character.name);
-    const subtitle = escapeHtml(`${character.species.name} ${character.className}`);
+    const characterName = character.name || defaultText.unnamedCharacter;
+    const speciesName = getSpeciesName(character);
+    const initial = escapeHtml(characterName.charAt(0).toUpperCase() || "A");
+    const name = escapeHtml(characterName);
+    const subtitle = escapeHtml(`${speciesName} ${character.className || "Adventurer"}`);
 
     const svg = `
 <svg xmlns="http://www.w3.org/2000/svg" width="800" height="800" viewBox="0 0 800 800">
@@ -176,8 +286,8 @@ export function getPortraitForExport() {
 
 
 /* =========================================================
-    4. Printable Character Sheet
-     ========================================================= */
+    5. Printable Character Sheet
+   ========================================================= */
 
 export function populatePrintableCharacterSheet() {
     const character = state.character;
@@ -187,15 +297,17 @@ export function populatePrintableCharacterSheet() {
     }
 
     const profile = character.generatedProfile || {};
+    const speciesName = getSpeciesName(character);
+    const labels = getAppearanceLabels(character);
 
     setText(printName, character.name);
-    setText(printSubtitle, `Level 1 ${character.species.name} ${character.className}`);
+    setText(printSubtitle, `Level 1 ${speciesName} ${character.className}`);
 
     if (printPortrait) {
         printPortrait.src = getPortraitForExport();
     }
 
-    setText(printSpecies, character.species.name);
+    setText(printSpecies, speciesName);
     setText(printClass, `Level 1 ${character.className}`);
     setText(printGender, character.gender);
     setText(printPortraitPresentation, character.portraitPresentation || character.gender || "");
@@ -203,26 +315,22 @@ export function populatePrintableCharacterSheet() {
     setText(printHeight, character.height);
     setText(printBuild, character.build);
     setText(printEyes, character.eyeColour);
-    setText(printHair, character.hairColour);
-    setText(printHairStyle, character.hairStyle || "");
-    setText(printSkin, character.skinTone);
-    setText(printFeature, character.notableFeature);
+
+    setText(printHair, `${labels.hair}: ${character.hairColour || ""}`);
+    setText(printHairStyle, `${labels.hairStyle}: ${character.hairStyle || ""}`);
+    setText(printSkin, `${labels.skin}: ${character.skinTone || ""}`);
+    setText(printFeature, getNotableFeatureName(character));
 
     setText(printHP, character.hp);
-
-    setText(
-        printWeapon,
-        `${character.weapon.name}, ${character.weapon.damage}, uses ${character.weapon.ability}`
-    );
-
-    setText(printSkills, character.classInfo.skills.join(", "));
-    setText(printSaves, character.classInfo.saves.join(", "));
+    setText(printWeapon, getWeaponText(character));
+    setText(printSkills, getSkillText(character));
+    setText(printSaves, getSaveText(character));
 
     if (printStatsGrid) {
         printStatsGrid.innerHTML = "";
 
         abilities.forEach(ability => {
-            const score = character.stats[ability];
+            const score = character.stats?.[ability] || 0;
             const modifier = getModifier(score);
 
             const stat = document.createElement("div");
@@ -239,7 +347,7 @@ export function populatePrintableCharacterSheet() {
     }
 
     setText(printIdentity, profile.identityText || "");
-    setText(printTraits, profile.traits ? profile.traits.join(", ") : "");
+    setText(printTraits, getProfileTraitsText(profile));
     setText(printAlignment, profile.alignment || "");
     setText(printFaith, profile.faithProfile || "");
     setText(printWeakness, profile.weakness || "");
@@ -249,8 +357,8 @@ export function populatePrintableCharacterSheet() {
 
 
 /* =========================================================
-    5. Character Summary Text
-     ========================================================= */
+    6. Character Summary Text
+   ========================================================= */
 
 export function buildCharacterSummaryText() {
     const character = state.character;
@@ -260,14 +368,16 @@ export function buildCharacterSummaryText() {
     }
 
     const profile = character.generatedProfile || {};
-    const title = profileTitle?.textContent || `${character.name}, ${character.species.name} ${character.className}`;
+    const speciesName = getSpeciesName(character);
+    const title = profileTitle?.textContent || `${character.name}, ${speciesName} ${character.className}`;
     const portraitPresentation = character.portraitPresentation || character.gender || "";
+    const labels = getAppearanceLabels(character);
 
     return `
 DICEBOUND CHARACTER SUMMARY
 
 Name: ${character.name}
-Species: ${character.species.name}
+Species: ${speciesName}
 Class: Level 1 ${character.className}
 Gender: ${character.gender}
 Portrait Presentation: ${portraitPresentation}
@@ -277,26 +387,26 @@ APPEARANCE
 Height: ${character.height}
 Build: ${character.build}
 Eyes: ${character.eyeColour}
-Hair: ${character.hairColour}
-Hair Style: ${character.hairStyle || ""}
-Skin: ${character.skinTone}
-Notable Feature: ${character.notableFeature}
+${labels.hair}: ${character.hairColour}
+${labels.hairStyle}: ${character.hairStyle || ""}
+${labels.skin}: ${character.skinTone}
+Notable Feature: ${getNotableFeatureName(character)}
 
 COMBAT BASICS
 Hit Points: ${character.hp}
-Weapon: ${character.weapon.name}, ${character.weapon.damage}, uses ${character.weapon.ability}
-Skill Proficiencies: ${character.classInfo.skills.join(", ")}
-Saving Throws: ${character.classInfo.saves.join(", ")}
+Weapon: ${getWeaponText(character)}
+Skill Proficiencies: ${getSkillText(character)}
+Saving Throws: ${getSaveText(character)}
 
 ABILITY SCORES
 ${abilities.map(ability => {
-    const score = character.stats[ability];
+    const score = character.stats?.[ability] || 0;
     return `${ability}: ${score} (${formatModifier(getModifier(score))})`;
 }).join("\n")}
 
 CHARACTER PROFILE
 Title: ${title}
-Core Traits: ${profile.traits ? profile.traits.join(", ") : ""}
+Core Traits: ${getProfileTraitsText(profile)}
 Moral Alignment: ${profile.alignment || ""}
 Religious Outlook: ${profile.faithProfile || ""}
 Weakness: ${profile.weakness || ""}
@@ -312,8 +422,8 @@ ${profile.speciesProfileText || ""}
 
 
 /* =========================================================
-    6. Copy Tools
-     ========================================================= */
+    7. Copy Tools
+   ========================================================= */
 
 export async function copyCharacterSummary() {
     if (!state.character) {
@@ -341,13 +451,15 @@ export async function copyPortraitPrompt() {
         return;
     }
 
-    if (!state.character.portraitPrompt) {
+    const portraitPrompt = getPortraitPromptText(state.character);
+
+    if (!portraitPrompt) {
         setExportStatus("Generate a portrait first, then copy the prompt.");
         return;
     }
 
     try {
-        const copied = await copyTextToClipboard(state.character.portraitPrompt);
+        const copied = await copyTextToClipboard(portraitPrompt);
 
         setExportStatus(
             copied
@@ -362,8 +474,8 @@ export async function copyPortraitPrompt() {
 
 
 /* =========================================================
-    7. Download And Print Tools
-     ========================================================= */
+    8. Download And Print Tools
+   ========================================================= */
 
 export function downloadPortrait() {
     const character = state.character;

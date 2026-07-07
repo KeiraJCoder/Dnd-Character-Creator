@@ -1,995 +1,1025 @@
 {
-  "questions": [
-    {
-      "text": "You find a wounded stranger on the road. They may be dangerous. What do you do?",
-      "answers": [
-        {
-          "label": "Help them first and ask questions later.",
-          "scores": {
-            "mercy": 2,
-            "courage": 1
-          }
-        },
-        {
-          "label": "Check the area carefully before approaching.",
-          "scores": {
-            "caution": 2,
-            "curiosity": 1
-          }
-        },
-        {
-          "label": "Question them from a safe distance.",
-          "scores": {
-            "caution": 1,
-            "diplomacy": 1
-          }
-        },
-        {
-          "label": "Leave them. It could be a trap.",
-          "scores": {
-            "ruthlessness": 1,
-            "independence": 1
-          }
-        }
-      ]
+    "_description": "Dicebound personality question data. This file stores roleplay questions used after the character's core DnD details have been selected. These questions do not alter DnD ability scores such as STR, DEX, CON, INT, WIS or CHA. Instead, they populate Dicebound profile scores used to generate personality traits, moral alignment, faith outlook, weakness, roleplay style and character identity text. DnD ability scores should be generated separately in character.js using class data from classes.json.",
+    "_scoreType": "personalityProfile",
+    "_doesNotModifyAbilityScores": true,
+    "_scoreDefinitions": {
+        "mercy": "Compassion, forgiveness and willingness to protect others.",
+        "ruthlessness": "Willingness to harm, sacrifice or abandon others for a goal.",
+        "honour": "Fairness, duty, truthfulness and respect for rules or promises.",
+        "deception": "Comfort with lying, secrecy, misdirection or manipulation.",
+        "faith": "Trust in gods, spirits, temples, omens or sacred duties.",
+        "scepticism": "Distrust of divine claims, authority, superstition or hidden motives.",
+        "courage": "Readiness to act despite danger.",
+        "caution": "Carefulness, patience and risk awareness.",
+        "greed": "Desire for wealth, reward or personal gain.",
+        "generosity": "Willingness to give resources, help or protection freely.",
+        "loyalty": "Attachment to allies, friends, promises or communities.",
+        "independence": "Preference for self-reliance, freedom and personal judgement.",
+        "curiosity": "Desire to investigate, learn and uncover hidden truths.",
+        "pragmatism": "Focus on practical outcomes over ideals.",
+        "violence": "Readiness to solve problems through force.",
+        "diplomacy": "Preference for negotiation, persuasion and social solutions.",
+        "pride": "Self-regard, refusal to be humiliated and desire for recognition.",
+        "humility": "Modesty, restraint and willingness to accept limits.",
+        "wisdom": "Good judgement, patience and reflective decision-making.",
+        "ambition": "Desire for advancement, power, fame or achievement.",
+        "confidence": "Boldness and self-assurance.",
+        "justice": "Concern for fairness, accountability and righting wrongs.",
+        "investigation": "Attention to clues, evidence and hidden details.",
+        "perception": "Watchfulness and awareness of surroundings.",
+        "skill": "Controlled expertise, precision and technical competence."
     },
-    {
-      "text": "A guard demands a bribe to let you enter a city.",
-      "answers": [
+    "questions": [
         {
-          "label": "Refuse and challenge their corruption openly.",
-          "scores": {
-            "honour": 2,
-            "pride": 1
-          }
+            "text": "You find a wounded stranger on the road. They may be dangerous. What do you do?",
+            "answers": [
+                {
+                    "label": "Help them first and ask questions later.",
+                    "scores": {
+                        "mercy": 2,
+                        "courage": 1
+                    }
+                },
+                {
+                    "label": "Check the area carefully before approaching.",
+                    "scores": {
+                        "caution": 2,
+                        "curiosity": 1
+                    }
+                },
+                {
+                    "label": "Question them from a safe distance.",
+                    "scores": {
+                        "caution": 1,
+                        "diplomacy": 1
+                    }
+                },
+                {
+                    "label": "Leave them. It could be a trap.",
+                    "scores": {
+                        "ruthlessness": 1,
+                        "independence": 1
+                    }
+                }
+            ]
         },
         {
-          "label": "Pay the bribe and move on.",
-          "scores": {
-            "pragmatism": 2,
-            "caution": 1
-          }
+            "text": "A guard demands a bribe to let you enter a city.",
+            "answers": [
+                {
+                    "label": "Refuse and challenge their corruption openly.",
+                    "scores": {
+                        "honour": 2,
+                        "pride": 1
+                    }
+                },
+                {
+                    "label": "Pay the bribe and move on.",
+                    "scores": {
+                        "pragmatism": 2,
+                        "caution": 1
+                    }
+                },
+                {
+                    "label": "Lie about being expected by someone important.",
+                    "scores": {
+                        "deception": 2,
+                        "confidence": 1
+                    }
+                },
+                {
+                    "label": "Threaten them quietly.",
+                    "scores": {
+                        "violence": 1,
+                        "ruthlessness": 1
+                    }
+                }
+            ]
         },
         {
-          "label": "Lie about being expected by someone important.",
-          "scores": {
-            "deception": 2,
-            "confidence": 1
-          }
+            "text": "A temple asks for donations before offering healing.",
+            "answers": [
+                {
+                    "label": "Donate generously.",
+                    "scores": {
+                        "faith": 2,
+                        "generosity": 1
+                    }
+                },
+                {
+                    "label": "Pay only what is required.",
+                    "scores": {
+                        "pragmatism": 1,
+                        "caution": 1
+                    }
+                },
+                {
+                    "label": "Argue that healing should be free.",
+                    "scores": {
+                        "mercy": 1,
+                        "honour": 1
+                    }
+                },
+                {
+                    "label": "Distrust the temple immediately.",
+                    "scores": {
+                        "scepticism": 2,
+                        "independence": 1
+                    }
+                }
+            ]
         },
         {
-          "label": "Threaten them quietly.",
-          "scores": {
-            "violence": 1,
-            "ruthlessness": 1
-          }
+            "text": "Your party wants to spare a defeated enemy.",
+            "answers": [
+                {
+                    "label": "Agree. Killing a helpless foe is wrong.",
+                    "scores": {
+                        "mercy": 2,
+                        "honour": 1
+                    }
+                },
+                {
+                    "label": "Agree, but only if they provide information.",
+                    "scores": {
+                        "pragmatism": 2,
+                        "diplomacy": 1
+                    }
+                },
+                {
+                    "label": "Disagree. They may return stronger.",
+                    "scores": {
+                        "caution": 1,
+                        "ruthlessness": 1
+                    }
+                },
+                {
+                    "label": "Finish them before anyone can stop you.",
+                    "scores": {
+                        "violence": 2,
+                        "ruthlessness": 2
+                    }
+                }
+            ]
+        },
+        {
+            "text": "A locked chest is found in an abandoned house.",
+            "answers": [
+                {
+                    "label": "Leave it. It belongs to someone.",
+                    "scores": {
+                        "honour": 2,
+                        "humility": 1
+                    }
+                },
+                {
+                    "label": "Open it carefully and look for clues.",
+                    "scores": {
+                        "curiosity": 2,
+                        "caution": 1
+                    }
+                },
+                {
+                    "label": "Open it and keep anything useful.",
+                    "scores": {
+                        "greed": 2,
+                        "pragmatism": 1
+                    }
+                },
+                {
+                    "label": "Smash it open.",
+                    "scores": {
+                        "violence": 1,
+                        "confidence": 1
+                    }
+                }
+            ]
+        },
+        {
+            "text": "A noble insults you in public.",
+            "answers": [
+                {
+                    "label": "Ignore them. Their opinion is meaningless.",
+                    "scores": {
+                        "humility": 2,
+                        "caution": 1
+                    }
+                },
+                {
+                    "label": "Answer calmly but firmly.",
+                    "scores": {
+                        "diplomacy": 2,
+                        "honour": 1
+                    }
+                },
+                {
+                    "label": "Humiliate them with a sharper insult.",
+                    "scores": {
+                        "pride": 2,
+                        "confidence": 1
+                    }
+                },
+                {
+                    "label": "Challenge them physically.",
+                    "scores": {
+                        "violence": 2,
+                        "pride": 1
+                    }
+                }
+            ]
+        },
+        {
+            "text": "You discover your employer lied about the mission.",
+            "answers": [
+                {
+                    "label": "Confront them and demand the truth.",
+                    "scores": {
+                        "honour": 2,
+                        "courage": 1
+                    }
+                },
+                {
+                    "label": "Continue, but prepare for betrayal.",
+                    "scores": {
+                        "caution": 2,
+                        "scepticism": 1
+                    }
+                },
+                {
+                    "label": "Renegotiate for more money.",
+                    "scores": {
+                        "greed": 2,
+                        "pragmatism": 1
+                    }
+                },
+                {
+                    "label": "Walk away immediately.",
+                    "scores": {
+                        "independence": 2,
+                        "pride": 1
+                    }
+                }
+            ]
+        },
+        {
+            "text": "A child asks whether heroes are real.",
+            "answers": [
+                {
+                    "label": "Tell them heroes are real, but they still get scared.",
+                    "scores": {
+                        "mercy": 1,
+                        "humility": 2
+                    }
+                },
+                {
+                    "label": "Tell them heroes are made by their choices.",
+                    "scores": {
+                        "honour": 1,
+                        "wisdom": 2
+                    }
+                },
+                {
+                    "label": "Tell them stories are often lies.",
+                    "scores": {
+                        "scepticism": 2,
+                        "pragmatism": 1
+                    }
+                },
+                {
+                    "label": "Avoid answering.",
+                    "scores": {
+                        "caution": 1,
+                        "independence": 1
+                    }
+                }
+            ]
+        },
+        {
+            "text": "You hear a voice calling from a sealed crypt.",
+            "answers": [
+                {
+                    "label": "Open it. Someone may need help.",
+                    "scores": {
+                        "mercy": 2,
+                        "courage": 1
+                    }
+                },
+                {
+                    "label": "Listen carefully before acting.",
+                    "scores": {
+                        "caution": 1,
+                        "curiosity": 2
+                    }
+                },
+                {
+                    "label": "Pray or perform a warding gesture first.",
+                    "scores": {
+                        "faith": 2,
+                        "caution": 1
+                    }
+                },
+                {
+                    "label": "Leave the dead alone.",
+                    "scores": {
+                        "scepticism": 1,
+                        "caution": 2
+                    }
+                }
+            ]
+        },
+        {
+            "text": "A starving thief stole bread from a market.",
+            "answers": [
+                {
+                    "label": "Pay for the bread yourself.",
+                    "scores": {
+                        "generosity": 2,
+                        "mercy": 1
+                    }
+                },
+                {
+                    "label": "Help them escape.",
+                    "scores": {
+                        "mercy": 1,
+                        "independence": 1
+                    }
+                },
+                {
+                    "label": "Return the bread, but speak for them.",
+                    "scores": {
+                        "honour": 1,
+                        "diplomacy": 2
+                    }
+                },
+                {
+                    "label": "Let the law handle it.",
+                    "scores": {
+                        "honour": 1,
+                        "caution": 1
+                    }
+                }
+            ]
+        },
+        {
+            "text": "You find a magical blade that whispers promises of power.",
+            "answers": [
+                {
+                    "label": "Refuse to touch it.",
+                    "scores": {
+                        "caution": 2,
+                        "humility": 1
+                    }
+                },
+                {
+                    "label": "Study it from a safe distance.",
+                    "scores": {
+                        "curiosity": 2,
+                        "caution": 1
+                    }
+                },
+                {
+                    "label": "Take it, but keep its influence secret.",
+                    "scores": {
+                        "deception": 2,
+                        "ambition": 2
+                    }
+                },
+                {
+                    "label": "Claim it proudly.",
+                    "scores": {
+                        "pride": 2,
+                        "ambition": 2
+                    }
+                }
+            ]
+        },
+        {
+            "text": "Your party disagrees about the next route.",
+            "answers": [
+                {
+                    "label": "Listen to everyone before deciding.",
+                    "scores": {
+                        "diplomacy": 2,
+                        "loyalty": 1
+                    }
+                },
+                {
+                    "label": "Follow the safest route.",
+                    "scores": {
+                        "caution": 2,
+                        "wisdom": 1
+                    }
+                },
+                {
+                    "label": "Push for the fastest route.",
+                    "scores": {
+                        "courage": 1,
+                        "pragmatism": 1
+                    }
+                },
+                {
+                    "label": "Go your own way if they waste time.",
+                    "scores": {
+                        "independence": 2,
+                        "pride": 1
+                    }
+                }
+            ]
+        },
+        {
+            "text": "A frightened enemy surrenders and offers a secret.",
+            "answers": [
+                {
+                    "label": "Accept the surrender.",
+                    "scores": {
+                        "mercy": 2,
+                        "honour": 1
+                    }
+                },
+                {
+                    "label": "Accept, but bind them first.",
+                    "scores": {
+                        "caution": 2,
+                        "pragmatism": 1
+                    }
+                },
+                {
+                    "label": "Take the secret, then decide later.",
+                    "scores": {
+                        "deception": 1,
+                        "pragmatism": 2
+                    }
+                },
+                {
+                    "label": "Do not trust them at all.",
+                    "scores": {
+                        "scepticism": 2,
+                        "caution": 1
+                    }
+                }
+            ]
+        },
+        {
+            "text": "A village blames an outsider for a curse without proof.",
+            "answers": [
+                {
+                    "label": "Defend the outsider.",
+                    "scores": {
+                        "honour": 2,
+                        "mercy": 1
+                    }
+                },
+                {
+                    "label": "Investigate before judging.",
+                    "scores": {
+                        "curiosity": 2,
+                        "wisdom": 1
+                    }
+                },
+                {
+                    "label": "Ask who benefits from the accusation.",
+                    "scores": {
+                        "scepticism": 2,
+                        "investigation": 1
+                    }
+                },
+                {
+                    "label": "Stay out of it unless paid.",
+                    "scores": {
+                        "greed": 1,
+                        "independence": 1
+                    }
+                }
+            ]
+        },
+        {
+            "text": "You are offered a reward to retrieve a stolen relic.",
+            "answers": [
+                {
+                    "label": "Ask why the relic matters.",
+                    "scores": {
+                        "curiosity": 2,
+                        "wisdom": 1
+                    }
+                },
+                {
+                    "label": "Accept because theft should be answered.",
+                    "scores": {
+                        "honour": 2,
+                        "courage": 1
+                    }
+                },
+                {
+                    "label": "Accept if the price is right.",
+                    "scores": {
+                        "greed": 2,
+                        "pragmatism": 1
+                    }
+                },
+                {
+                    "label": "Ask whether the relic should belong to them at all.",
+                    "scores": {
+                        "scepticism": 2,
+                        "independence": 1
+                    }
+                }
+            ]
+        },
+        {
+            "text": "A storm traps you and strangers inside an inn.",
+            "answers": [
+                {
+                    "label": "Help organise food, fire and shelter.",
+                    "scores": {
+                        "loyalty": 1,
+                        "generosity": 2
+                    }
+                },
+                {
+                    "label": "Watch everyone quietly.",
+                    "scores": {
+                        "caution": 2,
+                        "perception": 1
+                    }
+                },
+                {
+                    "label": "Tell stories to keep spirits up.",
+                    "scores": {
+                        "diplomacy": 2,
+                        "confidence": 1
+                    }
+                },
+                {
+                    "label": "Keep to yourself.",
+                    "scores": {
+                        "independence": 2,
+                        "caution": 1
+                    }
+                }
+            ]
+        },
+        {
+            "text": "You find evidence that your friend committed a serious crime.",
+            "answers": [
+                {
+                    "label": "Confront them privately.",
+                    "scores": {
+                        "loyalty": 2,
+                        "honour": 1
+                    }
+                },
+                {
+                    "label": "Report them to the proper authority.",
+                    "scores": {
+                        "honour": 2,
+                        "justice": 2
+                    }
+                },
+                {
+                    "label": "Hide the evidence until you know more.",
+                    "scores": {
+                        "caution": 2,
+                        "loyalty": 1
+                    }
+                },
+                {
+                    "label": "Destroy the evidence.",
+                    "scores": {
+                        "loyalty": 2,
+                        "deception": 2
+                    }
+                }
+            ]
+        },
+        {
+            "text": "A god, spirit or powerful being offers you guidance.",
+            "answers": [
+                {
+                    "label": "Accept with reverence.",
+                    "scores": {
+                        "faith": 3,
+                        "humility": 1
+                    }
+                },
+                {
+                    "label": "Listen, but question their motive.",
+                    "scores": {
+                        "faith": 1,
+                        "scepticism": 2
+                    }
+                },
+                {
+                    "label": "Ask what they want in return.",
+                    "scores": {
+                        "pragmatism": 2,
+                        "caution": 1
+                    }
+                },
+                {
+                    "label": "Reject them. Power always has a cost.",
+                    "scores": {
+                        "scepticism": 3,
+                        "independence": 1
+                    }
+                }
+            ]
+        },
+        {
+            "text": "A rival saves your life during battle.",
+            "answers": [
+                {
+                    "label": "Thank them sincerely.",
+                    "scores": {
+                        "humility": 2,
+                        "honour": 1
+                    }
+                },
+                {
+                    "label": "Repay the debt as soon as possible.",
+                    "scores": {
+                        "honour": 2,
+                        "loyalty": 1
+                    }
+                },
+                {
+                    "label": "Accept it but stay suspicious.",
+                    "scores": {
+                        "caution": 2,
+                        "scepticism": 1
+                    }
+                },
+                {
+                    "label": "Pretend it never happened.",
+                    "scores": {
+                        "pride": 2,
+                        "deception": 1
+                    }
+                }
+            ]
+        },
+        {
+            "text": "You discover a secret passage while others sleep.",
+            "answers": [
+                {
+                    "label": "Wake the group before entering.",
+                    "scores": {
+                        "loyalty": 2,
+                        "caution": 1
+                    }
+                },
+                {
+                    "label": "Mark it and investigate later.",
+                    "scores": {
+                        "caution": 2,
+                        "wisdom": 1
+                    }
+                },
+                {
+                    "label": "Explore alone.",
+                    "scores": {
+                        "curiosity": 2,
+                        "independence": 1
+                    }
+                },
+                {
+                    "label": "Hide it until it becomes useful.",
+                    "scores": {
+                        "deception": 2,
+                        "pragmatism": 1
+                    }
+                }
+            ]
+        },
+        {
+            "text": "A powerful enemy offers peace in exchange for one innocent life.",
+            "answers": [
+                {
+                    "label": "Refuse completely.",
+                    "scores": {
+                        "honour": 2,
+                        "mercy": 2
+                    }
+                },
+                {
+                    "label": "Search for another solution.",
+                    "scores": {
+                        "wisdom": 2,
+                        "courage": 1
+                    }
+                },
+                {
+                    "label": "Delay them while forming a plan.",
+                    "scores": {
+                        "deception": 1,
+                        "pragmatism": 2
+                    }
+                },
+                {
+                    "label": "Consider it if it saves many more.",
+                    "scores": {
+                        "ruthlessness": 2,
+                        "pragmatism": 2
+                    }
+                }
+            ]
+        },
+        {
+            "text": "You are badly injured, but someone else needs help.",
+            "answers": [
+                {
+                    "label": "Help them first.",
+                    "scores": {
+                        "mercy": 2,
+                        "courage": 1
+                    }
+                },
+                {
+                    "label": "Stabilise yourself, then help.",
+                    "scores": {
+                        "wisdom": 2,
+                        "caution": 1
+                    }
+                },
+                {
+                    "label": "Call for someone else to help them.",
+                    "scores": {
+                        "pragmatism": 1,
+                        "caution": 1
+                    }
+                },
+                {
+                    "label": "Protect yourself. You cannot help anyone dead.",
+                    "scores": {
+                        "independence": 1,
+                        "pragmatism": 2
+                    }
+                }
+            ]
+        },
+        {
+            "text": "A cursed artefact could save a town, but may corrupt you.",
+            "answers": [
+                {
+                    "label": "Use it and accept the cost.",
+                    "scores": {
+                        "courage": 2,
+                        "mercy": 2
+                    }
+                },
+                {
+                    "label": "Look for a safer method.",
+                    "scores": {
+                        "caution": 2,
+                        "wisdom": 1
+                    }
+                },
+                {
+                    "label": "Ask a priest, mage or scholar first.",
+                    "scores": {
+                        "faith": 1,
+                        "curiosity": 1
+                    }
+                },
+                {
+                    "label": "Use someone else as the bearer.",
+                    "scores": {
+                        "ruthlessness": 2,
+                        "pragmatism": 1
+                    }
+                }
+            ]
+        },
+        {
+            "text": "A prisoner begs you not to hand them over to cruel authorities.",
+            "answers": [
+                {
+                    "label": "Help them escape.",
+                    "scores": {
+                        "mercy": 2,
+                        "independence": 1
+                    }
+                },
+                {
+                    "label": "Investigate whether their claim is true.",
+                    "scores": {
+                        "curiosity": 1,
+                        "honour": 1,
+                        "caution": 1
+                    }
+                },
+                {
+                    "label": "Hand them over but witness the process.",
+                    "scores": {
+                        "honour": 1,
+                        "caution": 1
+                    }
+                },
+                {
+                    "label": "Use their fear to gain information.",
+                    "scores": {
+                        "ruthlessness": 1,
+                        "deception": 1
+                    }
+                }
+            ]
+        },
+        {
+            "text": "A merchant overpays you by mistake.",
+            "answers": [
+                {
+                    "label": "Return the extra coin.",
+                    "scores": {
+                        "honour": 2,
+                        "humility": 1
+                    }
+                },
+                {
+                    "label": "Return it only if they notice.",
+                    "scores": {
+                        "pragmatism": 1,
+                        "deception": 1
+                    }
+                },
+                {
+                    "label": "Keep it. Their mistake, your gain.",
+                    "scores": {
+                        "greed": 2,
+                        "independence": 1
+                    }
+                },
+                {
+                    "label": "Use it to help someone poorer.",
+                    "scores": {
+                        "generosity": 2,
+                        "mercy": 1
+                    }
+                }
+            ]
+        },
+        {
+            "text": "You are surrounded and outnumbered.",
+            "answers": [
+                {
+                    "label": "Stand your ground.",
+                    "scores": {
+                        "courage": 2,
+                        "pride": 1
+                    }
+                },
+                {
+                    "label": "Negotiate.",
+                    "scores": {
+                        "diplomacy": 2,
+                        "caution": 1
+                    }
+                },
+                {
+                    "label": "Create a distraction and escape.",
+                    "scores": {
+                        "deception": 1,
+                        "pragmatism": 2
+                    }
+                },
+                {
+                    "label": "Attack the leader first.",
+                    "scores": {
+                        "violence": 2,
+                        "courage": 1
+                    }
+                }
+            ]
+        },
+        {
+            "text": "A sacred grove blocks the shortest path.",
+            "answers": [
+                {
+                    "label": "Respect it and go around.",
+                    "scores": {
+                        "faith": 1,
+                        "mercy": 1,
+                        "humility": 1
+                    }
+                },
+                {
+                    "label": "Ask permission through prayer or ritual.",
+                    "scores": {
+                        "faith": 2,
+                        "wisdom": 1
+                    }
+                },
+                {
+                    "label": "Study the place before deciding.",
+                    "scores": {
+                        "curiosity": 2,
+                        "caution": 1
+                    }
+                },
+                {
+                    "label": "Cut through. Time matters more.",
+                    "scores": {
+                        "pragmatism": 2,
+                        "ruthlessness": 1
+                    }
+                }
+            ]
+        },
+        {
+            "text": "Someone weaker than you challenges you unfairly.",
+            "answers": [
+                {
+                    "label": "Refuse to hurt them.",
+                    "scores": {
+                        "mercy": 2,
+                        "humility": 1
+                    }
+                },
+                {
+                    "label": "Disarm them without serious harm.",
+                    "scores": {
+                        "honour": 2,
+                        "skill": 1
+                    }
+                },
+                {
+                    "label": "Embarrass them so they learn.",
+                    "scores": {
+                        "pride": 2,
+                        "confidence": 1
+                    }
+                },
+                {
+                    "label": "Defeat them quickly.",
+                    "scores": {
+                        "violence": 1,
+                        "ruthlessness": 1
+                    }
+                }
+            ]
+        },
+        {
+            "text": "An ancient book contains dangerous knowledge.",
+            "answers": [
+                {
+                    "label": "Seal it away.",
+                    "scores": {
+                        "caution": 2,
+                        "wisdom": 1
+                    }
+                },
+                {
+                    "label": "Read it carefully.",
+                    "scores": {
+                        "curiosity": 2,
+                        "ambition": 1
+                    }
+                },
+                {
+                    "label": "Give it to a trusted scholar.",
+                    "scores": {
+                        "humility": 1,
+                        "wisdom": 2
+                    }
+                },
+                {
+                    "label": "Keep it secret.",
+                    "scores": {
+                        "deception": 2,
+                        "ambition": 2
+                    }
+                }
+            ]
+        },
+        {
+            "text": "At the end of a hard quest, you are offered fame, wealth or peace.",
+            "answers": [
+                {
+                    "label": "Choose peace.",
+                    "scores": {
+                        "humility": 2,
+                        "wisdom": 1
+                    }
+                },
+                {
+                    "label": "Choose wealth.",
+                    "scores": {
+                        "greed": 3
+                    }
+                },
+                {
+                    "label": "Choose fame.",
+                    "scores": {
+                        "pride": 2,
+                        "ambition": 1
+                    }
+                },
+                {
+                    "label": "Ask that others are rewarded instead.",
+                    "scores": {
+                        "generosity": 2,
+                        "mercy": 1
+                    }
+                }
+            ]
         }
-      ]
-    },
-    {
-      "text": "A temple asks for donations before offering healing.",
-      "answers": [
-        {
-          "label": "Donate generously.",
-          "scores": {
-            "faith": 2,
-            "generosity": 1
-          }
-        },
-        {
-          "label": "Pay only what is required.",
-          "scores": {
-            "pragmatism": 1,
-            "caution": 1
-          }
-        },
-        {
-          "label": "Argue that healing should be free.",
-          "scores": {
-            "mercy": 1,
-            "honour": 1
-          }
-        },
-        {
-          "label": "Distrust the temple immediately.",
-          "scores": {
-            "scepticism": 2,
-            "independence": 1
-          }
-        }
-      ]
-    },
-    {
-      "text": "Your party wants to spare a defeated enemy.",
-      "answers": [
-        {
-          "label": "Agree. Killing a helpless foe is wrong.",
-          "scores": {
-            "mercy": 2,
-            "honour": 1
-          }
-        },
-        {
-          "label": "Agree, but only if they provide information.",
-          "scores": {
-            "pragmatism": 2,
-            "diplomacy": 1
-          }
-        },
-        {
-          "label": "Disagree. They may return stronger.",
-          "scores": {
-            "caution": 1,
-            "ruthlessness": 1
-          }
-        },
-        {
-          "label": "Finish them before anyone can stop you.",
-          "scores": {
-            "violence": 2,
-            "ruthlessness": 2
-          }
-        }
-      ]
-    },
-    {
-      "text": "A locked chest is found in an abandoned house.",
-      "answers": [
-        {
-          "label": "Leave it. It belongs to someone.",
-          "scores": {
-            "honour": 2,
-            "humility": 1
-          }
-        },
-        {
-          "label": "Open it carefully and look for clues.",
-          "scores": {
-            "curiosity": 2,
-            "caution": 1
-          }
-        },
-        {
-          "label": "Open it and keep anything useful.",
-          "scores": {
-            "greed": 2,
-            "pragmatism": 1
-          }
-        },
-        {
-          "label": "Smash it open.",
-          "scores": {
-            "violence": 1,
-            "confidence": 1
-          }
-        }
-      ]
-    },
-    {
-      "text": "A noble insults you in public.",
-      "answers": [
-        {
-          "label": "Ignore them. Their opinion is meaningless.",
-          "scores": {
-            "humility": 2,
-            "caution": 1
-          }
-        },
-        {
-          "label": "Answer calmly but firmly.",
-          "scores": {
-            "diplomacy": 2,
-            "honour": 1
-          }
-        },
-        {
-          "label": "Humiliate them with a sharper insult.",
-          "scores": {
-            "pride": 2,
-            "confidence": 1
-          }
-        },
-        {
-          "label": "Challenge them physically.",
-          "scores": {
-            "violence": 2,
-            "pride": 1
-          }
-        }
-      ]
-    },
-    {
-      "text": "You discover your employer lied about the mission.",
-      "answers": [
-        {
-          "label": "Confront them and demand the truth.",
-          "scores": {
-            "honour": 2,
-            "courage": 1
-          }
-        },
-        {
-          "label": "Continue, but prepare for betrayal.",
-          "scores": {
-            "caution": 2,
-            "scepticism": 1
-          }
-        },
-        {
-          "label": "Renegotiate for more money.",
-          "scores": {
-            "greed": 2,
-            "pragmatism": 1
-          }
-        },
-        {
-          "label": "Walk away immediately.",
-          "scores": {
-            "independence": 2,
-            "pride": 1
-          }
-        }
-      ]
-    },
-    {
-      "text": "A child asks whether heroes are real.",
-      "answers": [
-        {
-          "label": "Tell them heroes are real, but they still get scared.",
-          "scores": {
-            "mercy": 1,
-            "humility": 2
-          }
-        },
-        {
-          "label": "Tell them heroes are made by their choices.",
-          "scores": {
-            "honour": 1,
-            "wisdom": 2
-          }
-        },
-        {
-          "label": "Tell them stories are often lies.",
-          "scores": {
-            "scepticism": 2,
-            "pragmatism": 1
-          }
-        },
-        {
-          "label": "Avoid answering.",
-          "scores": {
-            "caution": 1,
-            "independence": 1
-          }
-        }
-      ]
-    },
-    {
-      "text": "You hear a voice calling from a sealed crypt.",
-      "answers": [
-        {
-          "label": "Open it. Someone may need help.",
-          "scores": {
-            "mercy": 2,
-            "courage": 1
-          }
-        },
-        {
-          "label": "Listen carefully before acting.",
-          "scores": {
-            "caution": 1,
-            "curiosity": 2
-          }
-        },
-        {
-          "label": "Pray or perform a warding gesture first.",
-          "scores": {
-            "faith": 2,
-            "caution": 1
-          }
-        },
-        {
-          "label": "Leave the dead alone.",
-          "scores": {
-            "scepticism": 1,
-            "caution": 2
-          }
-        }
-      ]
-    },
-    {
-      "text": "A starving thief stole bread from a market.",
-      "answers": [
-        {
-          "label": "Pay for the bread yourself.",
-          "scores": {
-            "generosity": 2,
-            "mercy": 1
-          }
-        },
-        {
-          "label": "Help them escape.",
-          "scores": {
-            "mercy": 1,
-            "independence": 1
-          }
-        },
-        {
-          "label": "Return the bread, but speak for them.",
-          "scores": {
-            "honour": 1,
-            "diplomacy": 2
-          }
-        },
-        {
-          "label": "Let the law handle it.",
-          "scores": {
-            "honour": 1,
-            "caution": 1
-          }
-        }
-      ]
-    },
-    {
-      "text": "You find a magical blade that whispers promises of power.",
-      "answers": [
-        {
-          "label": "Refuse to touch it.",
-          "scores": {
-            "caution": 2,
-            "humility": 1
-          }
-        },
-        {
-          "label": "Study it from a safe distance.",
-          "scores": {
-            "curiosity": 2,
-            "caution": 1
-          }
-        },
-        {
-          "label": "Take it, but keep its influence secret.",
-          "scores": {
-            "deception": 2,
-            "ambition": 2
-          }
-        },
-        {
-          "label": "Claim it proudly.",
-          "scores": {
-            "pride": 2,
-            "ambition": 2
-          }
-        }
-      ]
-    },
-    {
-      "text": "Your party disagrees about the next route.",
-      "answers": [
-        {
-          "label": "Listen to everyone before deciding.",
-          "scores": {
-            "diplomacy": 2,
-            "loyalty": 1
-          }
-        },
-        {
-          "label": "Follow the safest route.",
-          "scores": {
-            "caution": 2,
-            "wisdom": 1
-          }
-        },
-        {
-          "label": "Push for the fastest route.",
-          "scores": {
-            "courage": 1,
-            "pragmatism": 1
-          }
-        },
-        {
-          "label": "Go your own way if they waste time.",
-          "scores": {
-            "independence": 2,
-            "pride": 1
-          }
-        }
-      ]
-    },
-    {
-      "text": "A frightened enemy surrenders and offers a secret.",
-      "answers": [
-        {
-          "label": "Accept the surrender.",
-          "scores": {
-            "mercy": 2,
-            "honour": 1
-          }
-        },
-        {
-          "label": "Accept, but bind them first.",
-          "scores": {
-            "caution": 2,
-            "pragmatism": 1
-          }
-        },
-        {
-          "label": "Take the secret, then decide later.",
-          "scores": {
-            "deception": 1,
-            "pragmatism": 2
-          }
-        },
-        {
-          "label": "Do not trust them at all.",
-          "scores": {
-            "scepticism": 2,
-            "caution": 1
-          }
-        }
-      ]
-    },
-    {
-      "text": "A village blames an outsider for a curse without proof.",
-      "answers": [
-        {
-          "label": "Defend the outsider.",
-          "scores": {
-            "honour": 2,
-            "mercy": 1
-          }
-        },
-        {
-          "label": "Investigate before judging.",
-          "scores": {
-            "curiosity": 2,
-            "wisdom": 1
-          }
-        },
-        {
-          "label": "Ask who benefits from the accusation.",
-          "scores": {
-            "scepticism": 2,
-            "investigation": 1
-          }
-        },
-        {
-          "label": "Stay out of it unless paid.",
-          "scores": {
-            "greed": 1,
-            "independence": 1
-          }
-        }
-      ]
-    },
-    {
-      "text": "You are offered a reward to retrieve a stolen relic.",
-      "answers": [
-        {
-          "label": "Ask why the relic matters.",
-          "scores": {
-            "curiosity": 2,
-            "wisdom": 1
-          }
-        },
-        {
-          "label": "Accept because theft should be answered.",
-          "scores": {
-            "honour": 2,
-            "courage": 1
-          }
-        },
-        {
-          "label": "Accept if the price is right.",
-          "scores": {
-            "greed": 2,
-            "pragmatism": 1
-          }
-        },
-        {
-          "label": "Ask whether the relic should belong to them at all.",
-          "scores": {
-            "scepticism": 2,
-            "independence": 1
-          }
-        }
-      ]
-    },
-    {
-      "text": "A storm traps you and strangers inside an inn.",
-      "answers": [
-        {
-          "label": "Help organise food, fire and shelter.",
-          "scores": {
-            "loyalty": 1,
-            "generosity": 2
-          }
-        },
-        {
-          "label": "Watch everyone quietly.",
-          "scores": {
-            "caution": 2,
-            "perception": 1
-          }
-        },
-        {
-          "label": "Tell stories to keep spirits up.",
-          "scores": {
-            "diplomacy": 2,
-            "confidence": 1
-          }
-        },
-        {
-          "label": "Keep to yourself.",
-          "scores": {
-            "independence": 2,
-            "caution": 1
-          }
-        }
-      ]
-    },
-    {
-      "text": "You find evidence that your friend committed a serious crime.",
-      "answers": [
-        {
-          "label": "Confront them privately.",
-          "scores": {
-            "loyalty": 2,
-            "honour": 1
-          }
-        },
-        {
-          "label": "Report them to the proper authority.",
-          "scores": {
-            "honour": 2,
-            "justice": 2
-          }
-        },
-        {
-          "label": "Hide the evidence until you know more.",
-          "scores": {
-            "caution": 2,
-            "loyalty": 1
-          }
-        },
-        {
-          "label": "Destroy the evidence.",
-          "scores": {
-            "loyalty": 2,
-            "deception": 2
-          }
-        }
-      ]
-    },
-    {
-      "text": "A god, spirit or powerful being offers you guidance.",
-      "answers": [
-        {
-          "label": "Accept with reverence.",
-          "scores": {
-            "faith": 3,
-            "humility": 1
-          }
-        },
-        {
-          "label": "Listen, but question their motive.",
-          "scores": {
-            "faith": 1,
-            "scepticism": 2
-          }
-        },
-        {
-          "label": "Ask what they want in return.",
-          "scores": {
-            "pragmatism": 2,
-            "caution": 1
-          }
-        },
-        {
-          "label": "Reject them. Power always has a cost.",
-          "scores": {
-            "scepticism": 3,
-            "independence": 1
-          }
-        }
-      ]
-    },
-    {
-      "text": "A rival saves your life during battle.",
-      "answers": [
-        {
-          "label": "Thank them sincerely.",
-          "scores": {
-            "humility": 2,
-            "honour": 1
-          }
-        },
-        {
-          "label": "Repay the debt as soon as possible.",
-          "scores": {
-            "honour": 2,
-            "loyalty": 1
-          }
-        },
-        {
-          "label": "Accept it but stay suspicious.",
-          "scores": {
-            "caution": 2,
-            "scepticism": 1
-          }
-        },
-        {
-          "label": "Pretend it never happened.",
-          "scores": {
-            "pride": 2,
-            "deception": 1
-          }
-        }
-      ]
-    },
-    {
-      "text": "You discover a secret passage while others sleep.",
-      "answers": [
-        {
-          "label": "Wake the group before entering.",
-          "scores": {
-            "loyalty": 2,
-            "caution": 1
-          }
-        },
-        {
-          "label": "Mark it and investigate later.",
-          "scores": {
-            "caution": 2,
-            "wisdom": 1
-          }
-        },
-        {
-          "label": "Explore alone.",
-          "scores": {
-            "curiosity": 2,
-            "independence": 1
-          }
-        },
-        {
-          "label": "Hide it until it becomes useful.",
-          "scores": {
-            "deception": 2,
-            "pragmatism": 1
-          }
-        }
-      ]
-    },
-    {
-      "text": "A powerful enemy offers peace in exchange for one innocent life.",
-      "answers": [
-        {
-          "label": "Refuse completely.",
-          "scores": {
-            "honour": 2,
-            "mercy": 2
-          }
-        },
-        {
-          "label": "Search for another solution.",
-          "scores": {
-            "wisdom": 2,
-            "courage": 1
-          }
-        },
-        {
-          "label": "Delay them while forming a plan.",
-          "scores": {
-            "deception": 1,
-            "pragmatism": 2
-          }
-        },
-        {
-          "label": "Consider it if it saves many more.",
-          "scores": {
-            "ruthlessness": 2,
-            "pragmatism": 2
-          }
-        }
-      ]
-    },
-    {
-      "text": "You are badly injured, but someone else needs help.",
-      "answers": [
-        {
-          "label": "Help them first.",
-          "scores": {
-            "mercy": 2,
-            "courage": 1
-          }
-        },
-        {
-          "label": "Stabilise yourself, then help.",
-          "scores": {
-            "wisdom": 2,
-            "caution": 1
-          }
-        },
-        {
-          "label": "Call for someone else to help them.",
-          "scores": {
-            "pragmatism": 1,
-            "caution": 1
-          }
-        },
-        {
-          "label": "Protect yourself. You cannot help anyone dead.",
-          "scores": {
-            "independence": 1,
-            "pragmatism": 2
-          }
-        }
-      ]
-    },
-    {
-      "text": "A cursed artefact could save a town, but may corrupt you.",
-      "answers": [
-        {
-          "label": "Use it and accept the cost.",
-          "scores": {
-            "courage": 2,
-            "mercy": 2
-          }
-        },
-        {
-          "label": "Look for a safer method.",
-          "scores": {
-            "caution": 2,
-            "wisdom": 1
-          }
-        },
-        {
-          "label": "Ask a priest, mage or scholar first.",
-          "scores": {
-            "faith": 1,
-            "curiosity": 1
-          }
-        },
-        {
-          "label": "Use someone else as the bearer.",
-          "scores": {
-            "ruthlessness": 2,
-            "pragmatism": 1
-          }
-        }
-      ]
-    },
-    {
-      "text": "A prisoner begs you not to hand them over to cruel authorities.",
-      "answers": [
-        {
-          "label": "Help them escape.",
-          "scores": {
-            "mercy": 2,
-            "independence": 1
-          }
-        },
-        {
-          "label": "Investigate whether their claim is true.",
-          "scores": {
-            "curiosity": 1,
-            "honour": 1,
-            "caution": 1
-          }
-        },
-        {
-          "label": "Hand them over but witness the process.",
-          "scores": {
-            "honour": 1,
-            "caution": 1
-          }
-        },
-        {
-          "label": "Use their fear to gain information.",
-          "scores": {
-            "ruthlessness": 1,
-            "deception": 1
-          }
-        }
-      ]
-    },
-    {
-      "text": "A merchant overpays you by mistake.",
-      "answers": [
-        {
-          "label": "Return the extra coin.",
-          "scores": {
-            "honour": 2,
-            "humility": 1
-          }
-        },
-        {
-          "label": "Return it only if they notice.",
-          "scores": {
-            "pragmatism": 1,
-            "deception": 1
-          }
-        },
-        {
-          "label": "Keep it. Their mistake, your gain.",
-          "scores": {
-            "greed": 2,
-            "independence": 1
-          }
-        },
-        {
-          "label": "Use it to help someone poorer.",
-          "scores": {
-            "generosity": 2,
-            "mercy": 1
-          }
-        }
-      ]
-    },
-    {
-      "text": "You are surrounded and outnumbered.",
-      "answers": [
-        {
-          "label": "Stand your ground.",
-          "scores": {
-            "courage": 2,
-            "pride": 1
-          }
-        },
-        {
-          "label": "Negotiate.",
-          "scores": {
-            "diplomacy": 2,
-            "caution": 1
-          }
-        },
-        {
-          "label": "Create a distraction and escape.",
-          "scores": {
-            "deception": 1,
-            "pragmatism": 2
-          }
-        },
-        {
-          "label": "Attack the leader first.",
-          "scores": {
-            "violence": 2,
-            "courage": 1
-          }
-        }
-      ]
-    },
-    {
-      "text": "A sacred grove blocks the shortest path.",
-      "answers": [
-        {
-          "label": "Respect it and go around.",
-          "scores": {
-            "faith": 1,
-            "mercy": 1,
-            "humility": 1
-          }
-        },
-        {
-          "label": "Ask permission through prayer or ritual.",
-          "scores": {
-            "faith": 2,
-            "wisdom": 1
-          }
-        },
-        {
-          "label": "Study the place before deciding.",
-          "scores": {
-            "curiosity": 2,
-            "caution": 1
-          }
-        },
-        {
-          "label": "Cut through. Time matters more.",
-          "scores": {
-            "pragmatism": 2,
-            "ruthlessness": 1
-          }
-        }
-      ]
-    },
-    {
-      "text": "Someone weaker than you challenges you unfairly.",
-      "answers": [
-        {
-          "label": "Refuse to hurt them.",
-          "scores": {
-            "mercy": 2,
-            "humility": 1
-          }
-        },
-        {
-          "label": "Disarm them without serious harm.",
-          "scores": {
-            "honour": 2,
-            "skill": 1
-          }
-        },
-        {
-          "label": "Embarrass them so they learn.",
-          "scores": {
-            "pride": 2,
-            "confidence": 1
-          }
-        },
-        {
-          "label": "Defeat them quickly.",
-          "scores": {
-            "violence": 1,
-            "ruthlessness": 1
-          }
-        }
-      ]
-    },
-    {
-      "text": "An ancient book contains dangerous knowledge.",
-      "answers": [
-        {
-          "label": "Seal it away.",
-          "scores": {
-            "caution": 2,
-            "wisdom": 1
-          }
-        },
-        {
-          "label": "Read it carefully.",
-          "scores": {
-            "curiosity": 2,
-            "ambition": 1
-          }
-        },
-        {
-          "label": "Give it to a trusted scholar.",
-          "scores": {
-            "humility": 1,
-            "wisdom": 2
-          }
-        },
-        {
-          "label": "Keep it secret.",
-          "scores": {
-            "deception": 2,
-            "ambition": 2
-          }
-        }
-      ]
-    },
-    {
-      "text": "At the end of a hard quest, you are offered fame, wealth or peace.",
-      "answers": [
-        {
-          "label": "Choose peace.",
-          "scores": {
-            "humility": 2,
-            "wisdom": 1
-          }
-        },
-        {
-          "label": "Choose wealth.",
-          "scores": {
-            "greed": 3
-          }
-        },
-        {
-          "label": "Choose fame.",
-          "scores": {
-            "pride": 2,
-            "ambition": 1
-          }
-        },
-        {
-          "label": "Ask that others are rewarded instead.",
-          "scores": {
-            "generosity": 2,
-            "mercy": 1
-          }
-        }
-      ]
-    }
-  ]
+    ]
 }

@@ -1,26 +1,50 @@
 /* =========================================================
     Dicebound
-    Config
-     ========================================================= */
+    Frontend Configuration
+    ---------------------------------------------------------
+    This file stores shared frontend constants used by the
+    modular Dicebound browser app.
+
+    Responsibilities:
+    - define core ability abbreviations
+    - define the Level 1 proficiency bonus
+    - select the correct portrait API URL for local or hosted use
+    - define JSON data file paths
+    - provide safe fallback values if optional data files are
+        missing or incomplete
+    - provide shared default text and loading button labels
+
+    Species-specific appearance data should normally come from
+    data/species-appearance.json. The fallback physical traits
+    below are only a safety net, not the main species data source.
+   ========================================================= */
 
 
 /* =========================================================
     1. Core Game Constants
-     ========================================================= */
+   ========================================================= */
 
-export const abilities = ["STR", "DEX", "CON", "INT", "WIS", "CHA"];
+export const abilities = [
+    "STR",
+    "DEX",
+    "CON",
+    "INT",
+    "WIS",
+    "CHA"
+];
 
 export const proficiencyBonus = 2;
 
-export const portraitApiUrl = window.location.hostname === "localhost" ||
+export const portraitApiUrl =
+    window.location.hostname === "localhost" ||
     window.location.hostname === "127.0.0.1"
-    ? "http://localhost:3001/api/generate-portrait"
-    : "https://dnd-character-creator-0aqj.onrender.com/api/generate-portrait";
+        ? "http://localhost:3001/api/generate-portrait"
+        : "https://dnd-character-creator-0aqj.onrender.com/api/generate-portrait";
 
 
 /* =========================================================
     2. Data File Paths
-     ========================================================= */
+   ========================================================= */
 
 export const dataPaths = {
     names: [
@@ -44,7 +68,7 @@ export const dataPaths = {
 
 /* =========================================================
     3. Default Fallback Character Data
-     ========================================================= */
+   ========================================================= */
 
 export const defaultPhysicalTraits = {
     heights: [
@@ -69,6 +93,7 @@ export const defaultPhysicalTraits = {
         "Amber",
         "Black",
         "Blue",
+        "Brown",
         "Gold",
         "Green",
         "Grey",
@@ -85,17 +110,13 @@ export const defaultPhysicalTraits = {
         "Auburn",
         "Black",
         "Blonde",
-        "Bone Crest",
         "Brown",
         "Copper",
         "Dark Blue",
         "Gold",
         "Grey",
-        "Horned Crest",
         "Red",
-        "Scaled Crest",
         "Silver",
-        "Spined Crest",
         "White"
     ],
 
@@ -113,34 +134,18 @@ export const defaultPhysicalTraits = {
         "Shaved Sides",
         "Shaved Head",
         "Bald",
-        "No Hair",
-        "Smooth Scaled Head",
-        "Horned Crest",
-        "Bone Crest",
-        "Scaled Crest",
-        "Spined Crest",
-        "Short Head Spines",
-        "Long Head Spines",
-        "Crown Of Horns",
-        "Swept-Back Horns",
-        "Head Frill"
+        "No Hair"
     ],
 
     skinTones: [
         "Ashen",
-        "Black Scales",
         "Blue-Grey",
-        "Blue Scales",
         "Bronze",
-        "Bronze Scales",
-        "Copper Scales",
         "Copper-Toned",
         "Deep Brown",
         "Fair",
-        "Gold Scales",
         "Golden",
         "Green",
-        "Green Scales",
         "Grey",
         "Grey-Green",
         "Olive",
@@ -148,11 +153,8 @@ export const defaultPhysicalTraits = {
         "Pale Grey",
         "Purple",
         "Red",
-        "Red Scales",
-        "Silver Scales",
         "Stone Grey",
         "Warm Brown",
-        "White Scales",
         "Yellow-Green"
     ],
 
@@ -164,7 +166,7 @@ export const defaultPhysicalTraits = {
 
 /* =========================================================
     4. Default Text Values
-     ========================================================= */
+   ========================================================= */
 
 export const defaultText = {
     unnamedCharacter: "Unnamed Adventurer",
@@ -178,7 +180,7 @@ export const defaultText = {
 
 /* =========================================================
     5. Loading Button Text
-     ========================================================= */
+   ========================================================= */
 
 export const loadingText = {
     loadingData: "Loading Data...",

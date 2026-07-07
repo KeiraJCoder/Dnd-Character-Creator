@@ -1,8 +1,40 @@
+/* =========================================================
+   Dicebound
+   Portrait Provider Selector
+   ---------------------------------------------------------
+   This file decides which portrait provider the backend should
+   use.
+
+   Supported providers:
+   - cloudflare: real image generation through Cloudflare Workers AI
+   - demo: local SVG fallback portrait generation
+
+   IMAGE_PROVIDER can be:
+   - "cloudflare"
+   - "demo"
+   - "auto"
+
+   In auto mode, Cloudflare is used when valid Cloudflare
+   credentials are present. Otherwise the server falls back to
+   demo mode.
+
+   OpenAI is intentionally not supported in this project to avoid
+   paid image generation costs.
+   ========================================================= */
+
 const dotenv = require("dotenv");
 
 dotenv.config();
 
-const imageProvider = (process.env.IMAGE_PROVIDER || "auto").toLowerCase();
+const allowedProviders = [
+    "auto",
+    "cloudflare",
+    "demo"
+];
+
+const requestedProvider = normaliseProvider(
+    process.env.IMAGE_PROVIDER || "auto"
+);
 
 const cloudflareAccountId = process.env.CLOUDFLARE_ACCOUNT_ID;
 const cloudflareApiToken = process.env.CLOUDFLARE_API_TOKEN;
@@ -13,29 +45,31 @@ const hasCloudflareCredentials =
     cloudflareAccountId !== "paste_your_account_id_here" &&
     cloudflareApiToken !== "paste_your_cloudflare_api_token_here";
 
-const hasOpenAiKey =
-    Boolean(process.env.OPENAI_API_KEY) &&
-    process.env.OPENAI_API_KEY !== "put_your_api_key_here";
+function normaliseProvider(provider) {
+    const normalisedProvider = String(provider)
+        .trim()
+        .toLowerCase();
+
+    if (allowedProviders.includes(normalisedProvider)) {
+        return normalisedProvider;
+    }
+
+    return "auto";
+}
 
 function getActiveProvider() {
-    if (imageProvider === "cloudflare" && hasCloudflareCredentials) {
-        return "cloudflare";
-    }
-
-    if (imageProvider === "openai" && hasOpenAiKey) {
-        return "openai";
-    }
-
-    if (imageProvider === "demo") {
+    if (requestedProvider === "demo") {
         return "demo";
+    }
+
+    if (requestedProvider === "cloudflare") {
+        return hasCloudflareCredentials
+            ? "cloudflare"
+            : "demo";
     }
 
     if (hasCloudflareCredentials) {
         return "cloudflare";
-    }
-
-    if (hasOpenAiKey) {
-        return "openai";
     }
 
     return "demo";
@@ -45,20 +79,19 @@ function getProviderStatus() {
     const activeProvider = getActiveProvider();
 
     return {
-        requestedProvider: imageProvider,
+        requestedProvider,
         activeProvider,
         cloudflareConnected: hasCloudflareCredentials,
-        openAiConnected: hasOpenAiKey,
         mode: activeProvider
     };
 }
 
 module.exports = {
-        imageProvider,
-        cloudflareAccountId,
-        cloudflareApiToken,
-        hasCloudflareCredentials,
-        hasOpenAiKey,
-        getActiveProvider,
-        getProviderStatus
+    imageProvider: requestedProvider,
+    requestedProvider,
+    cloudflareAccountId,
+    cloudflareApiToken,
+    hasCloudflareCredentials,
+    getActiveProvider,
+    getProviderStatus
 };

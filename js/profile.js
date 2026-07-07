@@ -1,7 +1,27 @@
 /* =========================================================
     Dicebound
     Character Profile And Question Scoring
-     ========================================================= */
+    ---------------------------------------------------------
+    This file controls the personality question flow and turns
+    question answers into a generated roleplay profile.
+
+    Responsibilities:
+    - create the character before the question flow begins
+    - randomise question and answer order
+    - apply answer scores to the profile score state
+    - lightly apply species profile influence
+    - calculate traits, alignment, faith outlook, weakness and
+      playstyle
+    - create character identity text for the summary and export
+
+    This file should not alter DnD ability scores, hit points,
+    class rules, species anatomy rules or portrait prompt logic.
+    Those responsibilities belong in character.js, data files and
+    the backend portrait services.
+
+    Species profile influence is intentionally light flavour. The
+    question answers remain the main source of the final profile.
+   ========================================================= */
 
 import {
     defaultText
@@ -28,7 +48,7 @@ import {
 
 /* =========================================================
     1. DOM References
-     ========================================================= */
+   ========================================================= */
 
 export const profileQuestionElements = {
     creatorScreen: document.getElementById("creatorScreen"),
@@ -50,13 +70,69 @@ const {
 
 
 /* =========================================================
-    2. Randomised Question Set
-     ========================================================= */
+    2. General Helpers
+   ========================================================= */
+
+function getScore(scoreName) {
+    return Number(state.profileScores?.[scoreName]) || 0;
+}
+
+function getSpeciesName(character = state.character) {
+    if (typeof character?.species === "string") {
+        return character.species;
+    }
+
+    return character?.species?.name || "Unknown Species";
+}
+
+function normaliseKey(value) {
+    return String(value || "")
+        .trim()
+        .toLowerCase()
+        .replace(/[^a-z0-9]/g, "");
+}
+
+function isDragonborn(character = state.character) {
+    return normaliseKey(getSpeciesName(character)) === "dragonborn";
+}
+
+function getNotableFeatureName(character = state.character) {
+    const notableFeature = character?.notableFeature;
+
+    if (typeof notableFeature === "string") {
+        return notableFeature || defaultText.noNotableFeature;
+    }
+
+    return (
+        notableFeature?.name ||
+        character?.notableFeatureName ||
+        defaultText.noNotableFeature
+    );
+}
+
+function hasNoObviousNotableFeature(character = state.character) {
+    const featureName = getNotableFeatureName(character);
+
+    return (
+        normaliseKey(featureName) === normaliseKey(defaultText.noNotableFeature) ||
+        normaliseKey(featureName) === "none" ||
+        normaliseKey(featureName) === "nonotablefeature"
+    );
+}
+
+
+/* =========================================================
+    3. Randomised Question Set
+   ========================================================= */
 
 let randomisedQuestions = [];
 
 function createRandomisedQuestionSet() {
-    randomisedQuestions = shuffleArray(state.questions).map(question => {
+    const questions = Array.isArray(state.questions)
+        ? state.questions
+        : [];
+
+    randomisedQuestions = shuffleArray(questions).map(question => {
         return {
             ...question,
             answers: shuffleArray(question.answers || []).map(answer => {
@@ -79,8 +155,8 @@ function getActiveQuestions() {
 
 
 /* =========================================================
-    3. Question Flow
-     ========================================================= */
+    4. Question Flow
+   ========================================================= */
 
 export function beginQuestions(onComplete) {
     if (!state.loaded.questions || state.questions.length === 0) {
@@ -109,6 +185,7 @@ export function renderQuestion(onComplete) {
     const activeQuestions = getActiveQuestions();
 
     if (!activeQuestions.length || !activeQuestions[state.currentQuestionIndex]) {
+        finishQuestions(onComplete);
         return;
     }
 
@@ -148,9 +225,10 @@ export function renderQuestion(onComplete) {
 
             if (state.currentQuestionIndex >= totalQuestions) {
                 finishQuestions(onComplete);
-            } else {
-                renderQuestion(onComplete);
+                return;
             }
+
+            renderQuestion(onComplete);
         });
 
         answerChoices.appendChild(button);
@@ -169,8 +247,8 @@ export function finishQuestions(onComplete) {
 
 
 /* =========================================================
-    4. Score Application
-     ========================================================= */
+    5. Score Application
+   ========================================================= */
 
 export function applySpeciesProfileInfluence(species) {
     const influence = species?.profileInfluence || {};
@@ -186,8 +264,8 @@ export function applyScores(scores) {
 
 
 /* =========================================================
-    5. Trait And Alignment Logic
-     ========================================================= */
+    6. Trait And Alignment Logic
+   ========================================================= */
 
 export function getTopTraits() {
     const excluded = [
@@ -199,38 +277,42 @@ export function getTopTraits() {
     ];
 
     return Object.entries(state.profileScores)
-        .filter(([key]) => !excluded.includes(key))
-        .sort((a, b) => b[1] - a[1])
+        .filter(([key]) => {
+            return !excluded.includes(key);
+        })
+        .sort((a, b) => {
+            return b[1] - a[1];
+        })
         .slice(0, 4)
-        .map(([key]) => capitalise(key));
+        .map(([key]) => {
+            return capitalise(key);
+        });
 }
 
 export function getAlignment() {
-    const scores = state.profileScores;
-
     const goodScore =
-        scores.mercy +
-        scores.generosity +
-        scores.honour +
-        scores.justice;
+        getScore("mercy") +
+        getScore("generosity") +
+        getScore("honour") +
+        getScore("justice");
 
     const selfishScore =
-        scores.ruthlessness +
-        scores.greed +
-        scores.violence +
-        scores.deception;
+        getScore("ruthlessness") +
+        getScore("greed") +
+        getScore("violence") +
+        getScore("deception");
 
     const orderScore =
-        scores.honour +
-        scores.loyalty +
-        scores.justice +
-        scores.caution;
+        getScore("honour") +
+        getScore("loyalty") +
+        getScore("justice") +
+        getScore("caution");
 
     const chaosScore =
-        scores.independence +
-        scores.deception +
-        scores.pride +
-        scores.ambition;
+        getScore("independence") +
+        getScore("deception") +
+        getScore("pride") +
+        getScore("ambition");
 
     let moralAxis = "Neutral";
     let orderAxis = "Neutral";
@@ -264,12 +346,12 @@ export function getAlignment() {
 
 
 /* =========================================================
-    6. Faith, Weakness And Playstyle
-     ========================================================= */
+    7. Faith, Weakness And Playstyle
+   ========================================================= */
 
 export function getFaithProfile() {
-    const faith = state.profileScores.faith;
-    const scepticism = state.profileScores.scepticism;
+    const faith = getScore("faith");
+    const scepticism = getScore("scepticism");
 
     if (faith >= scepticism + 5) {
         return "Religious. This character is likely to respect temples, rituals, omens and divine authority.";
@@ -287,120 +369,127 @@ export function getFaithProfile() {
 }
 
 export function getWeakness() {
-    const scores = state.profileScores;
-
     const options = [
         {
-            score: scores.mercy + scores.loyalty,
+            score: getScore("mercy") + getScore("loyalty"),
             text: "Guilt. They may take responsibility for pain they did not cause, especially when vulnerable people suffer."
         },
         {
-            score: scores.pride + scores.confidence,
+            score: getScore("pride") + getScore("confidence"),
             text: "Pride. They may struggle to back down, admit weakness or accept help from rivals."
         },
         {
-            score: scores.scepticism + scores.caution,
+            score: getScore("scepticism") + getScore("caution"),
             text: "Suspicion. They may miss genuine kindness because they are always looking for the hidden threat."
         },
         {
-            score: scores.greed + scores.ambition,
+            score: getScore("greed") + getScore("ambition"),
             text: "Greed. They may take dangerous risks when wealth, status or power is within reach."
         },
         {
-            score: scores.courage + scores.violence,
+            score: getScore("courage") + getScore("violence"),
             text: "Recklessness. They may act before thinking when danger, anger or glory is involved."
         },
         {
-            score: scores.independence + scores.caution,
+            score: getScore("independence") + getScore("caution"),
             text: "Isolation. They may keep too much to themselves and struggle to rely on allies."
         }
     ];
 
-    options.sort((a, b) => b.score - a.score);
+    options.sort((a, b) => {
+        return b.score - a.score;
+    });
 
     return options[0].text;
 }
 
 export function getPlaystyle() {
-    const scores = state.profileScores;
-
     const styles = [
         {
-            score: scores.diplomacy + scores.mercy + scores.honour,
+            score: getScore("diplomacy") + getScore("mercy") + getScore("honour"),
             text: "Diplomatic problem-solver. They are likely to talk first, search for context and avoid needless bloodshed."
         },
         {
-            score: scores.curiosity + scores.caution + scores.investigation + scores.perception,
+            score: getScore("curiosity") + getScore("caution") + getScore("investigation") + getScore("perception"),
             text: "Careful investigator. They are likely to inspect clues, question motives and avoid rushing into danger."
         },
         {
-            score: scores.violence + scores.courage + scores.confidence,
+            score: getScore("violence") + getScore("courage") + getScore("confidence"),
             text: "Direct combatant. They are likely to confront threats quickly and trust action more than debate."
         },
         {
-            score: scores.pragmatism + scores.caution + scores.independence,
+            score: getScore("pragmatism") + getScore("caution") + getScore("independence"),
             text: "Pragmatic survivor. They are likely to choose the practical route, even when the answer is not morally clean."
         },
         {
-            score: scores.greed + scores.ambition + scores.deception,
+            score: getScore("greed") + getScore("ambition") + getScore("deception"),
             text: "Ambitious opportunist. They are likely to notice rewards, leverage secrets and look for personal advantage."
         }
     ];
 
-    styles.sort((a, b) => b.score - a.score);
+    styles.sort((a, b) => {
+        return b.score - a.score;
+    });
 
     return styles[0].text;
 }
 
 
 /* =========================================================
-    7. Character Profile Text
-     ========================================================= */
+    8. Character Profile Text
+   ========================================================= */
 
 export function getGenderDescription(character = state.character) {
     if (!character) {
         return "whose gender is not stated";
     }
 
-    if (character.gender.toLowerCase() === "prefer not to say") {
+    const gender = String(character.gender || "").trim();
+
+    if (!gender || gender.toLowerCase() === "prefer not to say") {
         return "whose gender is not stated";
     }
 
-    return `who is ${character.gender}`;
+    return `who is ${gender}`;
 }
 
 function getHairDescription(character) {
-    const speciesName = String(character.species?.name || "").toLowerCase();
     const hairColour = String(character.hairColour || "").trim();
     const hairStyle = String(character.hairStyle || "").trim();
+    const hairColourText = hairColour.toLowerCase();
+    const hairStyleText = hairStyle.toLowerCase();
 
-    if (speciesName === "dragonborn") {
+    if (isDragonborn(character)) {
+        if (hairStyleText === "smooth scaled head") {
+            return "a smooth scaled draconic head";
+        }
+
         if (hairStyle && hairColour) {
-            return `${hairColour.toLowerCase()} head detail in a ${hairStyle.toLowerCase()} style`;
+            return `${hairStyleText} with ${hairColourText} head, horn or crest colouring`;
         }
 
         if (hairStyle) {
-            return `${hairStyle.toLowerCase()} head detail`;
+            return `${hairStyleText} draconic head detail`;
         }
 
         if (hairColour) {
-            return `${hairColour.toLowerCase()} head detail`;
+            return `${hairColourText} head, horn or crest colouring`;
         }
 
         return "species-appropriate draconic head detail";
     }
 
     if (
-        hairStyle.toLowerCase() === "no hair" ||
-        hairStyle.toLowerCase() === "bald" ||
-        hairStyle.toLowerCase() === "shaved head" ||
-        hairColour.toLowerCase() === "no hair"
+        hairStyleText === "no hair" ||
+        hairStyleText === "bald" ||
+        hairStyleText === "shaved head" ||
+        hairColourText === "no hair"
     ) {
         return hairStyle || hairColour || "no hair";
     }
 
     if (hairColour && hairStyle) {
-        return `${hairColour} ${hairStyle.toLowerCase()}`;
+        return `${hairColour} ${hairStyleText}`;
     }
 
     if (hairColour) {
@@ -408,10 +497,34 @@ function getHairDescription(character) {
     }
 
     if (hairStyle) {
-        return hairStyle.toLowerCase();
+        return hairStyleText;
     }
 
     return "unspecified hair";
+}
+
+function getSkinOrScaleDescription(character) {
+    const skinTone = String(character.skinTone || "").trim();
+
+    if (isDragonborn(character)) {
+        return skinTone
+            ? `${skinTone} scales`
+            : "unspecified scale colour";
+    }
+
+    return skinTone
+        ? `${skinTone} skin`
+        : "unspecified skin tone";
+}
+
+function getNotableFeatureDescription(character) {
+    const featureName = getNotableFeatureName(character);
+
+    if (hasNoObviousNotableFeature(character)) {
+        return "They have no obvious unusual feature.";
+    }
+
+    return `Their notable feature is ${featureName}.`;
 }
 
 export function getIdentityText(alignment, traits, character = state.character) {
@@ -419,15 +532,20 @@ export function getIdentityText(alignment, traits, character = state.character) 
         return "";
     }
 
+    const speciesName = getSpeciesName(character);
     const portraitPresentation = character.portraitPresentation
         ? ` Their portrait presentation is ${character.portraitPresentation}.`
         : "";
 
     const hairDescription = getHairDescription(character);
+    const skinOrScaleDescription = getSkinOrScaleDescription(character);
+    const notableFeatureDescription = getNotableFeatureDescription(character);
 
-    const appearance = `${character.name} is a ${character.ageRange} ${character.species.name} ${character.className} ${getGenderDescription(character)}, with a ${character.height}, ${character.build} frame, ${character.eyeColour} eyes, ${hairDescription} and ${character.skinTone} skin. Their notable feature is: ${character.notableFeature}.${portraitPresentation}`;
+    const appearance = `${character.name} is a ${character.ageRange} ${speciesName} ${character.className} ${getGenderDescription(character)}, with a ${character.height}, ${character.build} frame, ${character.eyeColour} eyes, ${hairDescription} and ${skinOrScaleDescription}. ${notableFeatureDescription}${portraitPresentation}`;
 
-    const traitText = `They appear most strongly defined by ${traits.join(", ")}.`;
+    const traitText = traits.length > 0
+        ? `They appear most strongly defined by ${traits.join(", ")}.`
+        : "Their strongest traits are still emerging.";
 
     return `${appearance} ${traitText} Their choices suggest a ${alignment} outlook.`;
 }
@@ -437,17 +555,23 @@ export function getSpeciesProfileText(character = state.character) {
         return "";
     }
 
-    const traits = character.species.typicalTraits.length > 0
-        ? character.species.typicalTraits.join(", ")
+    const speciesName = getSpeciesName(character);
+    const species = character.species || {};
+    const typicalTraits = Array.isArray(species.typicalTraits) && species.typicalTraits.length > 0
+        ? species.typicalTraits.join(", ")
         : defaultText.noTypicalTraits;
 
-    return `${character.species.description} Typical species traits: ${traits}. Species tendency: ${character.species.playstyleBias}. Possible pressure point: ${character.species.weaknessBias}`;
+    const description = species.description || defaultText.noSpeciesBackground;
+    const playstyleBias = species.playstyleBias || defaultText.flexiblePlaystyle;
+    const weaknessBias = species.weaknessBias || defaultText.noSpeciesWeakness;
+
+    return `${description} Typical ${speciesName} traits: ${typicalTraits}. Species tendency: ${playstyleBias}. Possible pressure point: ${weaknessBias}`;
 }
 
 
 /* =========================================================
-    8. Generated Profile Object
-     ========================================================= */
+    9. Generated Profile Object
+   ========================================================= */
 
 export function createGeneratedProfile(character = state.character) {
     if (!character) {
@@ -470,6 +594,8 @@ export function createGeneratedProfile(character = state.character) {
         playstyle,
         identityText,
         speciesProfileText,
-        profileScores: { ...state.profileScores }
+        profileScores: {
+            ...state.profileScores
+        }
     };
 }

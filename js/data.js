@@ -1,7 +1,24 @@
 /* =========================================================
     Dicebound
     Data Loading
-     ========================================================= */
+    ---------------------------------------------------------
+    This file loads and normalises the JSON data used by the
+    Dicebound frontend.
+
+    Responsibilities:
+    - fetch JSON files from the configured data paths
+    - validate required data before the app uses it
+    - merge species core, appearance and profile data
+    - preserve rich notable feature data for portrait prompts
+    - provide safe fallback data when optional files are missing
+
+    This file should not contain species anatomy prompt rules.
+    Species anatomy belongs in species-portrait-rules.json and
+    the backend speciesPromptService.js.
+
+    This file should not contain character creation logic.
+    Character object creation belongs in character.js.
+   ========================================================= */
 
 import {
     dataPaths,
@@ -26,7 +43,7 @@ import {
 
 /* =========================================================
     1. Fetch Helpers
-     ========================================================= */
+   ========================================================= */
 
 export async function fetchJson(filePath) {
     try {
@@ -44,9 +61,13 @@ export async function fetchJson(filePath) {
 }
 
 export async function fetchJsonFromPaths(filePaths) {
+    const paths = Array.isArray(filePaths)
+        ? filePaths
+        : [filePaths];
+
     let lastError = null;
 
-    for (const filePath of filePaths) {
+    for (const filePath of paths) {
         try {
             return await fetchJson(filePath);
         } catch (error) {
@@ -59,44 +80,47 @@ export async function fetchJsonFromPaths(filePaths) {
 
 
 /* =========================================================
-    2. Data Validation Helpers
-     ========================================================= */
+    2. General Data Validation Helpers
+   ========================================================= */
 
 export function getValidPool(pool, fallbackPool) {
     return hasItems(pool) ? pool : fallbackPool;
 }
 
-function getFallbackHairStyles() {
-    return getValidPool(
-        defaultPhysicalTraits.hairStyles,
-        [
-            "Long Loose Hair",
-            "Shoulder-Length Hair",
-            "Short Hair",
-            "Short Back And Sides",
-            "Ponytail",
-            "Single Plait",
-            "Twin Plaits",
-            "Braided Hair",
-            "Messy Hair",
-            "Curly Hair",
-            "Shaved Sides",
-            "Shaved Head",
-            "Bald",
-            "No Hair",
-            "Smooth Scaled Head",
-            "Horned Crest",
-            "Bone Crest",
-            "Scaled Crest",
-            "Spined Crest",
-            "Short Head Spines",
-            "Long Head Spines",
-            "Crown Of Horns",
-            "Swept-Back Horns",
-            "Head Frill"
-        ]
-    );
+function cleanString(value) {
+    return String(value || "").trim();
 }
+
+function normaliseKey(value) {
+    return cleanString(value)
+        .toLowerCase()
+        .replace(/[^a-z0-9]/g, "");
+}
+
+function cleanStringList(items) {
+    if (!hasItems(items)) {
+        return [];
+    }
+
+    return [
+        ...new Set(
+            items
+                .map(item => cleanString(item))
+                .filter(Boolean)
+        )
+    ];
+}
+
+function cleanOptionalString(value) {
+    const cleanedValue = cleanString(value);
+
+    return cleanedValue || "";
+}
+
+
+/* =========================================================
+    3. Physical Trait Normalisation
+   ========================================================= */
 
 export function normalisePhysicalTraits(physicalTraits = {}) {
     return {
@@ -122,7 +146,7 @@ export function normalisePhysicalTraits(physicalTraits = {}) {
 
         hairStyles: getValidPool(
             physicalTraits.hairStyles,
-            getFallbackHairStyles()
+            defaultPhysicalTraits.hairStyles
         ),
 
         skinTones: getValidPool(
@@ -132,25 +156,28 @@ export function normalisePhysicalTraits(physicalTraits = {}) {
     };
 }
 
-function cleanStringList(items) {
-    if (!hasItems(items)) {
-        return [];
-    }
 
-    return [...new Set(
-        items
-            .map(item => String(item || "").trim())
-            .filter(item => item.length > 0)
-    )];
-}
+/* =========================================================
+    4. Notable Feature Normalisation
+   ========================================================= */
 
 function normaliseFeatureName(featureName) {
-    return String(featureName || "").trim();
+    return cleanString(featureName);
 }
 
 function normaliseAllowedSpecies(allowedSpecies) {
-    if (!allowedSpecies || allowedSpecies === "all") {
+    if (!allowedSpecies) {
         return "all";
+    }
+
+    if (typeof allowedSpecies === "string") {
+        const cleanedSpecies = cleanString(allowedSpecies);
+
+        if (!cleanedSpecies || normaliseKey(cleanedSpecies) === "all") {
+            return "all";
+        }
+
+        return [cleanedSpecies];
     }
 
     if (!Array.isArray(allowedSpecies)) {
@@ -164,6 +191,16 @@ function normaliseAllowedSpecies(allowedSpecies) {
         : "all";
 }
 
+function normaliseNegativePrompt(negativePrompt) {
+    if (typeof negativePrompt === "string") {
+        return cleanString(negativePrompt)
+            ? [cleanString(negativePrompt)]
+            : [];
+    }
+
+    return cleanStringList(negativePrompt);
+}
+
 function normaliseNotableFeatureItem(feature) {
     if (typeof feature === "string") {
         const name = normaliseFeatureName(feature);
@@ -174,7 +211,12 @@ function normaliseNotableFeatureItem(feature) {
 
         return {
             name,
-            allowedSpecies: "all"
+            allowedSpecies: "all",
+            category: "",
+            visibility: "",
+            promptInstruction: "",
+            visibilityInstruction: "",
+            negativePrompt: []
         };
     }
 
@@ -187,7 +229,12 @@ function normaliseNotableFeatureItem(feature) {
 
         return {
             name,
-            allowedSpecies: normaliseAllowedSpecies(feature.allowedSpecies)
+            allowedSpecies: normaliseAllowedSpecies(feature.allowedSpecies),
+            category: cleanOptionalString(feature.category),
+            visibility: cleanOptionalString(feature.visibility),
+            promptInstruction: cleanOptionalString(feature.promptInstruction),
+            visibilityInstruction: cleanOptionalString(feature.visibilityInstruction),
+            negativePrompt: normaliseNegativePrompt(feature.negativePrompt)
         };
     }
 
@@ -201,7 +248,12 @@ function getFallbackNotableFeatures() {
         return fallbackFeatures.map(feature => {
             return {
                 name: feature,
-                allowedSpecies: "all"
+                allowedSpecies: "all",
+                category: "",
+                visibility: "",
+                promptInstruction: "",
+                visibilityInstruction: "",
+                negativePrompt: []
             };
         });
     }
@@ -209,7 +261,12 @@ function getFallbackNotableFeatures() {
     return [
         {
             name: defaultText.noNotableFeature,
-            allowedSpecies: "all"
+            allowedSpecies: "all",
+            category: "",
+            visibility: "",
+            promptInstruction: "",
+            visibilityInstruction: "",
+            negativePrompt: []
         }
     ];
 }
@@ -229,7 +286,7 @@ export function normaliseNotableFeatures(notableFeatureData) {
         .map(normaliseNotableFeatureItem)
         .filter(Boolean)
         .filter(feature => {
-            const key = feature.name.toLowerCase();
+            const key = normaliseKey(feature.name);
 
             if (seenFeatures.has(key)) {
                 return false;
@@ -248,32 +305,46 @@ export function normaliseNotableFeatures(notableFeatureData) {
 
 
 /* =========================================================
-    3. Species Data Merging
-     ========================================================= */
+    5. Species Data Merging
+   ========================================================= */
+
+function getSpeciesAppearanceForName(speciesAppearanceData, speciesName) {
+    const appearanceBySpecies = speciesAppearanceData?.speciesAppearance || {};
+
+    return appearanceBySpecies[speciesName] || {};
+}
+
+function getSpeciesProfileForName(speciesProfileData, speciesName) {
+    const profileBySpecies = speciesProfileData?.speciesProfiles || {};
+
+    return profileBySpecies[speciesName] || {};
+}
 
 export function mergeSpeciesData(
     speciesCoreData,
     speciesAppearanceData,
     speciesProfileData
 ) {
-    const speciesCoreList = speciesCoreData.species;
-    const appearanceBySpecies = speciesAppearanceData.speciesAppearance;
-    const profileBySpecies = speciesProfileData.speciesProfiles;
+    const speciesCoreList = Array.isArray(speciesCoreData?.species)
+        ? speciesCoreData.species
+        : [];
 
     return speciesCoreList.map(speciesCore => {
-        const appearance = appearanceBySpecies[speciesCore.name] || {};
-        const profile = profileBySpecies[speciesCore.name] || {};
+        const speciesName = speciesCore.name;
+        const appearance = getSpeciesAppearanceForName(speciesAppearanceData, speciesName);
+        const profile = getSpeciesProfileForName(speciesProfileData, speciesName);
 
         return {
-            name: speciesCore.name,
+            name: speciesName,
 
             description:
                 speciesCore.description ||
                 defaultText.noSpeciesBackground,
 
             typicalTraits:
-                speciesCore.typicalTraits ||
-                [],
+                Array.isArray(speciesCore.typicalTraits)
+                    ? speciesCore.typicalTraits
+                    : [],
 
             physicalTraits:
                 normalisePhysicalTraits(appearance),
@@ -295,8 +366,8 @@ export function mergeSpeciesData(
 
 
 /* =========================================================
-    4. Individual Data Loaders
-     ========================================================= */
+    6. Individual Data Loaders
+   ========================================================= */
 
 export async function loadNameData() {
     try {
@@ -411,8 +482,8 @@ export async function loadNotableFeatureData() {
 
 
 /* =========================================================
-    5. Combined Data Loader
-     ========================================================= */
+    7. Combined Data Loader
+   ========================================================= */
 
 export async function loadAllData() {
     await Promise.all([

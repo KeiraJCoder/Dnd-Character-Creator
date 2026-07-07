@@ -1,134 +1,110 @@
 {
-  "speciesProfiles": {
-    "Human": {
-      "profileInfluence": {
-        "ambition": 2,
-        "pragmatism": 1,
-        "confidence": 1,
-        "curiosity": 1
-      },
-      "playstyleBias": "Flexible Problem-Solver",
-      "weaknessBias": "Restlessness. Humans may push too hard because they feel time, opportunity or legacy slipping away."
+    "_description": "Dicebound species profile data. This file stores light roleplay profile influences for the official 2024 Player's Handbook core species used by Dicebound. These values can gently bias personality scoring, playstyle wording and weakness text after the question flow has been answered. This file should not alter DnD ability scores, class statistics, saving throws, hit points or mechanical rules.",
+    "_sourceNotes": {
+        "ruleset": "DnD 2024 compatible",
+        "speciesSet": "Official 2024 Player's Handbook core species",
+        "importantNote": "These influences are intentionally light roleplay nudges, not fixed personality rules. The character's question answers should remain the main source of personality, alignment, weakness and playstyle."
     },
-    "Elf": {
-      "profileInfluence": {
-        "curiosity": 2,
-        "wisdom": 1,
-        "perception": 2,
-        "caution": 1
-      },
-      "playstyleBias": "Careful Investigator",
-      "weaknessBias": "Detachment. Elves may observe for too long before acting, especially when mortal urgency feels distant to them."
-    },
-    "Dwarf": {
-      "profileInfluence": {
-        "loyalty": 2,
-        "honour": 2,
-        "caution": 1,
-        "pragmatism": 1
-      },
-      "playstyleBias": "Pragmatic Survivor",
-      "weaknessBias": "Stubbornness. Dwarves may hold to a promise, grudge or tradition even when changing course would be wiser."
-    },
-    "Halfling": {
-      "profileInfluence": {
-        "courage": 2,
-        "mercy": 2,
-        "generosity": 1,
-        "caution": 1
-      },
-      "playstyleBias": "Diplomatic Problem-Solver",
-      "weaknessBias": "Overcommitment. Halflings may put themselves in danger because they cannot ignore someone who needs help."
-    },
-    "Gnome": {
-      "profileInfluence": {
-        "curiosity": 3,
-        "investigation": 2,
-        "confidence": 1,
-        "ambition": 1
-      },
-      "playstyleBias": "Careful Investigator",
-      "weaknessBias": "Obsession. Gnomes may chase an idea, mystery or invention long after caution says to stop."
-    },
-    "Tiefling": {
-      "profileInfluence": {
-        "independence": 2,
-        "scepticism": 2,
-        "confidence": 1,
-        "deception": 1
-      },
-      "playstyleBias": "Pragmatic Survivor",
-      "weaknessBias": "Defensiveness. Tieflings may expect rejection before it happens and push away people who might have stood beside them."
-    },
-    "Dragonborn": {
-      "profileInfluence": {
-        "pride": 2,
-        "honour": 2,
-        "courage": 2,
-        "confidence": 1
-      },
-      "playstyleBias": "Direct Combatant",
-      "weaknessBias": "Pride. Dragonborn may struggle to retreat, apologise or accept being seen as weak."
-    },
-    "Half-Elf": {
-      "profileInfluence": {
-        "diplomacy": 2,
-        "independence": 2,
-        "curiosity": 1,
-        "wisdom": 1
-      },
-      "playstyleBias": "Diplomatic Problem-Solver",
-      "weaknessBias": "Uncertainty. Half-Elves may question where they truly belong, especially when forced to choose sides."
-    },
-    "Half-Orc": {
-      "profileInfluence": {
-        "courage": 2,
-        "loyalty": 2,
-        "violence": 1,
-        "mercy": 1
-      },
-      "playstyleBias": "Direct Combatant",
-      "weaknessBias": "Anger. Half-Orcs may react strongly when mocked, cornered or treated like a monster."
-    },
-    "Aasimar": {
-      "profileInfluence": {
-        "faith": 3,
-        "mercy": 2,
-        "honour": 1,
-        "courage": 1
-      },
-      "playstyleBias": "Diplomatic Problem-Solver",
-      "weaknessBias": "Burden. Aasimar may believe they must be better than everyone else expects, even when they are breaking inside."
-    },
-    "Goblin": {
-      "profileInfluence": {
-        "caution": 2,
-        "deception": 2,
-        "pragmatism": 2,
-        "curiosity": 1
-      },
-      "playstyleBias": "Pragmatic Survivor",
-      "weaknessBias": "Distrust. Goblins may assume every offer has a hook and every kindness hides a trap."
-    },
-    "Orc": {
-      "profileInfluence": {
-        "courage": 2,
-        "independence": 2,
-        "pragmatism": 1,
-        "violence": 1
-      },
-      "playstyleBias": "Direct Combatant",
-      "weaknessBias": "Impatience. Orcs may act quickly because waiting can feel like weakness, hesitation or wasted survival time."
-    },
-    "Goliath": {
-      "profileInfluence": {
-        "courage": 2,
-        "pride": 2,
-        "loyalty": 1,
-        "confidence": 1
-      },
-      "playstyleBias": "Direct Combatant",
-      "weaknessBias": "Competitiveness. Goliaths may turn danger into a test of worth, even when caution would save them."
+    "speciesProfiles": {
+        "Aasimar": {
+            "profileInfluence": {
+                "faith": 3,
+                "mercy": 2,
+                "honour": 1,
+                "courage": 1
+            },
+            "playstyleBias": "Diplomatic Problem-Solver",
+            "weaknessBias": "Burden. Aasimar may feel pressured to live up to a divine purpose, even when they are exhausted, afraid or uncertain."
+        },
+        "Dragonborn": {
+            "profileInfluence": {
+                "pride": 2,
+                "honour": 2,
+                "courage": 2,
+                "confidence": 1
+            },
+            "playstyleBias": "Direct Combatant",
+            "weaknessBias": "Pride. Dragonborn may struggle to retreat, apologise or accept being seen as weak."
+        },
+        "Dwarf": {
+            "profileInfluence": {
+                "loyalty": 2,
+                "honour": 2,
+                "caution": 1,
+                "pragmatism": 1
+            },
+            "playstyleBias": "Pragmatic Survivor",
+            "weaknessBias": "Stubbornness. Dwarves may hold to a promise, grudge, craft, clan duty or tradition even when changing course would be wiser."
+        },
+        "Elf": {
+            "profileInfluence": {
+                "curiosity": 2,
+                "wisdom": 1,
+                "perception": 2,
+                "caution": 1
+            },
+            "playstyleBias": "Careful Investigator",
+            "weaknessBias": "Detachment. Elves may observe for too long before acting, especially when short-lived urgency feels distant to them."
+        },
+        "Gnome": {
+            "profileInfluence": {
+                "curiosity": 3,
+                "investigation": 2,
+                "confidence": 1,
+                "ambition": 1
+            },
+            "playstyleBias": "Careful Investigator",
+            "weaknessBias": "Obsession. Gnomes may chase an idea, mystery, illusion or invention long after caution says to stop."
+        },
+        "Goliath": {
+            "profileInfluence": {
+                "courage": 2,
+                "pride": 2,
+                "loyalty": 1,
+                "confidence": 1
+            },
+            "playstyleBias": "Direct Combatant",
+            "weaknessBias": "Competitiveness. Goliaths may turn danger into a test of worth, even when caution or teamwork would save them."
+        },
+        "Halfling": {
+            "profileInfluence": {
+                "courage": 2,
+                "mercy": 2,
+                "generosity": 1,
+                "caution": 1
+            },
+            "playstyleBias": "Diplomatic Problem-Solver",
+            "weaknessBias": "Overcommitment. Halflings may put themselves in danger because they cannot ignore someone who needs help."
+        },
+        "Human": {
+            "profileInfluence": {
+                "ambition": 2,
+                "pragmatism": 1,
+                "confidence": 1,
+                "curiosity": 1
+            },
+            "playstyleBias": "Flexible Problem-Solver",
+            "weaknessBias": "Restlessness. Humans may push too hard because they feel time, opportunity or legacy slipping away."
+        },
+        "Orc": {
+            "profileInfluence": {
+                "courage": 2,
+                "independence": 2,
+                "pragmatism": 1,
+                "violence": 1
+            },
+            "playstyleBias": "Direct Combatant",
+            "weaknessBias": "Impatience. Orcs may act quickly because waiting can feel like weakness, hesitation or wasted survival time."
+        },
+        "Tiefling": {
+            "profileInfluence": {
+                "independence": 2,
+                "scepticism": 2,
+                "confidence": 1,
+                "deception": 1
+            },
+            "playstyleBias": "Pragmatic Survivor",
+            "weaknessBias": "Defensiveness. Tieflings may expect rejection before it happens and push away people who might have stood beside them."
+        }
     }
-  }
 }

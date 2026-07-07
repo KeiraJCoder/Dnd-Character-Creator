@@ -1,120 +1,617 @@
 {
-  "speciesAppearance": {
-    "Human": {
-      "heights": ["Short", "Average Height", "Average Height", "Tall", "Very Tall"],
-      "builds": ["Thin", "Lean", "Average Build", "Average Build", "Stocky", "Broad", "Heavy-Set", "Fat", "Muscular"],
-      "eyeColours": ["Amber", "Black", "Blue", "Brown", "Green", "Grey", "Hazel"],
-      "hairColours": ["Ash-Grey", "Auburn", "Black", "Blonde", "Brown", "Copper", "Grey", "Red", "Silver", "White"],
-      "hairStyles": ["Long Loose Hair", "Shoulder-Length Hair", "Short Hair", "Short Back And Sides", "Ponytail", "Single Plait", "Twin Plaits", "Braided Hair", "Messy Hair", "Curly Hair", "Shaved Sides", "Shaved Head", "Bald"],
-      "skinTones": ["Bronze", "Deep Brown", "Fair", "Golden", "Olive", "Pale", "Warm Brown"]
+    "_description": "Dicebound species appearance data. This file stores species-specific appearance pools used by the frontend character builder for height, build, eye colour, hair colour, hair style and skin tone dropdowns. These values are used for character creation and portrait prompts. This is not a DnD rules-stat file. It is a 2024-compatible visual data file designed to keep generated characters species-appropriate for the official 2024 Player's Handbook core species.",
+    "_sourceNotes": {
+        "ruleset": "DnD 2024 compatible",
+        "official2024CoreSpecies": [
+            "Aasimar",
+            "Dragonborn",
+            "Dwarf",
+            "Elf",
+            "Gnome",
+            "Goliath",
+            "Halfling",
+            "Human",
+            "Orc",
+            "Tiefling"
+        ],
+        "importantNote": "DnD 2024 does not provide exhaustive official appearance tables for eye colour, hair colour, hair style, skin tone or body build. These pools are curated for species-appropriate character generation and portrait prompting."
     },
-
-    "Elf": {
-      "heights": ["Average Height", "Tall", "Tall", "Very Tall"],
-      "builds": ["Thin", "Lean", "Lean", "Average Build", "Broad"],
-      "eyeColours": ["Amber", "Blue", "Gold", "Green", "Grey", "Silver", "Violet"],
-      "hairColours": ["Ash-Grey", "Auburn", "Black", "Blonde", "Brown", "Silver", "White"],
-      "hairStyles": ["Long Loose Hair", "Shoulder-Length Hair", "Long Straight Hair", "Long Wavy Hair", "Ponytail", "High Ponytail", "Single Plait", "Twin Plaits", "Braided Hair", "Elegant Braids", "Half-Up Hair", "Crown Braid", "Short Hair"],
-      "skinTones": ["Bronze", "Deep Brown", "Fair", "Golden", "Olive", "Pale", "Warm Brown"]
-    },
-
-    "Dwarf": {
-      "heights": ["Short", "Short", "Short", "Average Height", "Average Height", "Tall"],
-      "builds": ["Average Build", "Stocky", "Stocky", "Broad", "Broad", "Heavy-Set", "Heavy-Set", "Fat", "Muscular"],
-      "eyeColours": ["Amber", "Black", "Blue", "Brown", "Green", "Grey"],
-      "hairColours": ["Auburn", "Black", "Brown", "Grey", "Red", "Silver", "White"],
-      "hairStyles": ["Long Loose Hair", "Shoulder-Length Hair", "Short Hair", "Thick Braids", "Single Plait", "Twin Plaits", "Braided Hair", "Messy Hair", "Tied Back Hair", "Shaved Sides", "Shaved Head", "Bald"],
-      "skinTones": ["Ashen", "Bronze", "Copper-Toned", "Deep Brown", "Fair", "Pale", "Warm Brown"]
-    },
-
-    "Halfling": {
-      "heights": ["Short", "Short", "Short", "Short", "Average Height"],
-      "builds": ["Thin", "Lean", "Average Build", "Average Build", "Stocky", "Broad", "Heavy-Set", "Fat"],
-      "eyeColours": ["Amber", "Blue", "Brown", "Green", "Grey", "Hazel"],
-      "hairColours": ["Auburn", "Black", "Blonde", "Brown", "Grey", "Red"],
-      "hairStyles": ["Long Loose Hair", "Shoulder-Length Hair", "Short Hair", "Messy Hair", "Curly Hair", "Wavy Hair", "Ponytail", "Single Plait", "Twin Plaits", "Braided Hair", "Shaved Head", "Bald"],
-      "skinTones": ["Bronze", "Deep Brown", "Fair", "Golden", "Olive", "Warm Brown"]
-    },
-
-    "Gnome": {
-      "heights": ["Short", "Short", "Average Height", "Average Height", "Tall"],
-      "builds": ["Thin", "Lean", "Lean", "Average Build", "Stocky", "Broad"],
-      "eyeColours": ["Amber", "Blue", "Brown", "Gold", "Green", "Grey", "Violet"],
-      "hairColours": ["Black", "Blonde", "Brown", "Copper", "Dark Blue", "Red", "Silver", "White"],
-      "hairStyles": ["Wild Hair", "Messy Hair", "Curly Hair", "Short Hair", "Shoulder-Length Hair", "Ponytail", "Single Plait", "Twin Plaits", "Braided Hair", "Shaved Sides", "Shaved Head", "Bald"],
-      "skinTones": ["Bronze", "Deep Brown", "Fair", "Golden", "Olive", "Pale", "Warm Brown"]
-    },
-
-    "Tiefling": {
-      "heights": ["Short", "Average Height", "Average Height", "Tall", "Very Tall"],
-      "builds": ["Thin", "Lean", "Average Build", "Stocky", "Broad", "Heavy-Set", "Muscular"],
-      "eyeColours": ["Amber", "Black", "Blue", "Gold", "Green", "Red", "Silver", "Violet"],
-      "hairColours": ["Ash-Grey", "Auburn", "Black", "Copper", "Dark Blue", "Red", "Silver", "White"],
-      "hairStyles": ["Long Loose Hair", "Shoulder-Length Hair", "Short Hair", "Ponytail", "Single Plait", "Twin Plaits", "Braided Hair", "Messy Hair", "Curly Hair", "Shaved Sides", "Shaved Head", "Bald", "Hair Around Horns", "Hair Between Horns", "Swept-Back Hair"],
-      "skinTones": ["Ashen", "Blue-Grey", "Bronze", "Deep Brown", "Fair", "Pale", "Purple", "Red", "Warm Brown"]
-    },
-
-    "Dragonborn": {
-      "heights": ["Average Height", "Tall", "Tall", "Very Tall", "Very Tall"],
-      "builds": ["Average Build", "Stocky", "Broad", "Heavy-Set", "Fat", "Muscular", "Muscular"],
-      "eyeColours": ["Amber", "Black", "Blue", "Gold", "Green", "Red", "Silver"],
-      "hairColours": ["Black", "Blue", "Bronze", "Bone", "Copper", "Gold", "Green", "Red", "Silver", "White"],
-      "hairStyles": ["No Hair", "Smooth Scaled Head", "Horned Crest", "Bone Crest", "Scaled Crest", "Spined Crest", "Short Head Spines", "Long Head Spines", "Crown Of Horns", "Swept-Back Horns", "Head Frill"],
-      "skinTones": ["Black Scales", "Blue Scales", "Bronze Scales", "Copper Scales", "Gold Scales", "Green Scales", "Red Scales", "Silver Scales", "White Scales"]
-    },
-
-    "Half-Elf": {
-      "heights": ["Short", "Average Height", "Average Height", "Tall", "Very Tall"],
-      "builds": ["Thin", "Lean", "Average Build", "Stocky", "Broad", "Heavy-Set", "Muscular"],
-      "eyeColours": ["Amber", "Blue", "Brown", "Green", "Grey", "Hazel", "Silver", "Violet"],
-      "hairColours": ["Ash-Grey", "Auburn", "Black", "Blonde", "Brown", "Red", "Silver", "White"],
-      "hairStyles": ["Long Loose Hair", "Shoulder-Length Hair", "Short Hair", "Long Straight Hair", "Long Wavy Hair", "Ponytail", "Single Plait", "Twin Plaits", "Braided Hair", "Half-Up Hair", "Messy Hair", "Curly Hair", "Shaved Sides", "Shaved Head", "Bald"],
-      "skinTones": ["Bronze", "Deep Brown", "Fair", "Golden", "Olive", "Pale", "Warm Brown"]
-    },
-
-    "Half-Orc": {
-      "heights": ["Short", "Average Height", "Tall", "Tall", "Very Tall"],
-      "builds": ["Average Build", "Stocky", "Broad", "Heavy-Set", "Fat", "Muscular", "Muscular"],
-      "eyeColours": ["Amber", "Black", "Brown", "Green", "Grey", "Hazel"],
-      "hairColours": ["Auburn", "Black", "Brown", "Dark Blue", "Grey", "White"],
-      "hairStyles": ["Long Loose Hair", "Shoulder-Length Hair", "Short Hair", "Messy Hair", "Ponytail", "Single Plait", "Braided Hair", "War Braids", "Shaved Sides", "Shaved Head", "Bald", "Topknot"],
-      "skinTones": ["Ashen", "Bronze", "Copper-Toned", "Deep Brown", "Grey-Green", "Olive", "Warm Brown"]
-    },
-
-    "Aasimar": {
-      "heights": ["Short", "Average Height", "Tall", "Very Tall"],
-      "builds": ["Thin", "Lean", "Average Build", "Stocky", "Broad", "Heavy-Set", "Muscular"],
-      "eyeColours": ["Amber", "Blue", "Gold", "Grey", "Silver", "Violet", "White"],
-      "hairColours": ["Ash-Grey", "Auburn", "Black", "Blonde", "Gold", "Silver", "White"],
-      "hairStyles": ["Long Loose Hair", "Shoulder-Length Hair", "Short Hair", "Long Straight Hair", "Long Wavy Hair", "Ponytail", "Single Plait", "Twin Plaits", "Braided Hair", "Half-Up Hair", "Flowing Hair", "Shaved Head", "Bald"],
-      "skinTones": ["Bronze", "Copper-Toned", "Deep Brown", "Fair", "Golden", "Pale", "Warm Brown"]
-    },
-
-    "Goblin": {
-      "heights": ["Short", "Short", "Short", "Average Height", "Tall"],
-      "builds": ["Thin", "Lean", "Lean", "Average Build", "Stocky", "Broad"],
-      "eyeColours": ["Amber", "Black", "Brown", "Green", "Red", "Yellow"],
-      "hairColours": ["Black", "Brown", "Grey", "Red", "White"],
-      "hairStyles": ["No Hair", "Wispy Hair", "Greasy Hair", "Messy Hair", "Short Hair", "Spiky Hair", "Patchy Hair", "Topknot", "Shaved Sides", "Shaved Head", "Bald"],
-      "skinTones": ["Ashen", "Deep Brown", "Green", "Grey-Green", "Olive", "Warm Brown", "Yellow-Green"]
-    },
-
-    "Orc": {
-      "heights": ["Short", "Average Height", "Tall", "Tall", "Very Tall"],
-      "builds": ["Average Build", "Stocky", "Broad", "Heavy-Set", "Fat", "Muscular", "Muscular"],
-      "eyeColours": ["Amber", "Black", "Brown", "Green", "Grey", "Red"],
-      "hairColours": ["Auburn", "Black", "Brown", "Grey", "White"],
-      "hairStyles": ["Long Loose Hair", "Shoulder-Length Hair", "Short Hair", "Messy Hair", "Ponytail", "Single Plait", "Braided Hair", "War Braids", "Shaved Sides", "Shaved Head", "Bald", "Topknot"],
-      "skinTones": ["Ashen", "Bronze", "Deep Brown", "Green", "Grey-Green", "Olive", "Warm Brown"]
-    },
-
-    "Goliath": {
-      "heights": ["Average Height", "Tall", "Very Tall", "Very Tall", "Very Tall"],
-      "builds": ["Average Build", "Stocky", "Broad", "Heavy-Set", "Fat", "Muscular", "Muscular"],
-      "eyeColours": ["Amber", "Black", "Blue", "Brown", "Grey", "Silver"],
-      "hairColours": ["Ash-Grey", "Black", "Brown", "Grey", "White"],
-      "hairStyles": ["No Hair", "Bald", "Shaved Head", "Short Hair", "War Braids", "Single Plait", "Topknot", "Shaved Sides", "Close-Cropped Hair"],
-      "skinTones": ["Ashen", "Bronze", "Deep Brown", "Grey", "Pale Grey", "Stone Grey", "Warm Brown"]
+    "speciesAppearance": {
+        "Aasimar": {
+            "heights": [
+                "Short",
+                "Average Height",
+                "Tall",
+                "Very Tall"
+            ],
+            "builds": [
+                "Thin",
+                "Lean",
+                "Average Build",
+                "Stocky",
+                "Broad",
+                "Heavy-Set",
+                "Fat",
+                "Muscular"
+            ],
+            "eyeColours": [
+                "Amber",
+                "Blue",
+                "Gold",
+                "Grey",
+                "Silver",
+                "Violet",
+                "White"
+            ],
+            "hairColours": [
+                "Ash-Grey",
+                "Auburn",
+                "Black",
+                "Blonde",
+                "Gold",
+                "Silver",
+                "White"
+            ],
+            "hairStyles": [
+                "Long Loose Hair",
+                "Shoulder-Length Hair",
+                "Short Hair",
+                "Long Straight Hair",
+                "Long Wavy Hair",
+                "Ponytail",
+                "Single Plait",
+                "Twin Plaits",
+                "Braided Hair",
+                "Half-Up Hair",
+                "Flowing Hair",
+                "Shaved Head",
+                "Bald"
+            ],
+            "skinTones": [
+                "Bronze",
+                "Copper-Toned",
+                "Deep Brown",
+                "Fair",
+                "Golden",
+                "Pale",
+                "Warm Brown"
+            ]
+        },
+        "Dragonborn": {
+          "heights": [
+              "Average Height",
+              "Tall",
+              "Tall",
+              "Very Tall",
+              "Very Tall"
+          ],
+          "builds": [
+              "Average Build",
+              "Stocky",
+              "Broad",
+              "Heavy-Set",
+              "Fat",
+              "Muscular",
+              "Muscular"
+          ],
+          "eyeColours": [
+              "Amber",
+              "Black",
+              "Blue",
+              "Gold",
+              "Green",
+              "Red",
+              "Silver"
+          ],
+          "hairColours": [
+              "Black Horns",
+              "Bone-Coloured Horns",
+              "Bronze Horns",
+              "Copper Horns",
+              "Gold Horns",
+              "Ivory Horns",
+              "Silver Horns",
+              "White Horns"
+          ],
+          "hairStyles": [
+              "Smooth Scaled Head",
+              "Small Horns",
+              "Swept-Back Horns",
+              "Crown Of Horns",
+              "Horned Crest",
+              "Bone Crest",
+              "Scaled Crest",
+              "Spined Crest",
+              "Short Head Spines",
+              "Long Head Spines",
+              "Head Frill"
+          ],
+          "skinTones": [
+              "Black Scales",
+              "Blue Scales",
+              "Bronze Scales",
+              "Copper Scales",
+              "Gold Scales",
+              "Green Scales",
+              "Red Scales",
+              "Silver Scales",
+              "White Scales"
+          ]
+        },
+        "Dwarf": {
+            "heights": [
+                "Short",
+                "Short",
+                "Short",
+                "Average Height",
+                "Average Height",
+                "Tall"
+            ],
+            "builds": [
+                "Average Build",
+                "Stocky",
+                "Stocky",
+                "Broad",
+                "Broad",
+                "Heavy-Set",
+                "Heavy-Set",
+                "Fat",
+                "Muscular"
+            ],
+            "eyeColours": [
+                "Amber",
+                "Black",
+                "Blue",
+                "Brown",
+                "Green",
+                "Grey"
+            ],
+            "hairColours": [
+                "Auburn",
+                "Black",
+                "Brown",
+                "Grey",
+                "Red",
+                "Silver",
+                "White"
+            ],
+            "hairStyles": [
+                "Long Loose Hair",
+                "Shoulder-Length Hair",
+                "Short Hair",
+                "Thick Braids",
+                "Single Plait",
+                "Twin Plaits",
+                "Braided Hair",
+                "Messy Hair",
+                "Tied Back Hair",
+                "Shaved Sides",
+                "Shaved Head",
+                "Bald"
+            ],
+            "skinTones": [
+                "Ashen",
+                "Bronze",
+                "Copper-Toned",
+                "Deep Brown",
+                "Fair",
+                "Pale",
+                "Warm Brown"
+            ]
+        },
+        "Elf": {
+            "heights": [
+                "Average Height",
+                "Tall",
+                "Tall",
+                "Very Tall"
+            ],
+            "builds": [
+                "Thin",
+                "Lean",
+                "Lean",
+                "Average Build",
+                "Broad"
+            ],
+            "eyeColours": [
+                "Amber",
+                "Blue",
+                "Gold",
+                "Green",
+                "Grey",
+                "Silver",
+                "Violet"
+            ],
+            "hairColours": [
+                "Ash-Grey",
+                "Auburn",
+                "Black",
+                "Blonde",
+                "Brown",
+                "Silver",
+                "White"
+            ],
+            "hairStyles": [
+                "Long Loose Hair",
+                "Shoulder-Length Hair",
+                "Long Straight Hair",
+                "Long Wavy Hair",
+                "Ponytail",
+                "High Ponytail",
+                "Single Plait",
+                "Twin Plaits",
+                "Braided Hair",
+                "Elegant Braids",
+                "Half-Up Hair",
+                "Crown Braid",
+                "Short Hair"
+            ],
+            "skinTones": [
+                "Bronze",
+                "Deep Brown",
+                "Fair",
+                "Golden",
+                "Olive",
+                "Pale",
+                "Warm Brown"
+            ]
+        },
+        "Gnome": {
+            "heights": [
+                "Short",
+                "Short",
+                "Average Height",
+                "Average Height",
+                "Tall"
+            ],
+            "builds": [
+                "Thin",
+                "Lean",
+                "Lean",
+                "Average Build",
+                "Stocky",
+                "Broad"
+            ],
+            "eyeColours": [
+                "Amber",
+                "Blue",
+                "Brown",
+                "Gold",
+                "Green",
+                "Grey",
+                "Violet"
+            ],
+            "hairColours": [
+                "Black",
+                "Blonde",
+                "Brown",
+                "Copper",
+                "Dark Blue",
+                "Red",
+                "Silver",
+                "White"
+            ],
+            "hairStyles": [
+                "Wild Hair",
+                "Messy Hair",
+                "Curly Hair",
+                "Short Hair",
+                "Shoulder-Length Hair",
+                "Ponytail",
+                "Single Plait",
+                "Twin Plaits",
+                "Braided Hair",
+                "Shaved Sides",
+                "Shaved Head",
+                "Bald"
+            ],
+            "skinTones": [
+                "Bronze",
+                "Deep Brown",
+                "Fair",
+                "Golden",
+                "Olive",
+                "Pale",
+                "Warm Brown"
+            ]
+        },
+        "Goliath": {
+            "heights": [
+                "Average Height",
+                "Tall",
+                "Very Tall",
+                "Very Tall",
+                "Very Tall"
+            ],
+            "builds": [
+                "Average Build",
+                "Stocky",
+                "Broad",
+                "Heavy-Set",
+                "Fat",
+                "Muscular",
+                "Muscular"
+            ],
+            "eyeColours": [
+                "Amber",
+                "Black",
+                "Blue",
+                "Brown",
+                "Grey",
+                "Silver"
+            ],
+            "hairColours": [
+                "Ash-Grey",
+                "Black",
+                "Brown",
+                "Grey",
+                "White"
+            ],
+            "hairStyles": [
+                "No Hair",
+                "Bald",
+                "Shaved Head",
+                "Short Hair",
+                "War Braids",
+                "Single Plait",
+                "Topknot",
+                "Shaved Sides",
+                "Close-Cropped Hair"
+            ],
+            "skinTones": [
+                "Ashen",
+                "Bronze",
+                "Deep Brown",
+                "Grey",
+                "Pale Grey",
+                "Stone Grey",
+                "Warm Brown"
+            ]
+        },
+        "Halfling": {
+            "heights": [
+                "Short",
+                "Short",
+                "Short",
+                "Short",
+                "Average Height"
+            ],
+            "builds": [
+                "Thin",
+                "Lean",
+                "Average Build",
+                "Average Build",
+                "Stocky",
+                "Broad",
+                "Heavy-Set",
+                "Fat"
+            ],
+            "eyeColours": [
+                "Amber",
+                "Blue",
+                "Brown",
+                "Green",
+                "Grey",
+                "Hazel"
+            ],
+            "hairColours": [
+                "Auburn",
+                "Black",
+                "Blonde",
+                "Brown",
+                "Grey",
+                "Red"
+            ],
+            "hairStyles": [
+                "Long Loose Hair",
+                "Shoulder-Length Hair",
+                "Short Hair",
+                "Messy Hair",
+                "Curly Hair",
+                "Wavy Hair",
+                "Ponytail",
+                "Single Plait",
+                "Twin Plaits",
+                "Braided Hair",
+                "Shaved Head",
+                "Bald"
+            ],
+            "skinTones": [
+                "Bronze",
+                "Deep Brown",
+                "Fair",
+                "Golden",
+                "Olive",
+                "Warm Brown"
+            ]
+        },
+        "Human": {
+            "heights": [
+                "Short",
+                "Average Height",
+                "Average Height",
+                "Tall",
+                "Very Tall"
+            ],
+            "builds": [
+                "Thin",
+                "Lean",
+                "Average Build",
+                "Average Build",
+                "Stocky",
+                "Broad",
+                "Heavy-Set",
+                "Fat",
+                "Muscular"
+            ],
+            "eyeColours": [
+                "Amber",
+                "Black",
+                "Blue",
+                "Brown",
+                "Green",
+                "Grey",
+                "Hazel"
+            ],
+            "hairColours": [
+                "Ash-Grey",
+                "Auburn",
+                "Black",
+                "Blonde",
+                "Brown",
+                "Copper",
+                "Grey",
+                "Red",
+                "Silver",
+                "White"
+            ],
+            "hairStyles": [
+                "Long Loose Hair",
+                "Shoulder-Length Hair",
+                "Short Hair",
+                "Short Back And Sides",
+                "Ponytail",
+                "Single Plait",
+                "Twin Plaits",
+                "Braided Hair",
+                "Messy Hair",
+                "Curly Hair",
+                "Shaved Sides",
+                "Shaved Head",
+                "Bald"
+            ],
+            "skinTones": [
+                "Bronze",
+                "Deep Brown",
+                "Fair",
+                "Golden",
+                "Olive",
+                "Pale",
+                "Warm Brown"
+            ]
+        },
+        "Orc": {
+            "heights": [
+                "Short",
+                "Average Height",
+                "Tall",
+                "Tall",
+                "Very Tall"
+            ],
+            "builds": [
+                "Average Build",
+                "Stocky",
+                "Broad",
+                "Heavy-Set",
+                "Fat",
+                "Muscular",
+                "Muscular"
+            ],
+            "eyeColours": [
+                "Amber",
+                "Black",
+                "Brown",
+                "Green",
+                "Grey",
+                "Red"
+            ],
+            "hairColours": [
+                "Auburn",
+                "Black",
+                "Brown",
+                "Grey",
+                "White"
+            ],
+            "hairStyles": [
+                "Long Loose Hair",
+                "Shoulder-Length Hair",
+                "Short Hair",
+                "Messy Hair",
+                "Ponytail",
+                "Single Plait",
+                "Braided Hair",
+                "War Braids",
+                "Shaved Sides",
+                "Shaved Head",
+                "Bald",
+                "Topknot"
+            ],
+            "skinTones": [
+                "Ashen",
+                "Bronze",
+                "Deep Brown",
+                "Green",
+                "Grey-Green",
+                "Olive",
+                "Warm Brown"
+            ]
+        },
+        "Tiefling": {
+            "heights": [
+                "Short",
+                "Average Height",
+                "Average Height",
+                "Tall",
+                "Very Tall"
+            ],
+            "builds": [
+                "Thin",
+                "Lean",
+                "Average Build",
+                "Stocky",
+                "Broad",
+                "Heavy-Set",
+                "Fat",
+                "Muscular"
+            ],
+            "eyeColours": [
+                "Amber",
+                "Black",
+                "Blue",
+                "Gold",
+                "Green",
+                "Red",
+                "Silver",
+                "Violet"
+            ],
+            "hairColours": [
+                "Ash-Grey",
+                "Auburn",
+                "Black",
+                "Copper",
+                "Dark Blue",
+                "Red",
+                "Silver",
+                "White"
+            ],
+            "hairStyles": [
+                "Long Loose Hair",
+                "Shoulder-Length Hair",
+                "Short Hair",
+                "Ponytail",
+                "Single Plait",
+                "Twin Plaits",
+                "Braided Hair",
+                "Messy Hair",
+                "Curly Hair",
+                "Shaved Sides",
+                "Shaved Head",
+                "Bald",
+                "Hair Around Horns",
+                "Hair Between Horns",
+                "Swept-Back Hair"
+            ],
+            "skinTones": [
+                "Ashen",
+                "Blue-Grey",
+                "Bronze",
+                "Deep Brown",
+                "Fair",
+                "Pale",
+                "Purple",
+                "Red",
+                "Warm Brown"
+            ]
+        }
     }
-  }
 }

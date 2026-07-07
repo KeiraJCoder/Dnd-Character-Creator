@@ -1,12 +1,29 @@
 /* =========================================================
     Dicebound
     Utility Helpers
-     ========================================================= */
+    ---------------------------------------------------------
+    This file stores small shared frontend helper functions.
+
+    Responsibilities:
+    - array checks and random selection
+    - dice rolling and ability modifier formatting
+    - safe text formatting
+    - simple DOM helpers
+    - select field helpers
+    - file/image helper functions
+    - clipboard copying
+    - shared character display helpers used by UI, export and
+      profile modules
+
+    This file should stay generic. It should not contain species
+    anatomy rules, portrait prompt logic, data loading, character
+    creation rules or question scoring logic.
+   ========================================================= */
 
 
 /* =========================================================
     1. Array And Random Helpers
-     ========================================================= */
+   ========================================================= */
 
 export function hasItems(value) {
     return Array.isArray(value) && value.length > 0;
@@ -45,7 +62,7 @@ export function getRandomSelectValue(selectElement) {
 
     const validOptions = Array.from(selectElement.options)
         .map(option => option.value)
-        .filter(value => value.length > 0);
+        .filter(value => String(value || "").trim().length > 0);
 
     return getRandomItem(validOptions) || "";
 }
@@ -53,10 +70,16 @@ export function getRandomSelectValue(selectElement) {
 
 /* =========================================================
     2. Dice And Ability Score Helpers
-     ========================================================= */
+   ========================================================= */
 
 export function rollDie(sides) {
-    return Math.floor(Math.random() * sides) + 1;
+    const dieSides = Number(sides);
+
+    if (!Number.isInteger(dieSides) || dieSides <= 0) {
+        return 1;
+    }
+
+    return Math.floor(Math.random() * dieSides) + 1;
 }
 
 export function rollAbilityScore() {
@@ -67,23 +90,39 @@ export function rollAbilityScore() {
         rollDie(6)
     ];
 
-    rolls.sort((a, b) => b - a);
+    rolls.sort((a, b) => {
+        return b - a;
+    });
 
     return rolls[0] + rolls[1] + rolls[2];
 }
 
 export function getModifier(score) {
-    return Math.floor((score - 10) / 2);
+    return Math.floor((Number(score) - 10) / 2);
 }
 
 export function formatModifier(modifier) {
-    return modifier >= 0 ? `+${modifier}` : `${modifier}`;
+    const value = Number(modifier) || 0;
+
+    return value >= 0
+        ? `+${value}`
+        : `${value}`;
 }
 
 
 /* =========================================================
     3. Text Formatting Helpers
-     ========================================================= */
+   ========================================================= */
+
+export function normaliseText(value) {
+    return String(value || "")
+        .trim()
+        .toLowerCase();
+}
+
+export function normaliseKey(value) {
+    return normaliseText(value).replace(/[^a-z0-9]/g, "");
+}
 
 export function capitalise(word) {
     const value = String(word || "").trim();
@@ -99,8 +138,8 @@ export function toTitleCase(text) {
     return String(text || "")
         .trim()
         .toLowerCase()
-        .split(" ")
-        .filter(word => word.length > 0)
+        .split(/\s+/)
+        .filter(Boolean)
         .map(word => {
             return word
                 .split("-")
@@ -121,10 +160,85 @@ export function escapeHtml(value) {
         .replaceAll("'", "&#039;");
 }
 
+export function escapeSvgText(value) {
+    return String(value ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&apos;");
+}
+
 
 /* =========================================================
-    4. DOM Helper Functions
-     ========================================================= */
+    4. Shared Character Display Helpers
+   ========================================================= */
+
+export function getSpeciesName(characterOrSpecies) {
+    if (typeof characterOrSpecies === "string") {
+        return characterOrSpecies;
+    }
+
+    if (typeof characterOrSpecies?.species === "string") {
+        return characterOrSpecies.species;
+    }
+
+    return (
+        characterOrSpecies?.species?.name ||
+        characterOrSpecies?.name ||
+        "Unknown Species"
+    );
+}
+
+export function isSpecies(characterOrSpecies, speciesName) {
+    return normaliseKey(getSpeciesName(characterOrSpecies)) === normaliseKey(speciesName);
+}
+
+export function isDragonborn(characterOrSpecies) {
+    return isSpecies(characterOrSpecies, "Dragonborn");
+}
+
+export function getNotableFeatureName(characterOrFeature, fallback = "No Obvious Unusual Feature") {
+    if (!characterOrFeature) {
+        return fallback;
+    }
+
+    if (typeof characterOrFeature === "string") {
+        return characterOrFeature || fallback;
+    }
+
+    if (typeof characterOrFeature.notableFeature === "string") {
+        return characterOrFeature.notableFeature || fallback;
+    }
+
+    return (
+        characterOrFeature.notableFeature?.name ||
+        characterOrFeature.notableFeatureName ||
+        characterOrFeature.name ||
+        fallback
+    );
+}
+
+export function getAppearanceLabels(characterOrSpecies) {
+    if (isDragonborn(characterOrSpecies)) {
+        return {
+            skin: "Scale Colour",
+            hair: "Head, Horn Or Crest Colour",
+            hairStyle: "Head Style"
+        };
+    }
+
+    return {
+        skin: "Skin",
+        hair: "Hair",
+        hairStyle: "Hair Style"
+    };
+}
+
+
+/* =========================================================
+    5. DOM Helper Functions
+   ========================================================= */
 
 export function setText(element, value) {
     if (element) {
@@ -163,14 +277,17 @@ export function setSelectValue(selectElement, value) {
     }
 
     const existingOption = Array.from(selectElement.options)
-        .find(option => option.value === cleanValue);
+        .find(option => {
+            return normaliseKey(option.value) === normaliseKey(cleanValue);
+        });
 
     if (existingOption) {
-        selectElement.value = cleanValue;
+        selectElement.value = existingOption.value;
         return;
     }
 
     const newOption = document.createElement("option");
+
     newOption.value = cleanValue;
     newOption.textContent = cleanValue;
 
@@ -180,8 +297,8 @@ export function setSelectValue(selectElement, value) {
 
 
 /* =========================================================
-    5. File And Image Helpers
-     ========================================================= */
+    6. File And Image Helpers
+   ========================================================= */
 
 export function createSafeFileName(name, extension) {
     const safeName = String(name || "dicebound-character")
@@ -190,7 +307,12 @@ export function createSafeFileName(name, extension) {
         .replace(/[^a-z0-9]+/g, "-")
         .replace(/^-+|-+$/g, "");
 
-    return `${safeName || "dicebound-character"}.${extension}`;
+    const safeExtension = String(extension || "png")
+        .trim()
+        .toLowerCase()
+        .replace(/[^a-z0-9]/g, "") || "png";
+
+    return `${safeName || "dicebound-character"}.${safeExtension}`;
 }
 
 export function getImageExtensionFromDataUrl(dataUrl) {
@@ -219,8 +341,8 @@ export function getImageExtensionFromDataUrl(dataUrl) {
 
 
 /* =========================================================
-    6. Clipboard Helper
-     ========================================================= */
+    7. Clipboard Helper
+   ========================================================= */
 
 export async function copyTextToClipboard(text) {
     if (!text) {

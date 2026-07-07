@@ -1,10 +1,31 @@
 /* =========================================================
     Dicebound
     User Interface And Screen Rendering
+    ---------------------------------------------------------
+    This file handles visible frontend screen updates.
+
+    Responsibilities:
+    - switch between creator, question and summary screens
+    - render the character summary sheet
+    - render generated profile text
+    - display generated portraits returned by the backend
+    - show a small browser-only fallback portrait if the backend
+      server cannot be reached
+    - reset visible UI state when restarting
+
+    This file should not create characters, score questions,
+    build AI prompts, apply species anatomy rules or duplicate
+    backend portrait generation logic.
+
+    The browser-only fallback portrait in this file is deliberately
+    simple. The proper demo portrait fallback lives on the backend
+    in demoPortraitService.js and is used when the server is running
+    but Cloudflare generation fails.
    ========================================================= */
 
 import {
     abilities,
+    defaultText,
     portraitApiUrl
 } from "./config.js";
 
@@ -100,7 +121,100 @@ const {
 
 
 /* =========================================================
-    2. Screen Helpers
+    2. Display Helpers
+   ========================================================= */
+
+function normaliseKey(value) {
+    return String(value || "")
+        .trim()
+        .toLowerCase()
+        .replace(/[^a-z0-9]/g, "");
+}
+
+function getSpeciesName(character = state.character) {
+    if (typeof character?.species === "string") {
+        return character.species;
+    }
+
+    return character?.species?.name || "Unknown Species";
+}
+
+function isDragonborn(character = state.character) {
+    return normaliseKey(getSpeciesName(character)) === "dragonborn";
+}
+
+function getNotableFeatureName(character = state.character) {
+    const notableFeature = character?.notableFeature;
+
+    if (typeof notableFeature === "string") {
+        return notableFeature || defaultText.noNotableFeature;
+    }
+
+    return (
+        notableFeature?.name ||
+        character?.notableFeatureName ||
+        defaultText.noNotableFeature
+    );
+}
+
+function getAppearanceLabels(character = state.character) {
+    if (isDragonborn(character)) {
+        return {
+            skin: "Scale Colour",
+            hair: "Head, Horn Or Crest Colour",
+            hairStyle: "Head Style"
+        };
+    }
+
+    return {
+        skin: "Skin",
+        hair: "Hair",
+        hairStyle: "Hair Style"
+    };
+}
+
+function getWeaponText(character = state.character) {
+    if (!character?.weapon) {
+        return "No weapon selected";
+    }
+
+    return `${character.weapon.name}, ${character.weapon.damage}`;
+}
+
+function getSkillText(character = state.character) {
+    const skills = character?.classInfo?.skills;
+
+    return Array.isArray(skills) && skills.length > 0
+        ? skills.join(", ")
+        : "";
+}
+
+function getSaveText(character = state.character) {
+    const saves = character?.classInfo?.saves;
+
+    return Array.isArray(saves) && saves.length > 0
+        ? saves.join(", ")
+        : "";
+}
+
+function getProfileTraitsText(profile) {
+    return Array.isArray(profile?.traits) && profile.traits.length > 0
+        ? profile.traits.join(", ")
+        : "";
+}
+
+function escapeSvgText(text) {
+    return String(text || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&apos;");
+}
+
+
+/* =========================================================
+    3. Screen Helpers
    ========================================================= */
 
 export function showCreatorScreen() {
@@ -123,7 +237,7 @@ export function showSummaryScreen() {
 
 
 /* =========================================================
-    3. Character Sheet Rendering
+    4. Character Sheet Rendering
    ========================================================= */
 
 export function setSheetRow(element, label, value) {
@@ -135,7 +249,7 @@ export function setSheetRow(element, label, value) {
 
     element.innerHTML = `
         <span class="sheet-label">${escapeHtml(label)}</span>
-        <span class="sheet-value">${escapeHtml(String(value))}</span>
+        <span class="sheet-value">${escapeHtml(String(value || ""))}</span>
     `;
 }
 
@@ -145,6 +259,7 @@ export function setAppearanceRow() {
     }
 
     const character = state.character;
+    const labels = getAppearanceLabels(character);
 
     sheetAppearance.className = "sheet-row sheet-appearance-row";
 
@@ -154,10 +269,10 @@ export function setAppearanceRow() {
         ["Height", character.height],
         ["Build", character.build],
         ["Eyes", character.eyeColour],
-        ["Hair", character.hairColour],
-        ["Hair Style", character.hairStyle],
-        ["Skin", character.skinTone],
-        ["Feature", character.notableFeature || "No Obvious Unusual Feature"]
+        [labels.hair, character.hairColour],
+        [labels.hairStyle, character.hairStyle],
+        [labels.skin, character.skinTone],
+        ["Feature", getNotableFeatureName(character)]
     ];
 
     const tags = appearanceItems
@@ -186,23 +301,24 @@ export function renderCharacterSheet() {
     }
 
     const character = state.character;
+    const speciesName = getSpeciesName(character);
 
     setText(sheetName, character.name);
 
     setSheetRow(sheetClass, "Class", `Level 1 ${character.className}`);
-    setSheetRow(sheetSpecies, "Species", character.species.name);
+    setSheetRow(sheetSpecies, "Species", speciesName);
     setAppearanceRow();
     setSheetRow(sheetHP, "Hit Points", character.hp);
-    setSheetRow(sheetWeapon, "Weapon", `${character.weapon.name}, ${character.weapon.damage}`);
+    setSheetRow(sheetWeapon, "Weapon", getWeaponText(character));
 
     if (sheetSkills) {
         sheetSkills.className = "sheet-list";
-        sheetSkills.textContent = character.classInfo.skills.join(", ");
+        sheetSkills.textContent = getSkillText(character);
     }
 
     if (sheetSaves) {
         sheetSaves.className = "sheet-list";
-        sheetSaves.textContent = character.classInfo.saves.join(", ");
+        sheetSaves.textContent = getSaveText(character);
     }
 
     if (!statsGrid) {
@@ -212,7 +328,7 @@ export function renderCharacterSheet() {
     statsGrid.innerHTML = "";
 
     abilities.forEach(ability => {
-        const score = character.stats[ability];
+        const score = character.stats?.[ability] || 0;
         const modifier = getModifier(score);
 
         const stat = document.createElement("div");
@@ -230,7 +346,7 @@ export function renderCharacterSheet() {
 
 
 /* =========================================================
-    4. Portrait Display
+    5. Portrait Display
    ========================================================= */
 
 export function resetPortraitDisplay() {
@@ -251,6 +367,16 @@ export function resetPortraitDisplay() {
         generatePortraitButton.disabled = false;
         generatePortraitButton.textContent = "Generate Character Portrait";
     }
+
+    if (state.character) {
+        state.character.portraitUrl = null;
+        state.character.portraitPrompt = null;
+        state.character.portraitNegativePrompt = null;
+        state.character.portraitProvider = null;
+        state.character.portraitDemoMode = false;
+        state.character.portraitFallback = false;
+        state.character.portraitFallbackReason = null;
+    }
 }
 
 export function showPortraitImage(imageUrl) {
@@ -262,6 +388,104 @@ export function showPortraitImage(imageUrl) {
     if (portraitInitial) {
         portraitInitial.classList.add("hidden");
     }
+}
+
+function createBrowserFallbackPortrait(errorMessage = "") {
+    const character = state.character;
+
+    if (!character) {
+        return "";
+    }
+
+    const characterName = character.name || defaultText.unnamedCharacter;
+    const speciesName = getSpeciesName(character);
+    const className = character.className || "Adventurer";
+    const initial = characterName.charAt(0).toUpperCase() || "A";
+    const featureName = getNotableFeatureName(character);
+    const labels = getAppearanceLabels(character);
+
+    const svg = `
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+    <defs>
+        <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#120c08"/>
+            <stop offset="50%" stop-color="#3f2412"/>
+            <stop offset="100%" stop-color="#050505"/>
+        </linearGradient>
+    </defs>
+
+    <rect width="1024" height="1024" fill="url(#bg)"/>
+
+    <circle cx="512" cy="285" r="185" fill="#d6a84f" opacity="0.16"/>
+    <circle cx="512" cy="285" r="140" fill="#0e0a06" stroke="#d6a84f" stroke-width="6"/>
+
+    <text x="512" y="335" text-anchor="middle" fill="#d6a84f" font-size="150" font-family="Georgia, serif" font-weight="700">
+        ${escapeSvgText(initial)}
+    </text>
+
+    <text x="512" y="530" text-anchor="middle" fill="#f7ead8" font-size="54" font-family="Georgia, serif" font-weight="700">
+        ${escapeSvgText(characterName)}
+    </text>
+
+    <text x="512" y="592" text-anchor="middle" fill="#f4d9a9" font-size="34" font-family="Arial, sans-serif" font-weight="700">
+        ${escapeSvgText(speciesName)} ${escapeSvgText(className)}
+    </text>
+
+    <text x="512" y="665" text-anchor="middle" fill="#cbd5e1" font-size="26" font-family="Arial, sans-serif">
+        ${escapeSvgText(character.gender || "Unknown")} • ${escapeSvgText(character.ageRange || "Unknown")} • ${escapeSvgText(character.build || "Unknown")}
+    </text>
+
+    <text x="512" y="725" text-anchor="middle" fill="#dbc59d" font-size="24" font-family="Arial, sans-serif">
+        ${escapeSvgText(labels.skin)}: ${escapeSvgText(character.skinTone || "Unknown")} • Eyes: ${escapeSvgText(character.eyeColour || "Unknown")}
+    </text>
+
+    <text x="512" y="765" text-anchor="middle" fill="#dbc59d" font-size="24" font-family="Arial, sans-serif">
+        ${escapeSvgText(labels.hairStyle)}: ${escapeSvgText(character.hairStyle || "Unknown")}
+    </text>
+
+    <text x="512" y="825" text-anchor="middle" fill="#f4d9a9" font-size="24" font-family="Arial, sans-serif">
+        Feature: ${escapeSvgText(featureName)}
+    </text>
+
+    <rect x="252" y="875" width="520" height="70" rx="18" fill="#000000" opacity="0.32" stroke="#d6a84f" stroke-opacity="0.45"/>
+
+    <text x="512" y="918" text-anchor="middle" fill="#facc15" font-size="24" font-family="Arial, sans-serif" font-weight="700">
+        Browser fallback portrait
+    </text>
+
+    <text x="512" y="980" text-anchor="middle" fill="#cbd5e1" font-size="18" font-family="Arial, sans-serif" opacity="0.78">
+        ${escapeSvgText(errorMessage)}
+    </text>
+</svg>
+    `.trim();
+
+    return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+}
+
+function storePortraitResult(data) {
+    state.character.portraitUrl = data.imageUrl;
+    state.character.portraitPrompt = data.prompt || null;
+    state.character.portraitNegativePrompt = data.negativePrompt || null;
+    state.character.portraitProvider = data.provider || null;
+    state.character.portraitDemoMode = Boolean(data.demoMode);
+    state.character.portraitFallback = Boolean(data.fallback);
+    state.character.portraitFallbackReason = data.fallbackReason || null;
+}
+
+function getPortraitStatusMessage(data) {
+    if (data.fallback) {
+        return data.fallbackReason || "Cloudflare failed, so a demo portrait was created instead.";
+    }
+
+    if (data.demoMode) {
+        return "Demo portrait generated. Cloudflare image generation was not used.";
+    }
+
+    if (data.provider === "cloudflare") {
+        return "Cloudflare portrait generated.";
+    }
+
+    return "Portrait generated.";
 }
 
 export async function generateCharacterPortrait(onPortraitGenerated) {
@@ -289,7 +513,9 @@ export async function generateCharacterPortrait(onPortraitGenerated) {
             })
         });
 
-        const data = await response.json().catch(() => ({}));
+        const data = await response.json().catch(() => {
+            return {};
+        });
 
         if (!response.ok) {
             throw new Error(data.detail || data.error || "Portrait generation failed.");
@@ -299,21 +525,38 @@ export async function generateCharacterPortrait(onPortraitGenerated) {
             throw new Error("No image URL was returned by the server.");
         }
 
-        state.character.portraitUrl = data.imageUrl;
-        state.character.portraitPrompt = data.prompt || null;
-
+        storePortraitResult(data);
         showPortraitImage(data.imageUrl);
 
         if (typeof onPortraitGenerated === "function") {
             onPortraitGenerated();
         }
 
-        portraitStatus.textContent = "Portrait generated.";
+        portraitStatus.textContent = getPortraitStatusMessage(data);
         generatePortraitButton.textContent = "Generate Again";
     } catch (error) {
         console.error("Portrait generation failed.", error);
-        portraitStatus.textContent = "Could not generate portrait. Check that the server is running.";
-        generatePortraitButton.textContent = "Try Again";
+
+        const fallbackUrl = createBrowserFallbackPortrait(
+            "The portrait server could not be reached."
+        );
+
+        state.character.portraitUrl = fallbackUrl;
+        state.character.portraitPrompt = null;
+        state.character.portraitNegativePrompt = null;
+        state.character.portraitProvider = "browser-fallback";
+        state.character.portraitDemoMode = true;
+        state.character.portraitFallback = true;
+        state.character.portraitFallbackReason = error.message;
+
+        showPortraitImage(fallbackUrl);
+
+        if (typeof onPortraitGenerated === "function") {
+            onPortraitGenerated();
+        }
+
+        portraitStatus.textContent = "Portrait server unavailable. A local browser fallback portrait was created.";
+        generatePortraitButton.textContent = "Try Server Again";
     } finally {
         generatePortraitButton.disabled = false;
     }
@@ -321,7 +564,7 @@ export async function generateCharacterPortrait(onPortraitGenerated) {
 
 
 /* =========================================================
-    5. Summary Screen Rendering
+    6. Summary Screen Rendering
    ========================================================= */
 
 export function showSummary(onSummaryRendered) {
@@ -347,15 +590,16 @@ export function showSummary(onSummaryRendered) {
     }
 
     const firstTrait = generatedProfile.traits[0] || "Adventurous";
+    const speciesName = getSpeciesName(state.character);
 
     setText(
         profileTitle,
-        `${state.character.name}, The ${firstTrait} ${state.character.species.name} ${state.character.className}`
+        `${state.character.name}, The ${firstTrait} ${speciesName} ${state.character.className}`
     );
 
     setText(profileIdentity, generatedProfile.identityText);
     setText(profileSpecies, generatedProfile.speciesProfileText);
-    setText(profileTraits, generatedProfile.traits.join(", "));
+    setText(profileTraits, getProfileTraitsText(generatedProfile));
     setText(profileAlignment, generatedProfile.alignment);
     setText(profileFaith, generatedProfile.faithProfile);
     setText(profileWeakness, generatedProfile.weakness);
@@ -368,7 +612,7 @@ export function showSummary(onSummaryRendered) {
 
 
 /* =========================================================
-    6. Restart
+    7. Restart
    ========================================================= */
 
 export function restart(onRestarted) {

@@ -1,144 +1,831 @@
 {
-  "classes": {
-    "Fighter": {
-      "description": "A durable warrior trained for direct conflict.",
-      "hitDie": 10,
-      "skills": ["Athletics", "Intimidation"],
-      "saves": ["STR", "CON"],
-      "weapons": [
-        {
-          "name": "Longsword",
-          "damage": "1d8",
-          "ability": "STR"
-        },
-        {
-          "name": "Battleaxe",
-          "damage": "1d8",
-          "ability": "STR"
-        },
-        {
-          "name": "Rapier",
-          "damage": "1d8",
-          "ability": "DEX"
-        },
-        {
-          "name": "Longbow",
-          "damage": "1d8",
-          "ability": "DEX"
-        }
-      ]
+    "_description": "Dicebound class data. This file stores the class information used by the frontend character builder. JavaScript modules load this file to render class cards, assign hit points, show saving throw proficiencies, display default skill proficiencies and offer selectable starting weapons. The core class traits and starting equipment are based on 2024 DnD class structure. The skills array is a Dicebound default selection from the official skill options, and the weapons array contains selectable weapons drawn from official starting equipment or level 1 class combat features.",
+    "_sourceNotes": {
+        "ruleset": "DnD 2024",
+        "sourceType": "Official 2024 Basic Rules class data",
+        "importantNote": "The startingEquipment field is the closest official representation. The weapons field is kept for Dicebound's current frontend and should be treated as selectable starting weapon options, not as the complete weapon proficiency list."
     },
-    "Rogue": {
-      "description": "A quick, skilled character who survives through precision and nerve.",
-      "hitDie": 8,
-      "skills": ["Stealth", "Sleight Of Hand", "Investigation"],
-      "saves": ["DEX", "INT"],
-      "weapons": [
-        {
-          "name": "Dagger",
-          "damage": "1d4",
-          "ability": "DEX"
+    "classes": {
+        "Barbarian": {
+            "description": "A fierce warrior who relies on strength, endurance and primal fury.",
+            "primaryAbilities": [
+                "STR"
+            ],
+            "hitDie": 12,
+            "saves": [
+                "STR",
+                "CON"
+            ],
+            "skillChoiceCount": 2,
+            "skillOptions": [
+                "Animal Handling",
+                "Athletics",
+                "Intimidation",
+                "Nature",
+                "Perception",
+                "Survival"
+            ],
+            "skills": [
+                "Athletics",
+                "Intimidation"
+            ],
+            "weaponProficiencies": [
+                "Simple Weapons",
+                "Martial Weapons"
+            ],
+            "armorTraining": [
+                "Light Armor",
+                "Medium Armor",
+                "Shields"
+            ],
+            "startingEquipment": {
+                "optionA": {
+                    "items": [
+                        "Greataxe",
+                        "4 Handaxes",
+                        "Explorer's Pack"
+                    ],
+                    "gold": 15
+                },
+                "optionB": {
+                    "gold": 75
+                }
+            },
+            "weapons": [
+                {
+                    "name": "Greataxe",
+                    "damage": "1d12",
+                    "damageType": "Slashing",
+                    "ability": "STR"
+                },
+                {
+                    "name": "Handaxe",
+                    "damage": "1d6",
+                    "damageType": "Slashing",
+                    "ability": "STR",
+                    "quantity": 4
+                }
+            ]
         },
-        {
-          "name": "Shortsword",
-          "damage": "1d6",
-          "ability": "DEX"
+        "Bard": {
+            "description": "A charismatic performer, storyteller and spellcaster who turns talent into magic.",
+            "primaryAbilities": [
+                "CHA"
+            ],
+            "hitDie": 8,
+            "saves": [
+                "DEX",
+                "CHA"
+            ],
+            "skillChoiceCount": 3,
+            "skillOptions": [
+                "Acrobatics",
+                "Animal Handling",
+                "Arcana",
+                "Athletics",
+                "Deception",
+                "History",
+                "Insight",
+                "Intimidation",
+                "Investigation",
+                "Medicine",
+                "Nature",
+                "Perception",
+                "Performance",
+                "Persuasion",
+                "Religion",
+                "Sleight of Hand",
+                "Stealth",
+                "Survival"
+            ],
+            "skills": [
+                "Performance",
+                "Persuasion",
+                "Deception"
+            ],
+            "weaponProficiencies": [
+                "Simple Weapons"
+            ],
+            "armorTraining": [
+                "Light Armor"
+            ],
+            "toolProficiencies": [
+                "Choose 3 Musical Instruments"
+            ],
+            "startingEquipment": {
+                "optionA": {
+                    "items": [
+                        "Leather Armor",
+                        "2 Daggers",
+                        "Musical Instrument of your choice",
+                        "Entertainer's Pack"
+                    ],
+                    "gold": 19
+                },
+                "optionB": {
+                    "gold": 90
+                }
+            },
+            "weapons": [
+                {
+                    "name": "Dagger",
+                    "damage": "1d4",
+                    "damageType": "Piercing",
+                    "ability": "DEX",
+                    "quantity": 2
+                }
+            ]
         },
-        {
-          "name": "Rapier",
-          "damage": "1d8",
-          "ability": "DEX"
+        "Cleric": {
+            "description": "A divine spellcaster shaped by faith, duty and resilience.",
+            "primaryAbilities": [
+                "WIS"
+            ],
+            "hitDie": 8,
+            "saves": [
+                "WIS",
+                "CHA"
+            ],
+            "skillChoiceCount": 2,
+            "skillOptions": [
+                "History",
+                "Insight",
+                "Medicine",
+                "Persuasion",
+                "Religion"
+            ],
+            "skills": [
+                "Medicine",
+                "Religion"
+            ],
+            "weaponProficiencies": [
+                "Simple Weapons"
+            ],
+            "armorTraining": [
+                "Light Armor",
+                "Medium Armor",
+                "Shields"
+            ],
+            "startingEquipment": {
+                "optionA": {
+                    "items": [
+                        "Chain Shirt",
+                        "Shield",
+                        "Mace",
+                        "Holy Symbol",
+                        "Priest's Pack"
+                    ],
+                    "gold": 7
+                },
+                "optionB": {
+                    "gold": 110
+                }
+            },
+            "weapons": [
+                {
+                    "name": "Mace",
+                    "damage": "1d6",
+                    "damageType": "Bludgeoning",
+                    "ability": "STR"
+                }
+            ]
         },
-        {
-          "name": "Shortbow",
-          "damage": "1d6",
-          "ability": "DEX"
+        "Druid": {
+            "description": "A nature-bound spellcaster who draws power from wild places, beasts and the elements.",
+            "primaryAbilities": [
+                "WIS"
+            ],
+            "hitDie": 8,
+            "saves": [
+                "INT",
+                "WIS"
+            ],
+            "skillChoiceCount": 2,
+            "skillOptions": [
+                "Arcana",
+                "Animal Handling",
+                "Insight",
+                "Medicine",
+                "Nature",
+                "Perception",
+                "Religion",
+                "Survival"
+            ],
+            "skills": [
+                "Nature",
+                "Survival"
+            ],
+            "weaponProficiencies": [
+                "Simple Weapons"
+            ],
+            "armorTraining": [
+                "Light Armor",
+                "Shields"
+            ],
+            "toolProficiencies": [
+                "Herbalism Kit"
+            ],
+            "startingEquipment": {
+                "optionA": {
+                    "items": [
+                        "Leather Armor",
+                        "Shield",
+                        "Sickle",
+                        "Druidic Focus: Quarterstaff",
+                        "Explorer's Pack",
+                        "Herbalism Kit"
+                    ],
+                    "gold": 9
+                },
+                "optionB": {
+                    "gold": 50
+                }
+            },
+            "weapons": [
+                {
+                    "name": "Sickle",
+                    "damage": "1d4",
+                    "damageType": "Slashing",
+                    "ability": "STR"
+                },
+                {
+                    "name": "Quarterstaff",
+                    "damage": "1d6",
+                    "damageType": "Bludgeoning",
+                    "ability": "STR"
+                }
+            ]
+        },
+        "Fighter": {
+            "description": "A durable warrior trained for direct conflict, tactics and weapon mastery.",
+            "primaryAbilities": [
+                "STR",
+                "DEX"
+            ],
+            "hitDie": 10,
+            "saves": [
+                "STR",
+                "CON"
+            ],
+            "skillChoiceCount": 2,
+            "skillOptions": [
+                "Acrobatics",
+                "Animal Handling",
+                "Athletics",
+                "History",
+                "Insight",
+                "Intimidation",
+                "Persuasion",
+                "Perception",
+                "Survival"
+            ],
+            "skills": [
+                "Athletics",
+                "Intimidation"
+            ],
+            "weaponProficiencies": [
+                "Simple Weapons",
+                "Martial Weapons"
+            ],
+            "armorTraining": [
+                "Light Armor",
+                "Medium Armor",
+                "Heavy Armor",
+                "Shields"
+            ],
+            "startingEquipment": {
+                "optionA": {
+                    "items": [
+                        "Chain Mail",
+                        "Greatsword",
+                        "Flail",
+                        "8 Javelins",
+                        "Dungeoneer's Pack"
+                    ],
+                    "gold": 4
+                },
+                "optionB": {
+                    "items": [
+                        "Studded Leather Armor",
+                        "Scimitar",
+                        "Shortsword",
+                        "Longbow",
+                        "20 Arrows",
+                        "Quiver",
+                        "Dungeoneer's Pack"
+                    ],
+                    "gold": 11
+                },
+                "optionC": {
+                    "gold": 155
+                }
+            },
+            "weapons": [
+                {
+                    "name": "Greatsword",
+                    "damage": "2d6",
+                    "damageType": "Slashing",
+                    "ability": "STR"
+                },
+                {
+                    "name": "Flail",
+                    "damage": "1d8",
+                    "damageType": "Bludgeoning",
+                    "ability": "STR"
+                },
+                {
+                    "name": "Javelin",
+                    "damage": "1d6",
+                    "damageType": "Piercing",
+                    "ability": "STR",
+                    "quantity": 8
+                },
+                {
+                    "name": "Scimitar",
+                    "damage": "1d6",
+                    "damageType": "Slashing",
+                    "ability": "DEX"
+                },
+                {
+                    "name": "Shortsword",
+                    "damage": "1d6",
+                    "damageType": "Piercing",
+                    "ability": "DEX"
+                },
+                {
+                    "name": "Longbow",
+                    "damage": "1d8",
+                    "damageType": "Piercing",
+                    "ability": "DEX"
+                }
+            ]
+        },
+        "Monk": {
+            "description": "A disciplined martial artist who channels focus through movement, precision and inner power.",
+            "primaryAbilities": [
+                "DEX",
+                "WIS"
+            ],
+            "hitDie": 8,
+            "saves": [
+                "STR",
+                "DEX"
+            ],
+            "skillChoiceCount": 2,
+            "skillOptions": [
+                "Acrobatics",
+                "Athletics",
+                "History",
+                "Insight",
+                "Religion",
+                "Stealth"
+            ],
+            "skills": [
+                "Acrobatics",
+                "Insight"
+            ],
+            "weaponProficiencies": [
+                "Simple Weapons",
+                "Martial Weapons With The Light Property"
+            ],
+            "armorTraining": [],
+            "toolProficiencies": [
+                "Choose 1 Artisan's Tool or Musical Instrument"
+            ],
+            "startingEquipment": {
+                "optionA": {
+                    "items": [
+                        "Spear",
+                        "5 Daggers",
+                        "Artisan's Tools or Musical Instrument chosen from tool proficiency",
+                        "Explorer's Pack"
+                    ],
+                    "gold": 11
+                },
+                "optionB": {
+                    "gold": 50
+                }
+            },
+            "weapons": [
+                {
+                    "name": "Unarmed Strike",
+                    "damage": "1d6",
+                    "damageType": "Bludgeoning",
+                    "ability": "DEX",
+                    "source": "Martial Arts"
+                },
+                {
+                    "name": "Spear",
+                    "damage": "1d6",
+                    "damageType": "Piercing",
+                    "ability": "DEX"
+                },
+                {
+                    "name": "Dagger",
+                    "damage": "1d4",
+                    "damageType": "Piercing",
+                    "ability": "DEX",
+                    "quantity": 5
+                }
+            ]
+        },
+        "Paladin": {
+            "description": "A holy warrior bound by conviction, martial discipline and divine power.",
+            "primaryAbilities": [
+                "STR",
+                "CHA"
+            ],
+            "hitDie": 10,
+            "saves": [
+                "WIS",
+                "CHA"
+            ],
+            "skillChoiceCount": 2,
+            "skillOptions": [
+                "Athletics",
+                "Insight",
+                "Intimidation",
+                "Medicine",
+                "Persuasion",
+                "Religion"
+            ],
+            "skills": [
+                "Athletics",
+                "Persuasion"
+            ],
+            "weaponProficiencies": [
+                "Simple Weapons",
+                "Martial Weapons"
+            ],
+            "armorTraining": [
+                "Light Armor",
+                "Medium Armor",
+                "Heavy Armor",
+                "Shields"
+            ],
+            "startingEquipment": {
+                "optionA": {
+                    "items": [
+                        "Chain Mail",
+                        "Shield",
+                        "Longsword",
+                        "6 Javelins",
+                        "Holy Symbol",
+                        "Priest's Pack"
+                    ],
+                    "gold": 9
+                },
+                "optionB": {
+                    "gold": 150
+                }
+            },
+            "weapons": [
+                {
+                    "name": "Longsword",
+                    "damage": "1d8",
+                    "damageType": "Slashing",
+                    "ability": "STR"
+                },
+                {
+                    "name": "Javelin",
+                    "damage": "1d6",
+                    "damageType": "Piercing",
+                    "ability": "STR",
+                    "quantity": 6
+                }
+            ]
+        },
+        "Ranger": {
+            "description": "A tracker, hunter and survivor who belongs beyond city walls.",
+            "primaryAbilities": [
+                "DEX",
+                "WIS"
+            ],
+            "hitDie": 10,
+            "saves": [
+                "STR",
+                "DEX"
+            ],
+            "skillChoiceCount": 3,
+            "skillOptions": [
+                "Animal Handling",
+                "Athletics",
+                "Insight",
+                "Investigation",
+                "Nature",
+                "Perception",
+                "Stealth",
+                "Survival"
+            ],
+            "skills": [
+                "Survival",
+                "Perception",
+                "Animal Handling"
+            ],
+            "weaponProficiencies": [
+                "Simple Weapons",
+                "Martial Weapons"
+            ],
+            "armorTraining": [
+                "Light Armor",
+                "Medium Armor",
+                "Shields"
+            ],
+            "startingEquipment": {
+                "optionA": {
+                    "items": [
+                        "Studded Leather Armor",
+                        "Scimitar",
+                        "Shortsword",
+                        "Longbow",
+                        "20 Arrows",
+                        "Quiver",
+                        "Druidic Focus: Sprig of Mistletoe",
+                        "Explorer's Pack"
+                    ],
+                    "gold": 7
+                },
+                "optionB": {
+                    "gold": 150
+                }
+            },
+            "weapons": [
+                {
+                    "name": "Scimitar",
+                    "damage": "1d6",
+                    "damageType": "Slashing",
+                    "ability": "DEX"
+                },
+                {
+                    "name": "Shortsword",
+                    "damage": "1d6",
+                    "damageType": "Piercing",
+                    "ability": "DEX"
+                },
+                {
+                    "name": "Longbow",
+                    "damage": "1d8",
+                    "damageType": "Piercing",
+                    "ability": "DEX"
+                }
+            ]
+        },
+        "Rogue": {
+            "description": "A quick, skilled character who survives through precision, stealth and nerve.",
+            "primaryAbilities": [
+                "DEX"
+            ],
+            "hitDie": 8,
+            "saves": [
+                "DEX",
+                "INT"
+            ],
+            "skillChoiceCount": 4,
+            "skillOptions": [
+                "Acrobatics",
+                "Athletics",
+                "Deception",
+                "Insight",
+                "Intimidation",
+                "Investigation",
+                "Perception",
+                "Persuasion",
+                "Sleight of Hand",
+                "Stealth"
+            ],
+            "skills": [
+                "Stealth",
+                "Sleight of Hand",
+                "Investigation",
+                "Perception"
+            ],
+            "weaponProficiencies": [
+                "Simple Weapons",
+                "Martial Weapons With The Finesse Or Light Property"
+            ],
+            "armorTraining": [
+                "Light Armor"
+            ],
+            "toolProficiencies": [
+                "Thieves' Tools"
+            ],
+            "startingEquipment": {
+                "optionA": {
+                    "items": [
+                        "Leather Armor",
+                        "2 Daggers",
+                        "Shortsword",
+                        "Shortbow",
+                        "20 Arrows",
+                        "Quiver",
+                        "Thieves' Tools",
+                        "Burglar's Pack"
+                    ],
+                    "gold": 8
+                },
+                "optionB": {
+                    "gold": 100
+                }
+            },
+            "weapons": [
+                {
+                    "name": "Dagger",
+                    "damage": "1d4",
+                    "damageType": "Piercing",
+                    "ability": "DEX",
+                    "quantity": 2
+                },
+                {
+                    "name": "Shortsword",
+                    "damage": "1d6",
+                    "damageType": "Piercing",
+                    "ability": "DEX"
+                },
+                {
+                    "name": "Shortbow",
+                    "damage": "1d6",
+                    "damageType": "Piercing",
+                    "ability": "DEX"
+                }
+            ]
+        },
+        "Sorcerer": {
+            "description": "An innate spellcaster whose magic comes from bloodline, fate or supernatural influence.",
+            "primaryAbilities": [
+                "CHA"
+            ],
+            "hitDie": 6,
+            "saves": [
+                "CON",
+                "CHA"
+            ],
+            "skillChoiceCount": 2,
+            "skillOptions": [
+                "Arcana",
+                "Deception",
+                "Insight",
+                "Intimidation",
+                "Persuasion",
+                "Religion"
+            ],
+            "skills": [
+                "Arcana",
+                "Persuasion"
+            ],
+            "weaponProficiencies": [
+                "Simple Weapons"
+            ],
+            "armorTraining": [],
+            "startingEquipment": {
+                "optionA": {
+                    "items": [
+                        "Spear",
+                        "2 Daggers",
+                        "Arcane Focus: Crystal",
+                        "Dungeoneer's Pack"
+                    ],
+                    "gold": 28
+                },
+                "optionB": {
+                    "gold": 50
+                }
+            },
+            "weapons": [
+                {
+                    "name": "Spear",
+                    "damage": "1d6",
+                    "damageType": "Piercing",
+                    "ability": "STR"
+                },
+                {
+                    "name": "Dagger",
+                    "damage": "1d4",
+                    "damageType": "Piercing",
+                    "ability": "DEX",
+                    "quantity": 2
+                }
+            ]
+        },
+        "Warlock": {
+            "description": "A pact-bound spellcaster who draws power from an otherworldly patron.",
+            "primaryAbilities": [
+                "CHA"
+            ],
+            "hitDie": 8,
+            "saves": [
+                "WIS",
+                "CHA"
+            ],
+            "skillChoiceCount": 2,
+            "skillOptions": [
+                "Arcana",
+                "Deception",
+                "History",
+                "Intimidation",
+                "Investigation",
+                "Nature",
+                "Religion"
+            ],
+            "skills": [
+                "Arcana",
+                "Deception"
+            ],
+            "weaponProficiencies": [
+                "Simple Weapons"
+            ],
+            "armorTraining": [
+                "Light Armor"
+            ],
+            "startingEquipment": {
+                "optionA": {
+                    "items": [
+                        "Leather Armor",
+                        "Sickle",
+                        "2 Daggers",
+                        "Arcane Focus: Orb",
+                        "Book: Occult Lore",
+                        "Scholar's Pack"
+                    ],
+                    "gold": 15
+                },
+                "optionB": {
+                    "gold": 100
+                }
+            },
+            "weapons": [
+                {
+                    "name": "Sickle",
+                    "damage": "1d4",
+                    "damageType": "Slashing",
+                    "ability": "STR"
+                },
+                {
+                    "name": "Dagger",
+                    "damage": "1d4",
+                    "damageType": "Piercing",
+                    "ability": "DEX",
+                    "quantity": 2
+                }
+            ]
+        },
+        "Wizard": {
+            "description": "A scholar of magic who relies on study, preparation and knowledge rather than brute force.",
+            "primaryAbilities": [
+                "INT"
+            ],
+            "hitDie": 6,
+            "saves": [
+                "INT",
+                "WIS"
+            ],
+            "skillChoiceCount": 2,
+            "skillOptions": [
+                "Arcana",
+                "History",
+                "Insight",
+                "Investigation",
+                "Medicine",
+                "Nature",
+                "Religion"
+            ],
+            "skills": [
+                "Arcana",
+                "Investigation"
+            ],
+            "weaponProficiencies": [
+                "Simple Weapons"
+            ],
+            "armorTraining": [],
+            "startingEquipment": {
+                "optionA": {
+                    "items": [
+                        "2 Daggers",
+                        "Arcane Focus: Quarterstaff",
+                        "Robe",
+                        "Spellbook",
+                        "Scholar's Pack"
+                    ],
+                    "gold": 5
+                },
+                "optionB": {
+                    "gold": 55
+                }
+            },
+            "weapons": [
+                {
+                    "name": "Dagger",
+                    "damage": "1d4",
+                    "damageType": "Piercing",
+                    "ability": "DEX",
+                    "quantity": 2
+                },
+                {
+                    "name": "Quarterstaff",
+                    "damage": "1d6",
+                    "damageType": "Bludgeoning",
+                    "ability": "STR"
+                }
+            ]
         }
-      ]
-    },
-    "Ranger": {
-      "description": "A tracker, hunter and survivor who belongs beyond city walls.",
-      "hitDie": 10,
-      "skills": ["Survival", "Perception", "Animal Handling"],
-      "saves": ["STR", "DEX"],
-      "weapons": [
-        {
-          "name": "Longbow",
-          "damage": "1d8",
-          "ability": "DEX"
-        },
-        {
-          "name": "Shortsword",
-          "damage": "1d6",
-          "ability": "DEX"
-        },
-        {
-          "name": "Scimitar",
-          "damage": "1d6",
-          "ability": "DEX"
-        },
-        {
-          "name": "Spear",
-          "damage": "1d6",
-          "ability": "STR"
-        }
-      ]
-    },
-    "Cleric": {
-      "description": "A divine spellcaster shaped by faith, duty and resilience.",
-      "hitDie": 8,
-      "skills": ["Medicine", "Religion", "Insight"],
-      "saves": ["WIS", "CHA"],
-      "weapons": [
-        {
-          "name": "Mace",
-          "damage": "1d6",
-          "ability": "STR"
-        },
-        {
-          "name": "Spear",
-          "damage": "1d6",
-          "ability": "STR"
-        },
-        {
-          "name": "Light Crossbow",
-          "damage": "1d8",
-          "ability": "DEX"
-        },
-        {
-          "name": "Dagger",
-          "damage": "1d4",
-          "ability": "DEX"
-        }
-      ]
-    },
-    "Wizard": {
-      "description": "A scholar of magic who relies on knowledge rather than brute force.",
-      "hitDie": 6,
-      "skills": ["Arcana", "History", "Investigation"],
-      "saves": ["INT", "WIS"],
-      "weapons": [
-        {
-          "name": "Quarterstaff",
-          "damage": "1d6",
-          "ability": "STR"
-        },
-        {
-          "name": "Dagger",
-          "damage": "1d4",
-          "ability": "DEX"
-        },
-        {
-          "name": "Light Crossbow",
-          "damage": "1d8",
-          "ability": "DEX"
-        },
-        {
-          "name": "Sling",
-          "damage": "1d4",
-          "ability": "DEX"
-        }
-      ]
     }
-  }
 }

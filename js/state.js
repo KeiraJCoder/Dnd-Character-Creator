@@ -1,12 +1,33 @@
 /* =========================================================
     Dicebound
-    State
-     ========================================================= */
+    Shared Frontend State
+    ---------------------------------------------------------
+    This file stores shared state for the modular Dicebound
+    frontend.
+
+    Responsibilities:
+    - hold loaded JSON data
+    - track selected class, weapon and current character
+    - track the current question index
+    - store personality profile scores
+    - track which data files have loaded successfully
+    - provide small setter and reset helpers used by other
+      frontend modules
+
+    This file should not contain character creation rules,
+    species anatomy rules, portrait prompt logic, DOM rendering
+    or export formatting.
+
+    Character creation belongs in character.js.
+    Question scoring and profile text belong in profile.js.
+    Data loading belongs in data.js.
+    Portrait display belongs in ui.js.
+   ========================================================= */
 
 
 /* =========================================================
     1. Profile Score Defaults
-     ========================================================= */
+   ========================================================= */
 
 export function createEmptyProfileScores() {
     return {
@@ -41,7 +62,7 @@ export function createEmptyProfileScores() {
 
 /* =========================================================
     2. Shared App State
-     ========================================================= */
+   ========================================================= */
 
 export const state = {
     nameData: {
@@ -80,7 +101,7 @@ export const state = {
 
 /* =========================================================
     3. State Reset Helpers
-     ========================================================= */
+   ========================================================= */
 
 export function resetProfileScores() {
     state.profileScores = createEmptyProfileScores();
@@ -91,6 +112,7 @@ export function resetCharacterProgress() {
     state.selectedWeapon = null;
     state.character = null;
     state.currentQuestionIndex = 0;
+
     resetProfileScores();
 }
 
@@ -106,30 +128,50 @@ export function resetLoadedState() {
 
 /* =========================================================
     4. Data Setters
-     ========================================================= */
+   ========================================================= */
 
 export function setNameData(nameData) {
-    state.nameData = nameData;
+    state.nameData = {
+        firstNames: Array.isArray(nameData?.firstNames)
+            ? nameData.firstNames
+            : [],
+        lastNames: Array.isArray(nameData?.lastNames)
+            ? nameData.lastNames
+            : []
+    };
+
     state.loaded.names = true;
 }
 
 export function setClassData(classData) {
-    state.classes = classData;
+    state.classes = classData && typeof classData === "object"
+        ? classData
+        : {};
+
     state.loaded.classes = true;
 }
 
 export function setQuestionData(questionData) {
-    state.questions = questionData;
+    state.questions = Array.isArray(questionData)
+        ? questionData
+        : [];
+
     state.loaded.questions = true;
 }
 
 export function setSpeciesData(speciesData) {
-    state.speciesData = speciesData;
+    state.speciesData = Array.isArray(speciesData)
+        ? speciesData
+        : [];
+
     state.loaded.species = true;
 }
 
 export function setNotableFeatures(notableFeatures) {
-    state.notableFeatures = notableFeatures;
+    state.notableFeatures = Array.isArray(notableFeatures)
+        ? notableFeatures
+        : [];
+
     state.loaded.notableFeatures = true;
 }
 
@@ -140,22 +182,37 @@ export function setDataLoadingError() {
 
 /* =========================================================
     5. Character Selection Setters
-     ========================================================= */
+   ========================================================= */
 
 export function setSelectedClassName(className) {
-    state.selectedClassName = className;
+    state.selectedClassName = className || null;
 }
 
 export function setSelectedWeapon(weapon) {
-    state.selectedWeapon = weapon;
+    state.selectedWeapon = weapon || null;
 }
 
 export function setCurrentCharacter(character) {
-    state.character = character;
+    state.character = character || null;
+}
+
+export function updateCurrentCharacter(updates) {
+    if (!state.character || !updates || typeof updates !== "object") {
+        return;
+    }
+
+    state.character = {
+        ...state.character,
+        ...updates
+    };
 }
 
 export function setCurrentQuestionIndex(index) {
-    state.currentQuestionIndex = index;
+    const nextIndex = Number(index);
+
+    state.currentQuestionIndex = Number.isInteger(nextIndex) && nextIndex >= 0
+        ? nextIndex
+        : 0;
 }
 
 export function moveToNextQuestion() {
@@ -165,17 +222,28 @@ export function moveToNextQuestion() {
 
 /* =========================================================
     6. Profile Score Updates
-     ========================================================= */
+   ========================================================= */
 
 export function addProfileScore(key, value) {
-    if (!Object.prototype.hasOwnProperty.call(state.profileScores, key)) {
-        state.profileScores[key] = 0;
+    const scoreKey = String(key || "").trim();
+    const scoreValue = Number(value) || 0;
+
+    if (!scoreKey) {
+        return;
     }
 
-    state.profileScores[key] += value;
+    if (!Object.prototype.hasOwnProperty.call(state.profileScores, scoreKey)) {
+        state.profileScores[scoreKey] = 0;
+    }
+
+    state.profileScores[scoreKey] += scoreValue;
 }
 
 export function applyProfileScores(scores) {
+    if (!scores || typeof scores !== "object") {
+        return;
+    }
+
     Object.entries(scores).forEach(([key, value]) => {
         addProfileScore(key, value);
     });
