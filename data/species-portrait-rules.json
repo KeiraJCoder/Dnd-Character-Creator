@@ -45,10 +45,15 @@
                 "Dragon snout",
                 "Orc tusks",
                 "Animal muzzle",
-                "Large feathered wings unless specifically listed",
+                "Wings",
+                "Angel wings",
+                "Feathered wings",
+                "Glowing wings",
+                "Pink wings",
+                "Celestial wing shapes behind the head",
                 "Glowing orange eyes unless orange, amber or gold eyes are selected",
                 "Full glowing face",
-                "Plain human with no celestial presence"
+                "Ordinary modern person with no fantasy adventurer presence"
             ],
             "skinInstruction": "Use the listed skin tone as normal Aasimar skin. A very subtle celestial softness or faint aura is acceptable, but do not replace the listed skin tone with gold, silver, white, orange or glowing skin.",
             "hairInstruction": "Use the listed hair colour and hair style normally. Do not turn the hair into light, flames, metal, a halo, horns, a crown or glowing head ornaments.",
@@ -76,12 +81,17 @@
                 "dragon snout",
                 "orc tusks",
                 "animal muzzle",
-                "large wings",
+                "wings",
+                "angel wings",
+                "feathered wings",
+                "glowing wings",
+                "pink wings",
+                "wing shapes behind head",
                 "orange glowing eyes",
                 "glowing orange eyes",
                 "full glowing face",
                 "halo shaped like horns",
-                "plain human"
+                "ordinary modern person"
             ]
         },
         "Dragonborn": {

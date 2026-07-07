@@ -20,7 +20,7 @@
     The browser-only fallback portrait in this file is deliberately
     simple. The proper demo portrait fallback lives on the backend
     in demoPortraitService.js and is used when the server is running
-    but Cloudflare generation fails.
+    but the active image provider fails.
    ========================================================= */
 
 import {
@@ -36,8 +36,12 @@ import {
 
 import {
     escapeHtml,
+    escapeSvgText,
     formatModifier,
+    getAppearanceLabels,
     getModifier,
+    getNotableFeatureName,
+    getSpeciesName,
     hideElement,
     setText,
     showElement
@@ -124,55 +128,6 @@ const {
     2. Display Helpers
    ========================================================= */
 
-function normaliseKey(value) {
-    return String(value || "")
-        .trim()
-        .toLowerCase()
-        .replace(/[^a-z0-9]/g, "");
-}
-
-function getSpeciesName(character = state.character) {
-    if (typeof character?.species === "string") {
-        return character.species;
-    }
-
-    return character?.species?.name || "Unknown Species";
-}
-
-function isDragonborn(character = state.character) {
-    return normaliseKey(getSpeciesName(character)) === "dragonborn";
-}
-
-function getNotableFeatureName(character = state.character) {
-    const notableFeature = character?.notableFeature;
-
-    if (typeof notableFeature === "string") {
-        return notableFeature || defaultText.noNotableFeature;
-    }
-
-    return (
-        notableFeature?.name ||
-        character?.notableFeatureName ||
-        defaultText.noNotableFeature
-    );
-}
-
-function getAppearanceLabels(character = state.character) {
-    if (isDragonborn(character)) {
-        return {
-            skin: "Scale Colour",
-            hair: "Head, Horn Or Crest Colour",
-            hairStyle: "Head Style"
-        };
-    }
-
-    return {
-        skin: "Skin",
-        hair: "Hair",
-        hairStyle: "Hair Style"
-    };
-}
-
 function getWeaponText(character = state.character) {
     if (!character?.weapon) {
         return "No weapon selected";
@@ -203,13 +158,24 @@ function getProfileTraitsText(profile) {
         : "";
 }
 
-function escapeSvgText(text) {
-    return String(text || "")
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&apos;");
+function formatProviderName(provider) {
+    if (provider === "openai") {
+        return "OpenAI";
+    }
+
+    if (provider === "cloudflare") {
+        return "Cloudflare";
+    }
+
+    if (provider === "demo") {
+        return "Demo";
+    }
+
+    if (provider === "browser-fallback") {
+        return "Browser fallback";
+    }
+
+    return "Portrait provider";
 }
 
 
@@ -346,7 +312,141 @@ export function renderCharacterSheet() {
 
 
 /* =========================================================
-    5. Portrait Display
+    5. Portrait Request Payload
+   ========================================================= */
+
+function createPortraitRequestCharacter(character) {
+    if (!character || typeof character !== "object") {
+        return character;
+    }
+
+    return {
+        name: character.name,
+        gender: character.gender,
+        portraitPresentation: character.portraitPresentation,
+
+        species: createPortraitRequestSpecies(character.species),
+
+        ageRange: character.ageRange,
+        height: character.height,
+        build: character.build,
+        eyeColour: character.eyeColour,
+        hairColour: character.hairColour,
+        hairStyle: character.hairStyle,
+        skinTone: character.skinTone,
+
+        notableFeature: createPortraitRequestNotableFeature(character.notableFeature),
+        notableFeatureName: character.notableFeatureName,
+
+        className: character.className,
+        classInfo: createPortraitRequestClassInfo(character.classInfo),
+        weapon: createPortraitRequestWeapon(character.weapon),
+        stats: createPortraitRequestStats(character.stats),
+        hp: character.hp,
+
+        generatedProfile: createPortraitRequestProfile(character.generatedProfile)
+    };
+}
+
+function createPortraitRequestSpecies(species) {
+    if (typeof species === "string") {
+        return species;
+    }
+
+    if (!species || typeof species !== "object") {
+        return null;
+    }
+
+    return {
+        name: species.name,
+        description: species.description,
+        typicalTraits: Array.isArray(species.typicalTraits)
+            ? [...species.typicalTraits]
+            : []
+    };
+}
+
+function createPortraitRequestNotableFeature(notableFeature) {
+    if (typeof notableFeature === "string") {
+        return notableFeature;
+    }
+
+    if (!notableFeature || typeof notableFeature !== "object") {
+        return null;
+    }
+
+    return {
+        name: notableFeature.name,
+        allowedSpecies: notableFeature.allowedSpecies,
+        category: notableFeature.category,
+        visibility: notableFeature.visibility,
+        promptInstruction: notableFeature.promptInstruction,
+        visibilityInstruction: notableFeature.visibilityInstruction,
+        negativePrompt: Array.isArray(notableFeature.negativePrompt)
+            ? [...notableFeature.negativePrompt]
+            : []
+    };
+}
+
+function createPortraitRequestClassInfo(classInfo) {
+    if (!classInfo || typeof classInfo !== "object") {
+        return null;
+    }
+
+    return {
+        description: classInfo.description,
+        hitDie: classInfo.hitDie,
+        skills: Array.isArray(classInfo.skills)
+            ? [...classInfo.skills]
+            : [],
+        saves: Array.isArray(classInfo.saves)
+            ? [...classInfo.saves]
+            : []
+    };
+}
+
+function createPortraitRequestWeapon(weapon) {
+    if (!weapon || typeof weapon !== "object") {
+        return null;
+    }
+
+    return {
+        name: weapon.name,
+        damage: weapon.damage,
+        ability: weapon.ability
+    };
+}
+
+function createPortraitRequestStats(stats) {
+    if (!stats || typeof stats !== "object") {
+        return {};
+    }
+
+    return abilities.reduce((cleanStats, ability) => {
+        cleanStats[ability] = stats[ability];
+        return cleanStats;
+    }, {});
+}
+
+function createPortraitRequestProfile(profile) {
+    if (!profile || typeof profile !== "object") {
+        return null;
+    }
+
+    return {
+        traits: Array.isArray(profile.traits)
+            ? [...profile.traits]
+            : [],
+        alignment: profile.alignment,
+        faithProfile: profile.faithProfile,
+        weakness: profile.weakness,
+        playstyle: profile.playstyle
+    };
+}
+
+
+/* =========================================================
+    6. Portrait Display
    ========================================================= */
 
 export function resetPortraitDisplay() {
@@ -373,6 +473,7 @@ export function resetPortraitDisplay() {
         state.character.portraitPrompt = null;
         state.character.portraitNegativePrompt = null;
         state.character.portraitProvider = null;
+        state.character.portraitModel = null;
         state.character.portraitDemoMode = false;
         state.character.portraitFallback = false;
         state.character.portraitFallbackReason = null;
@@ -463,10 +564,15 @@ function createBrowserFallbackPortrait(errorMessage = "") {
 }
 
 function storePortraitResult(data) {
+    if (!state.character) {
+        return;
+    }
+
     state.character.portraitUrl = data.imageUrl;
     state.character.portraitPrompt = data.prompt || null;
     state.character.portraitNegativePrompt = data.negativePrompt || null;
     state.character.portraitProvider = data.provider || null;
+    state.character.portraitModel = data.model || null;
     state.character.portraitDemoMode = Boolean(data.demoMode);
     state.character.portraitFallback = Boolean(data.fallback);
     state.character.portraitFallbackReason = data.fallbackReason || null;
@@ -474,18 +580,39 @@ function storePortraitResult(data) {
 
 function getPortraitStatusMessage(data) {
     if (data.fallback) {
-        return data.fallbackReason || "Cloudflare failed, so a demo portrait was created instead.";
+        return data.fallbackReason || "The image provider failed, so a demo portrait was created instead.";
     }
 
     if (data.demoMode) {
-        return "Demo portrait generated. Cloudflare image generation was not used.";
+        return "Demo portrait generated. Live image generation was not used.";
+    }
+
+    if (data.provider === "openai") {
+        return "OpenAI portrait generated.";
     }
 
     if (data.provider === "cloudflare") {
         return "Cloudflare portrait generated.";
     }
 
+    if (data.provider) {
+        return `${formatProviderName(data.provider)} portrait generated.`;
+    }
+
     return "Portrait generated.";
+}
+
+function getPortraitErrorMessage(response, data) {
+    if (response.status === 413) {
+        return "Portrait request was too large. Try again after refreshing the page.";
+    }
+
+    return (
+        data.detail ||
+        data.error ||
+        data.message ||
+        "Portrait generation failed."
+    );
 }
 
 export async function generateCharacterPortrait(onPortraitGenerated) {
@@ -509,7 +636,7 @@ export async function generateCharacterPortrait(onPortraitGenerated) {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                character: state.character
+                character: createPortraitRequestCharacter(state.character)
             })
         });
 
@@ -518,7 +645,7 @@ export async function generateCharacterPortrait(onPortraitGenerated) {
         });
 
         if (!response.ok) {
-            throw new Error(data.detail || data.error || "Portrait generation failed.");
+            throw new Error(getPortraitErrorMessage(response, data));
         }
 
         if (!data.imageUrl) {
@@ -541,13 +668,16 @@ export async function generateCharacterPortrait(onPortraitGenerated) {
             "The portrait server could not be reached."
         );
 
-        state.character.portraitUrl = fallbackUrl;
-        state.character.portraitPrompt = null;
-        state.character.portraitNegativePrompt = null;
-        state.character.portraitProvider = "browser-fallback";
-        state.character.portraitDemoMode = true;
-        state.character.portraitFallback = true;
-        state.character.portraitFallbackReason = error.message;
+        if (state.character) {
+            state.character.portraitUrl = fallbackUrl;
+            state.character.portraitPrompt = null;
+            state.character.portraitNegativePrompt = null;
+            state.character.portraitProvider = "browser-fallback";
+            state.character.portraitModel = null;
+            state.character.portraitDemoMode = true;
+            state.character.portraitFallback = true;
+            state.character.portraitFallbackReason = error.message;
+        }
 
         showPortraitImage(fallbackUrl);
 
@@ -564,7 +694,7 @@ export async function generateCharacterPortrait(onPortraitGenerated) {
 
 
 /* =========================================================
-    6. Summary Screen Rendering
+    7. Summary Screen Rendering
    ========================================================= */
 
 export function showSummary(onSummaryRendered) {
@@ -612,7 +742,7 @@ export function showSummary(onSummaryRendered) {
 
 
 /* =========================================================
-    7. Restart
+    8. Restart
    ========================================================= */
 
 export function restart(onRestarted) {
