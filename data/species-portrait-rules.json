@@ -1,8 +1,8 @@
 {
-    "_description": "Dicebound species portrait rules. This file stores species-specific visual rules used by the backend portrait prompt system. It should only contain the official 2024 Player's Handbook core species supported by Dicebound. These rules focus on portrait anatomy, visible species markers, skin or scale handling, hair or head-detail handling, and negative prompt terms. Character-specific details such as selected scale colour, eye colour, hair colour, hair style, class, weapon and notable feature are added later by the prompt builder.",
+    "_description": "Dicebound species portrait rules. This file stores species-specific visual rules used by the backend portrait prompt system. These rules define species anatomy, visible species markers, species field interpretation, and species-specific negative prompt terms. Character-specific selected values such as exact scale colour, eye colour, hair colour, hair style, class, weapon and notable feature are added later by promptBuilder.js.",
     "speciesPortraitRules": {
         "Aasimar": {
-            "priority": "Visually depict this Aasimar as a celestial-touched humanlike adventurer, not an elf, not a tiefling, not a fae and not a winged or horned being. The character must have rounded human ears, a humanlike face, normal humanoid anatomy, no pointed ears, no horns, no crown, no wing-like headpiece and no draconic or infernal features. Celestial presence should be shown only through subtle soft light, calm expression or gentle atmosphere.",
+            "priority": "Make the character clearly Aasimar: a celestial-touched humanlike adventurer with normal humanoid anatomy, rounded human ears, and subtle divine presence. The character should not look like an elf, tiefling, angel, fae or winged being.",
             "baseLook": [
                 "Celestial-touched humanoid adventurer",
                 "Natural humanlike face",
@@ -10,18 +10,16 @@
                 "Normal humanlike nose and mouth",
                 "Normal humanoid body anatomy",
                 "Serene or quietly otherworldly expression",
-                "Subtle divine presence shown through soft lighting, calm expression or faint aura only",
+                "Subtle divine presence through soft lighting, calm expression or faint aura only",
                 "Grounded fantasy adventurer appearance"
             ],
             "mustShow": [
                 "Aasimar should look celestial rather than infernal, elven, tiefling or draconic",
-                "The ears must be rounded human ears. Do not make the ears pointed, long, elven or tiefling-like.",
-                "Rounded humanlike ears must be visible or implied, not pointed ears",
-                "The face should remain humanoid, natural and readable",
-                "The selected eye colour must remain accurate and visible",
-                "The selected skin tone must remain accurate and visible",
-                "The selected hair colour and hair style must remain accurate",
-                "Any celestial glow must be subtle and must not change the selected eye colour, skin tone or hair colour"
+                "Rounded humanlike ears, not pointed ears",
+                "Humanlike face, not elven or infernal",
+                "Normal humanoid anatomy",
+                "Subtle celestial atmosphere only",
+                "No wings, horns, halo-crown or angelic head ornament"
             ],
             "mustNotShow": [
                 "Horns",
@@ -51,12 +49,11 @@
                 "Glowing wings",
                 "Pink wings",
                 "Celestial wing shapes behind the head",
-                "Glowing orange eyes unless orange, amber or gold eyes are selected",
                 "Full glowing face",
                 "Ordinary modern person with no fantasy adventurer presence"
             ],
-            "skinInstruction": "Use the listed skin tone as normal Aasimar skin. A very subtle celestial softness or faint aura is acceptable, but do not replace the listed skin tone with gold, silver, white, orange or glowing skin.",
-            "hairInstruction": "Use the listed hair colour and hair style normally. Do not turn the hair into light, flames, metal, a halo, horns, a crown or glowing head ornaments.",
+            "skinInstruction": "Use the selected skin tone as normal Aasimar skin. A very subtle celestial softness or faint aura is acceptable, but do not replace the selected skin tone with glowing, metallic or angelic skin.",
+            "hairInstruction": "Use the selected hair colour and hair style normally. Do not turn the hair into light, flames, metal, a halo, horns, a crown or glowing head ornaments.",
             "negativePrompt": [
                 "horns",
                 "gold horns",
@@ -87,8 +84,6 @@
                 "glowing wings",
                 "pink wings",
                 "wing shapes behind head",
-                "orange glowing eyes",
-                "glowing orange eyes",
                 "full glowing face",
                 "halo shaped like horns",
                 "ordinary modern person"
@@ -103,21 +98,20 @@
                 "Strong scaled brow ridges",
                 "Dragon-like jaws",
                 "Predator teeth or reptilian mouth structure",
-                "Visible scales across the whole face, snout, neck, shoulders, chest and upper torso",
+                "Visible scales across the face, snout, neck, shoulders, chest and upper torso",
                 "Thick-boned powerful body",
                 "Humanoid posture with normal arms and normal shoulders",
                 "Clawed or talon-like hands if hands are visible",
-                "Horns, head ridges, spines, frills, crest or smooth scaled skull as the selected head detail"
+                "Horns, head ridges, spines, frills, crest or smooth scaled skull as head detail"
             ],
             "mustShow": [
-                "The selected skin tone must be shown as the Dragonborn scale colour, not as smooth skin",
-                "The scale colour must cover the face, snout, neck, shoulders, chest and upper torso",
-                "The selected eye colour must be visible in the irises or eyes",
-                "The selected hair colour field must be interpreted as horn, crest, spine or head-detail colour, not human hair",
-                "The selected hair style field must be interpreted as Dragonborn head anatomy, not a mammalian hairstyle",
-                "If the head style is Smooth Scaled Head, show a smooth scaled skull with no hair, no crest, no frill and no crown of horns",
-                "If the head style is Crown Of Horns, show a crown-like arrangement of horns growing from the Dragonborn head",
-                "If the head style is Long Head Spines, show several long visible spines growing from the head"
+                "Dragonborn anatomy must read as reptilian and draconic, not human in costume",
+                "Dragon head with snout or muzzle",
+                "Visible scale texture",
+                "Reptilian facial structure",
+                "Humanoid adventurer posture",
+                "No mammalian hair",
+                "No separate dragon helmet, mask, pet dragon or second dragon head"
             ],
             "mustNotShow": [
                 "Human face",
@@ -127,8 +121,6 @@
                 "Tiefling face",
                 "Human hair",
                 "Mammalian hair",
-                "Long hair",
-                "Short human hair",
                 "Ponytail",
                 "Plaits",
                 "Braids",
@@ -149,8 +141,8 @@
                 "Tail unless specifically listed",
                 "Full dragon body"
             ],
-            "skinInstruction": "Use the listed skin tone as Dragonborn scale colour. The face, snout, neck, shoulders, chest and upper torso must all visibly use that scale colour. Do not turn scale colour into clothing colour, background colour or lighting.",
-            "hairInstruction": "Dragonborn do not have normal hair. Use the listed hair colour as horn, crest, spine or head-detail colour. Use the listed hair style as exact Dragonborn head anatomy, such as horns, crown of horns, crest ridges, head frill, bone crest, scaled crest, spines or smooth scaled head.",
+            "skinInstruction": "Use the selected skin or scale value as Dragonborn scale colour. The colour should appear on the visible scales, not as clothing, lighting or background colour.",
+            "hairInstruction": "Dragonborn do not have normal hair. Use the selected hair or head-detail colour as horn, crest, spine, frill or head-detail colour. Use the selected hair style or head style as Dragonborn head anatomy, not as mammalian hair.",
             "negativePrompt": [
                 "human face",
                 "human woman",
@@ -194,7 +186,7 @@
             ]
         },
         "Dwarf": {
-            "priority": "Make the character clearly Dwarf. Use short, sturdy adult dwarf anatomy with compact strength.",
+            "priority": "Make the character clearly Dwarf. Use short, sturdy adult dwarf anatomy with compact strength, broad proportions and a grounded fantasy adventurer presence.",
             "baseLook": [
                 "Short sturdy adult humanoid",
                 "Broad shoulders",
@@ -206,9 +198,12 @@
                 "Grounded dwarven adventurer appearance"
             ],
             "mustShow": [
-                "The character must look like a short adult, not a child",
-                "The body should look sturdy and compact",
-                "The selected skin tone, hair colour and hair style must remain visible"
+                "Short adult proportions",
+                "Sturdy compact body",
+                "Broad torso or shoulders",
+                "Mature adult face",
+                "Grounded dwarf presence",
+                "Adult dwarf, not child, gnome or halfling"
             ],
             "mustNotShow": [
                 "Tall slender body",
@@ -217,12 +212,13 @@
                 "Child body",
                 "Child face",
                 "Tiny gnome body",
+                "Halfling body",
                 "Orc tusks unless specifically listed",
                 "Dragonborn scales",
                 "Tiefling horns"
             ],
-            "skinInstruction": "Use the listed skin tone as normal Dwarf skin.",
-            "hairInstruction": "Use the listed hair colour and hair style. Beards are optional, but they must not hide the face or selected notable feature unless the character data specifically supports them.",
+            "skinInstruction": "Use the selected skin tone as normal Dwarf skin.",
+            "hairInstruction": "Use the selected hair colour and hair style. Beards are optional, but they must not hide the face or selected notable feature unless the character data specifically supports them.",
             "negativePrompt": [
                 "tall body",
                 "slender body",
@@ -232,6 +228,7 @@
                 "child",
                 "childlike",
                 "gnome body",
+                "halfling body",
                 "orc tusks",
                 "horns",
                 "scales"
@@ -249,9 +246,11 @@
                 "Refined fantasy adventurer appearance"
             ],
             "mustShow": [
-                "Pointed elven ears must be visible",
-                "The selected eye colour must remain visible",
-                "The selected hair colour and hair style must remain accurate"
+                "Pointed elven ears",
+                "Fine angular facial features",
+                "Graceful elven proportions",
+                "Refined fantasy adventurer appearance",
+                "Elf anatomy, not human, halfling, gnome or tiefling"
             ],
             "mustNotShow": [
                 "Rounded human ears",
@@ -260,10 +259,12 @@
                 "Dragonborn scales",
                 "Dragon snout",
                 "Animal muzzle",
-                "Short stocky dwarf body"
+                "Short stocky dwarf body",
+                "Small halfling body",
+                "Childlike gnome body"
             ],
-            "skinInstruction": "Use the listed skin tone as smooth elven skin.",
-            "hairInstruction": "Use the listed hair colour and hair style. Elf hair can be neat, long, braided or practical depending on the character sheet, but do not change the selected style.",
+            "skinInstruction": "Use the selected skin tone as smooth elven skin.",
+            "hairInstruction": "Use the selected hair colour and hair style. Elf hair can be neat, long, braided or practical depending on the character sheet, but do not change the selected style.",
             "negativePrompt": [
                 "round ears",
                 "rounded human ears",
@@ -273,11 +274,14 @@
                 "snout",
                 "muzzle",
                 "dwarf body",
-                "stocky dwarf"
+                "stocky dwarf",
+                "halfling body",
+                "gnome body",
+                "childlike"
             ]
         },
         "Gnome": {
-            "priority": "Make the character clearly Gnome. Use small adult gnome anatomy with mature adult facial proportions and lively expression.",
+            "priority": "Make the character clearly Gnome. Use small adult gnome anatomy with mature adult facial proportions, slightly pointed gnome ears and a lively expression.",
             "baseLook": [
                 "Small adult gnome humanoid",
                 "Short adult body",
@@ -290,10 +294,12 @@
                 "Compact fantasy adventurer appearance"
             ],
             "mustShow": [
-                "The character must look like a small adult, not a child",
-                "The selected eye colour must remain visible",
-                "Slightly pointed gnome ears should be visible",
-                "The selected hair colour and hair style must remain accurate"
+                "Small adult proportions",
+                "Mature adult face",
+                "Slightly pointed gnome ears",
+                "Lively expressive face",
+                "Compact fantasy adventurer appearance",
+                "Adult gnome, not child, halfling or elf"
             ],
             "mustNotShow": [
                 "Child face",
@@ -303,12 +309,13 @@
                 "Tall elf body",
                 "Elegant elf face",
                 "Broad dwarf body",
+                "Rounded halfling face",
                 "Orc tusks",
                 "Dragonborn scales",
                 "Dragon snout"
             ],
-            "skinInstruction": "Use the listed skin tone as normal Gnome skin.",
-            "hairInstruction": "Use the listed hair colour and hair style. Slightly eccentric hair is acceptable only if it still matches the selected style.",
+            "skinInstruction": "Use the selected skin tone as normal Gnome skin.",
+            "hairInstruction": "Use the selected hair colour and hair style. Slightly eccentric hair is acceptable only if it still matches the selected style.",
             "negativePrompt": [
                 "child",
                 "young child",
@@ -318,27 +325,32 @@
                 "tall elf",
                 "elegant elf",
                 "dwarf body",
+                "halfling body",
+                "rounded halfling face",
                 "orc tusks",
                 "scales",
                 "dragon snout"
             ]
         },
         "Goliath": {
-            "priority": "Make the character clearly Goliath. Use very tall, powerful giant-blooded humanoid anatomy.",
+            "priority": "Make the character clearly Goliath. Use very tall, powerful giant-blooded humanoid anatomy with imposing scale, broad structure and mountain-born presence.",
             "baseLook": [
                 "Very tall powerful humanoid",
-                "Massive muscular or heavy build if selected",
+                "Massive build if selected",
                 "Broad shoulders",
                 "Large adult warrior proportions",
                 "Strong facial structure",
-                "Stone-like, grey or earthy skin is appropriate if listed",
+                "Stone-like, grey or earthy skin is appropriate if selected",
                 "Mountain-born adventurer appearance",
                 "Imposing presence without orc tusks or dragon scales"
             ],
             "mustShow": [
-                "The character should look larger and more imposing than a normal human",
-                "The selected build must be visible in the upper body",
-                "The selected skin tone must remain visible"
+                "Larger and more imposing than a normal human",
+                "Powerful giant-blooded humanoid proportions",
+                "Broad shoulders",
+                "Strong adult facial structure",
+                "Mountain-born adventurer presence",
+                "Large adult body scale, not normal human size"
             ],
             "mustNotShow": [
                 "Normal human size",
@@ -352,8 +364,8 @@
                 "Dragon snout",
                 "Thin delicate body unless the selected build is thin"
             ],
-            "skinInstruction": "Use the listed skin tone as Goliath skin. Grey, stone-like, pale grey, ashen or earthy tones are appropriate if listed, but do not replace the selected tone.",
-            "hairInstruction": "Use the listed hair colour and hair style. Bald, shaved, close-cropped or practical hair is appropriate if the character sheet supports it.",
+            "skinInstruction": "Use the selected skin tone as Goliath skin. Grey, stone-like, pale grey, ashen or earthy tones are appropriate if selected, but do not replace the selected tone.",
+            "hairInstruction": "Use the selected hair colour and hair style. Bald, shaved, close-cropped or practical hair is appropriate if the character sheet supports it.",
             "negativePrompt": [
                 "normal human size",
                 "short body",
@@ -371,26 +383,34 @@
             ]
         },
         "Halfling": {
-            "priority": "Make the character clearly Halfling. Use small adult halfling anatomy with rounded, grounded features.",
+            "priority": "Make the character clearly Halfling. Use small adult halfling anatomy with rounded humanlike ears, warm rounded adult features and grounded proportions. The character must not look like an elf or gnome.",
             "baseLook": [
                 "Small adult humanoid",
-                "Rounded humanlike ears",
-                "Warm rounded adult face",
+                "Rounded humanlike ears, not pointed ears",
+                "Small adult halfling proportions, not elf proportions",
+                "Warm rounded adult face, not elegant elven features",
                 "Soft grounded facial features",
                 "Adult proportions at small size",
                 "Compact body",
-                "Broad or sturdy body if the selected build says broad or stocky",
+                "Broad or sturdy body if selected",
                 "Humanlike skin"
             ],
             "mustShow": [
-                "The character must look like a small adult, not a child",
-                "The selected build must remain visible",
-                "The selected skin tone, hair colour and hair style must remain accurate"
+                "Small adult proportions",
+                "Rounded humanlike ears, not pointed ears",
+                "Warm rounded adult face, not elegant elven features",
+                "Compact grounded body",
+                "Humanlike halfling appearance",
+                "Adult halfling, not child, gnome or elf"
             ],
             "mustNotShow": [
                 "Pointed elf ears",
+                "Elf ears",
+                "Elven ears",
                 "Long pointed ears",
                 "Elegant elf face",
+                "Elf-like face",
+                "Slender elf body",
                 "Child face",
                 "Child body",
                 "Baby-like proportions",
@@ -401,18 +421,24 @@
                 "Tiefling horns",
                 "Orc tusks"
             ],
-            "skinInstruction": "Use the listed skin tone as normal Halfling skin. Bronze skin should look warm and sun-touched if selected.",
-            "hairInstruction": "Use the listed hair colour and hair style normally.",
+            "skinInstruction": "Use the selected skin tone as normal Halfling skin. Bronze skin should look warm and sun-touched if selected.",
+            "hairInstruction": "Use the selected hair colour and hair style normally.",
             "negativePrompt": [
                 "elf ears",
                 "pointed ears",
+                "elven ears",
+                "long pointed ears",
                 "long ears",
                 "elven face",
+                "elegant elf face",
+                "elf-like face",
                 "beautiful elf",
+                "slender elf body",
                 "child",
                 "young child",
                 "baby face",
                 "gnome",
+                "gnome ears",
                 "dwarf body",
                 "tall body",
                 "horns",
@@ -421,7 +447,7 @@
             ]
         },
         "Human": {
-            "priority": "Make the character clearly Human. Use natural human anatomy, rounded ears and ordinary human proportions.",
+            "priority": "Make the character clearly Human. Use natural human anatomy, rounded ears and ordinary human proportions without fantasy species markers.",
             "baseLook": [
                 "Natural human face",
                 "Rounded human ears",
@@ -431,9 +457,12 @@
                 "Grounded human adventurer appearance"
             ],
             "mustShow": [
-                "The character must look fully human",
-                "The selected skin tone must appear as normal human skin",
-                "The selected hair colour, hair style and eye colour must remain accurate"
+                "Fully human anatomy",
+                "Rounded human ears",
+                "Natural human face",
+                "Normal human proportions",
+                "Grounded human adventurer appearance",
+                "No fantasy species markers unless specifically listed as a notable feature"
             ],
             "mustNotShow": [
                 "Pointed elf ears",
@@ -444,10 +473,13 @@
                 "Animal muzzle",
                 "Animal ears",
                 "Celestial glow unless specifically listed",
-                "Infernal features unless specifically listed"
+                "Infernal features unless specifically listed",
+                "Gnome proportions",
+                "Halfling proportions",
+                "Dwarf proportions"
             ],
-            "skinInstruction": "Use the listed skin tone as normal Human skin.",
-            "hairInstruction": "Use the listed hair colour and hair style normally.",
+            "skinInstruction": "Use the selected skin tone as normal Human skin.",
+            "hairInstruction": "Use the selected hair colour and hair style normally.",
             "negativePrompt": [
                 "elf ears",
                 "pointed ears",
@@ -459,11 +491,14 @@
                 "dragon face",
                 "animal ears",
                 "animal face",
-                "non-human anatomy"
+                "non-human anatomy",
+                "gnome body",
+                "halfling body",
+                "dwarf body"
             ]
         },
         "Orc": {
-            "priority": "Make the character clearly Orc. Use large powerful orc anatomy with rugged orc features.",
+            "priority": "Make the character clearly Orc. Use large powerful orc anatomy with rugged orc features, heavy brow, broad nose and visible tusks or lower fangs.",
             "baseLook": [
                 "Large powerful orc humanoid",
                 "Heavy brow",
@@ -476,9 +511,11 @@
             ],
             "mustShow": [
                 "Visible orc tusks or lower fangs",
-                "Strong or rugged orc facial structure",
-                "The selected skin tone must remain visible",
-                "The selected eye colour must remain visible"
+                "Strong rugged orc facial structure",
+                "Heavy brow",
+                "Broad nose",
+                "Powerful orc adventurer presence",
+                "Orc anatomy, not human, elf, goliath or tiefling"
             ],
             "mustNotShow": [
                 "Plain human face",
@@ -490,10 +527,11 @@
                 "Dragonborn scales",
                 "Dragon snout",
                 "Tiefling horns",
-                "Smooth fashion-model features"
+                "Smooth fashion-model features",
+                "No tusks"
             ],
-            "skinInstruction": "Use the listed skin tone as Orc skin. Green, grey, ashen, bronze, deep brown or earthy tones are appropriate if listed, but do not replace the selected tone.",
-            "hairInstruction": "Use the listed hair colour and hair style. Orc hair can look rough, shaved, braided or practical depending on the character sheet, but the selected style must remain visible.",
+            "skinInstruction": "Use the selected skin tone as Orc skin. Green, grey, ashen, bronze, deep brown or earthy tones are appropriate if selected, but do not replace the selected tone.",
+            "hairInstruction": "Use the selected hair colour and hair style. Orc hair can look rough, shaved, braided or practical depending on the character sheet, but the selected style must remain visible.",
             "negativePrompt": [
                 "plain human",
                 "beautiful elf",
@@ -505,27 +543,30 @@
                 "dragon snout",
                 "horns",
                 "smooth perfect skin",
-                "fashion model face"
+                "fashion model face",
+                "no tusks",
+                "tuskless"
             ]
         },
         "Tiefling": {
-            "priority": "Make the character clearly Tiefling. Use infernal humanoid anatomy with visible horns and otherworldly features.",
+            "priority": "Make the character clearly Tiefling. Use infernal humanoid anatomy with visible horns, pointed tiefling ears and otherworldly features.",
             "baseLook": [
                 "Infernal humanoid",
                 "Visible horns",
                 "Pointed tiefling ears",
                 "Unusual eyes",
                 "Humanlike face with infernal features",
-                "Skin may be unnatural or fantasy coloured if listed",
+                "Skin may be unnatural or fantasy coloured if selected",
                 "Hair arranged naturally around the horns",
                 "Striking otherworldly adventurer appearance"
             ],
             "mustShow": [
                 "Visible tiefling horns",
                 "Pointed tiefling ears",
-                "The selected skin tone must remain visible",
-                "The selected hair colour and hair style must fit around the horns",
-                "The selected eye colour must remain visible"
+                "Humanlike face with infernal features",
+                "Otherworldly adventurer appearance",
+                "Hair arranged naturally around horns",
+                "Tiefling anatomy, not elf, human, dragonborn or orc"
             ],
             "mustNotShow": [
                 "Plain human with no infernal features",
@@ -538,8 +579,8 @@
                 "Wings unless specifically listed",
                 "Hornless tiefling"
             ],
-            "skinInstruction": "Use the listed skin tone as Tiefling skin. Unusual colours such as red, purple, blue-grey, ashen or pale tones are appropriate if listed, but do not replace the selected tone.",
-            "hairInstruction": "Use the listed hair colour and hair style. Hair should fit naturally around the horns and must not hide the horns, ears or notable feature.",
+            "skinInstruction": "Use the selected skin tone as Tiefling skin. Unusual colours such as red, purple, blue-grey, ashen or pale tones are appropriate if selected, but do not replace the selected tone.",
+            "hairInstruction": "Use the selected hair colour and hair style. Hair should fit naturally around the horns and must not hide the horns, ears or notable feature.",
             "negativePrompt": [
                 "no horns",
                 "hornless",

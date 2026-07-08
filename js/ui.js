@@ -231,6 +231,7 @@ export function setAppearanceRow() {
 
     const appearanceItems = [
         ["Gender", character.gender],
+        ["Gender Presentation", character.portraitPresentation || character.gender],
         ["Age", character.ageRange],
         ["Height", character.height],
         ["Build", character.build],
@@ -504,6 +505,7 @@ function createBrowserFallbackPortrait(errorMessage = "") {
     const initial = characterName.charAt(0).toUpperCase() || "A";
     const featureName = getNotableFeatureName(character);
     const labels = getAppearanceLabels(character);
+    const portraitPresentation = character.portraitPresentation || character.gender || "Unknown";
 
     const svg = `
 <svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
@@ -533,7 +535,7 @@ function createBrowserFallbackPortrait(errorMessage = "") {
     </text>
 
     <text x="512" y="665" text-anchor="middle" fill="#cbd5e1" font-size="26" font-family="Arial, sans-serif">
-        ${escapeSvgText(character.gender || "Unknown")} • ${escapeSvgText(character.ageRange || "Unknown")} • ${escapeSvgText(character.build || "Unknown")}
+        ${escapeSvgText(character.gender || "Unknown")} • ${escapeSvgText(portraitPresentation)} • ${escapeSvgText(character.ageRange || "Unknown")} • ${escapeSvgText(character.build || "Unknown")}
     </text>
 
     <text x="512" y="725" text-anchor="middle" fill="#dbc59d" font-size="24" font-family="Arial, sans-serif">
@@ -719,12 +721,12 @@ export function showSummary(onSummaryRendered) {
         portraitInitial.textContent = state.character.name.charAt(0).toUpperCase();
     }
 
-    const firstTrait = generatedProfile.traits[0] || "Adventurous";
+    const titleTrait = generatedProfile.titleTrait || generatedProfile.traits[0] || "Adventurous";
     const speciesName = getSpeciesName(state.character);
 
     setText(
         profileTitle,
-        `${state.character.name}, The ${firstTrait} ${speciesName} ${state.character.className}`
+        `${state.character.name}, The ${titleTrait} ${speciesName} ${state.character.className}`
     );
 
     setText(profileIdentity, generatedProfile.identityText);

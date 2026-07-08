@@ -1,27 +1,27 @@
 /* =========================================================
-   Dicebound
-   Species Prompt Service
-   ---------------------------------------------------------
-   This file converts species portrait rules into prompt text
-   for the backend portrait generation system.
+    Dicebound
+    Species Prompt Service
+    ---------------------------------------------------------
+    This file converts species portrait rules into prompt text
+    for the backend portrait generation system.
 
-   Responsibilities:
-   - load species anatomy rules from species-portrait-rules.json
-   - provide species visual instructions to promptBuilder.js
-   - provide species-specific negative prompt terms
-   - normalise species names and aliases
-   - ignore unsupported legacy species if they appear in old data
+    Responsibilities:
+    - load species anatomy rules from species-portrait-rules.json
+    - provide species visual instructions to promptBuilder.js
+    - provide species-specific negative prompt terms
+    - normalise species names and aliases
+    - ignore unsupported legacy species if they appear in old data
 
-   This file should not duplicate full species anatomy rules.
-   Species anatomy belongs in species-portrait-rules.json.
-   Character-specific details such as scale colour, eye colour,
-   hair colour, head style, class, weapon and notable features
-   belong in promptBuilder.js.
+    This file should not duplicate full species anatomy rules.
+    Species anatomy belongs in species-portrait-rules.json.
+    Character-specific details such as scale colour, eye colour,
+    hair colour, head style, class, weapon and notable features
+    belong in promptBuilder.js.
 
-   Supported species are the official 2024 Player's Handbook
-   core species used by Dicebound:
-   Aasimar, Dragonborn, Dwarf, Elf, Gnome, Goliath, Halfling,
-   Human, Orc and Tiefling.
+    Supported species are the official 2024 Player's Handbook
+    core species used by Dicebound:
+    Aasimar, Dragonborn, Dwarf, Elf, Gnome, Goliath, Halfling,
+    Human, Orc and Tiefling.
    ========================================================= */
 
 const speciesAliases = {
@@ -75,22 +75,31 @@ const supportedSpeciesKeys = new Set([
 let speciesPortraitRules = loadSpeciesPortraitRules();
 
 function loadSpeciesPortraitRules() {
-    try {
-        const speciesPortraitRulesData = require("../../data/species-portrait-rules.json");
+    const possiblePaths = [
+        "../../data/species-portrait-rules.json",
+        "../data/species-portrait-rules.json"
+    ];
 
-        const rules =
-            speciesPortraitRulesData.speciesPortraitRules ||
-            speciesPortraitRulesData ||
-            {};
+    for (const filePath of possiblePaths) {
+        try {
+            const speciesPortraitRulesData = require(filePath);
 
-        return filterSupportedSpeciesRules(rules);
-    } catch (error) {
-        console.warn(
-            "species-portrait-rules.json could not be loaded. Falling back to generic species prompt handling."
-        );
+            const rules =
+                speciesPortraitRulesData.speciesPortraitRules ||
+                speciesPortraitRulesData ||
+                {};
 
-        return {};
+            return filterSupportedSpeciesRules(rules);
+        } catch {
+            // Try the next likely path.
+        }
     }
+
+    console.warn(
+        "species-portrait-rules.json could not be loaded. Falling back to generic species prompt handling."
+    );
+
+    return {};
 }
 
 function filterSupportedSpeciesRules(rules) {
@@ -200,7 +209,7 @@ function getSpeciesVisualInstruction(species) {
         ].join(" ");
     }
 
-    const ruleSentences = getSpeciesRuleSentences(rule);
+    const ruleSentences = getSpeciesAnatomySentences(rule);
 
     return [
         `Species accuracy: ${speciesName}.`,
@@ -210,16 +219,14 @@ function getSpeciesVisualInstruction(species) {
     ].join(" ");
 }
 
-function getSpeciesRuleSentences(rule) {
+function getSpeciesAnatomySentences(rule) {
     return dedupeList([
         ...toSentenceList(rule.priority),
         ...toSentenceList(rule.baseLook),
         ...toSentenceList(rule.anatomy),
         ...toSentenceList(rule.requiredFeatures),
         ...toSentenceList(rule.mustShow),
-        ...toSentenceList(rule.allowedFeatures),
-        ...toSentenceList(rule.skinInstruction),
-        ...toSentenceList(rule.hairInstruction)
+        ...toSentenceList(rule.allowedFeatures)
     ]);
 }
 

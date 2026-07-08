@@ -210,6 +210,19 @@ function getPortraitPromptText(character) {
         : "";
 }
 
+function getPrintableProfileTitle(character, speciesName) {
+    const summaryTitle = profileTitle?.textContent || "";
+
+    if (summaryTitle.includes(",")) {
+        return summaryTitle.split(",").slice(1).join(",").trim();
+    }
+
+    const profile = character.generatedProfile || {};
+    const titleTrait = profile.titleTrait || profile.traits?.[0] || "Adventurous";
+
+    return `The ${titleTrait} ${speciesName} ${character.className}`;
+}
+
 
 /* =========================================================
     3. Export Status
@@ -301,7 +314,7 @@ export function populatePrintableCharacterSheet() {
     const labels = getAppearanceLabels(character);
 
     setText(printName, character.name);
-    setText(printSubtitle, `Level 1 ${speciesName} ${character.className}`);
+    setText(printSubtitle, getPrintableProfileTitle(character, speciesName));
 
     if (printPortrait) {
         printPortrait.src = getPortraitForExport();
@@ -380,10 +393,10 @@ Name: ${character.name}
 Species: ${speciesName}
 Class: Level 1 ${character.className}
 Gender: ${character.gender}
-Portrait Presentation: ${portraitPresentation}
 Age Range: ${character.ageRange}
 
 APPEARANCE
+Gender Presentation: ${portraitPresentation}
 Height: ${character.height}
 Build: ${character.build}
 Eyes: ${character.eyeColour}

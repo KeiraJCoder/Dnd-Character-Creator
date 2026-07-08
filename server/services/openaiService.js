@@ -19,7 +19,7 @@ const defaultImageMimeType = "image/png";
 async function generateWithOpenAI(character) {
     validateOpenAiRequest(character);
 
-    const prompt = buildOpenAiPrompt(character);
+    const prompt = buildPortraitPrompt(character);
     const negativePrompt = buildDynamicNegativePrompt(character);
     const body = buildOpenAiRequestBody(prompt);
 
@@ -93,70 +93,6 @@ function buildOpenAiRequestBody(prompt) {
         output_format: openaiImageFormat,
         moderation: openaiImageModeration
     };
-}
-
-function buildOpenAiPrompt(character) {
-    const basePrompt = buildPortraitPrompt(character);
-    const negativePrompt = buildDynamicNegativePrompt(character);
-    const characterLock = buildCharacterSheetLock(character);
-
-    return [
-        "STRICT DICEBOUND CHARACTER PORTRAIT.",
-        "Follow the character sheet literally. Selected values are mandatory, not suggestions.",
-        "Create one fantasy character bust portrait from head to upper torso.",
-        "No text, no logo, no extra characters, no pet, no companion, no mask, no helmet, no crown and no decorative headpiece unless explicitly required by the character sheet.",
-        characterLock,
-        "MANDATORY SPECIES RULE: species anatomy must match the listed species. Do not drift into elf, tiefling, dragonborn, human or another species unless that is the selected species.",
-        "MANDATORY VISIBLE FEATURE RULE: if a notable feature is listed, it must be clearly visible unless the feature is 'No Obvious Unusual Feature'.",
-        basePrompt,
-        negativePrompt
-            ? `AVOID THESE ERRORS: ${negativePrompt}`
-            : ""
-    ]
-        .filter(Boolean)
-        .join("\n\n");
-}
-
-function buildCharacterSheetLock(character) {
-    const speciesName = getSpeciesName(character);
-    const notableFeatureName = getNotableFeatureName(character);
-
-    return [
-        "CHARACTER SHEET LOCK:",
-        `- Species must read as: ${speciesName}.`,
-        `- Class visual theme: ${character.className || "Adventurer"}.`,
-        `- Gender or portrait presentation must read as: ${character.portraitPresentation || character.gender || "Not specified"}.`,
-        `- Age must read as: ${character.ageRange || "Not specified"}.`,
-        `- Height impression must read as: ${character.height || "Not specified"}.`,
-        `- Body build must read as: ${character.build || "Not specified"}.`,
-        `- Eye colour must be: ${character.eyeColour || "Not specified"}.`,
-        `- Hair or head-detail colour must be: ${character.hairColour || "Not specified"}.`,
-        `- Hair style or head style must be: ${character.hairStyle || "Not specified"}.`,
-        `- Skin tone or scale colour must be: ${character.skinTone || "Not specified"}.`,
-        `- Visible notable feature must be: ${notableFeatureName}.`
-    ].join("\n");
-}
-
-function getSpeciesName(character) {
-    if (typeof character?.species === "string") {
-        return character.species;
-    }
-
-    return character?.species?.name || "Unknown Species";
-}
-
-function getNotableFeatureName(character) {
-    const notableFeature = character?.notableFeature;
-
-    if (typeof notableFeature === "string") {
-        return notableFeature || "No Obvious Unusual Feature";
-    }
-
-    return (
-        notableFeature?.name ||
-        character?.notableFeatureName ||
-        "No Obvious Unusual Feature"
-    );
 }
 
 function extractImageUrlFromOpenAiResponse(data) {

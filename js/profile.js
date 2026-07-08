@@ -10,8 +10,8 @@
     - randomise question and answer order
     - apply answer scores to the profile score state
     - lightly apply species profile influence
-    - calculate traits, alignment, faith outlook, weakness and
-      playstyle
+    - calculate traits, title trait, alignment, faith outlook,
+      weakness and playstyle
     - create character identity text for the summary and export
 
     This file should not alter DnD ability scores, hit points,
@@ -90,6 +90,47 @@ function normaliseKey(value) {
         .trim()
         .toLowerCase()
         .replace(/[^a-z0-9]/g, "");
+}
+
+function formatProseValue(value) {
+    return String(value || "")
+        .trim()
+        .replace(/\s+/g, " ")
+        .toLowerCase();
+}
+
+function getArticleFor(value) {
+    const text = formatProseValue(value);
+
+    if (!text) {
+        return "a";
+    }
+
+    if (/^(a|e|i|o|u)/.test(text)) {
+        return "an";
+    }
+
+    return "a";
+}
+
+function joinProseList(items) {
+    const cleanItems = items
+        .map(formatProseValue)
+        .filter(Boolean);
+
+    if (cleanItems.length === 0) {
+        return "";
+    }
+
+    if (cleanItems.length === 1) {
+        return cleanItems[0];
+    }
+
+    if (cleanItems.length === 2) {
+        return `${cleanItems[0]} and ${cleanItems[1]}`;
+    }
+
+    return `${cleanItems.slice(0, -1).join(", ")} and ${cleanItems[cleanItems.length - 1]}`;
 }
 
 function isDragonborn(character = state.character) {
@@ -185,7 +226,6 @@ export function renderQuestion(onComplete) {
     const activeQuestions = getActiveQuestions();
 
     if (!activeQuestions.length || !activeQuestions[state.currentQuestionIndex]) {
-        finishQuestions(onComplete);
         return;
     }
 
@@ -264,8 +304,40 @@ export function applyScores(scores) {
 
 
 /* =========================================================
-    6. Trait And Alignment Logic
+    6. Trait, Title And Alignment Logic
    ========================================================= */
+
+function getTraitDisplayName(scoreKey) {
+    const traitNames = {
+        mercy: "Merciful",
+        ruthlessness: "Ruthless",
+        honour: "Honourable",
+        deception: "Deceptive",
+        faith: "Faithful",
+        scepticism: "Sceptical",
+        courage: "Courageous",
+        caution: "Watchful",
+        greed: "Greedy",
+        generosity: "Generous",
+        loyalty: "Loyal",
+        independence: "Independent",
+        curiosity: "Curious",
+        pragmatism: "Pragmatic",
+        violence: "Fierce",
+        diplomacy: "Diplomatic",
+        pride: "Proud",
+        humility: "Humble",
+        wisdom: "Wise",
+        ambition: "Ambitious",
+        confidence: "Confident",
+        justice: "Just",
+        investigation: "Investigative",
+        perception: "Perceptive",
+        skill: "Skilled"
+    };
+
+    return traitNames[scoreKey] || capitalise(scoreKey);
+}
 
 export function getTopTraits() {
     const excluded = [
@@ -280,13 +352,102 @@ export function getTopTraits() {
         .filter(([key]) => {
             return !excluded.includes(key);
         })
+        .filter(([, value]) => {
+            return Number(value) > 0;
+        })
         .sort((a, b) => {
             return b[1] - a[1];
         })
         .slice(0, 4)
         .map(([key]) => {
-            return capitalise(key);
+            return getTraitDisplayName(key);
         });
+}
+
+function getTitleOptions() {
+    return [
+        {
+            title: "Merciful",
+            score: getScore("mercy") + getScore("generosity") + getScore("humility")
+        },
+        {
+            title: "Honourable",
+            score: getScore("honour") + getScore("justice") + getScore("loyalty")
+        },
+        {
+            title: "Courageous",
+            score: getScore("courage") + getScore("confidence") + getScore("pride")
+        },
+        {
+            title: "Watchful",
+            score: getScore("caution") + getScore("perception") + getScore("wisdom")
+        },
+        {
+            title: "Curious",
+            score: getScore("curiosity") + getScore("investigation") + getScore("skill")
+        },
+        {
+            title: "Silver-Tongued",
+            score: getScore("diplomacy") + getScore("deception") + getScore("confidence")
+        },
+        {
+            title: "Kind-Hearted",
+            score: getScore("mercy") + getScore("generosity") + getScore("loyalty")
+        },
+        {
+            title: "Iron-Willed",
+            score: getScore("courage") + getScore("pragmatism") + getScore("independence")
+        },
+        {
+            title: "Wise",
+            score: getScore("wisdom") + getScore("humility") + getScore("caution")
+        },
+        {
+            title: "Ambitious",
+            score: getScore("ambition") + getScore("pride") + getScore("confidence")
+        },
+        {
+            title: "Independent",
+            score: getScore("independence") + getScore("pragmatism") + getScore("scepticism")
+        },
+        {
+            title: "Fierce",
+            score: getScore("violence") + getScore("courage") + getScore("ruthlessness")
+        },
+        {
+            title: "Pragmatic",
+            score: getScore("pragmatism") + getScore("caution") + getScore("wisdom")
+        },
+        {
+            title: "Devout",
+            score: getScore("faith") + getScore("honour") + getScore("humility")
+        },
+        {
+            title: "Restless",
+            score: getScore("curiosity") + getScore("ambition") + getScore("independence")
+        }
+    ];
+}
+
+export function getProfileTitleTrait() {
+    const titleOptions = getTitleOptions()
+        .filter(option => {
+            return Number(option.score) > 0;
+        })
+        .sort((a, b) => {
+            return b.score - a.score;
+        });
+
+    if (titleOptions.length === 0) {
+        return "Adventurous";
+    }
+
+    const highestScore = titleOptions[0].score;
+    const tiedOptions = titleOptions.filter(option => {
+        return option.score === highestScore;
+    });
+
+    return shuffleArray(tiedOptions)[0]?.title || "Adventurous";
 }
 
 export function getAlignment() {
@@ -450,14 +611,14 @@ export function getGenderDescription(character = state.character) {
         return "whose gender is not stated";
     }
 
-    return `who is ${gender}`;
+    return `who is ${formatProseValue(gender)}`;
 }
 
 function getHairDescription(character) {
     const hairColour = String(character.hairColour || "").trim();
     const hairStyle = String(character.hairStyle || "").trim();
-    const hairColourText = hairColour.toLowerCase();
-    const hairStyleText = hairStyle.toLowerCase();
+    const hairColourText = formatProseValue(hairColour);
+    const hairStyleText = formatProseValue(hairStyle);
 
     if (isDragonborn(character)) {
         if (hairStyleText === "smooth scaled head") {
@@ -485,15 +646,15 @@ function getHairDescription(character) {
         hairStyleText === "shaved head" ||
         hairColourText === "no hair"
     ) {
-        return hairStyle || hairColour || "no hair";
+        return hairStyleText || hairColourText || "no hair";
     }
 
     if (hairColour && hairStyle) {
-        return `${hairColour} ${hairStyleText}`;
+        return `${hairColourText} ${hairStyleText}`;
     }
 
     if (hairColour) {
-        return `${hairColour} hair`;
+        return `${hairColourText} hair`;
     }
 
     if (hairStyle) {
@@ -504,7 +665,7 @@ function getHairDescription(character) {
 }
 
 function getSkinOrScaleDescription(character) {
-    const skinTone = String(character.skinTone || "").trim();
+    const skinTone = formatProseValue(character.skinTone);
 
     if (isDragonborn(character)) {
         return skinTone
@@ -524,7 +685,17 @@ function getNotableFeatureDescription(character) {
         return "They have no obvious unusual feature.";
     }
 
-    return `Their notable feature is ${featureName}.`;
+    return `Their notable feature is ${formatProseValue(featureName)}.`;
+}
+
+function getPortraitPresentationDescription(character) {
+    const portraitPresentation = formatProseValue(character?.portraitPresentation);
+
+    if (!portraitPresentation) {
+        return "";
+    }
+
+    return ` Their portrait presentation is ${portraitPresentation}.`;
 }
 
 export function getIdentityText(alignment, traits, character = state.character) {
@@ -532,22 +703,40 @@ export function getIdentityText(alignment, traits, character = state.character) 
         return "";
     }
 
-    const speciesName = getSpeciesName(character);
-    const portraitPresentation = character.portraitPresentation
-        ? ` Their portrait presentation is ${character.portraitPresentation}.`
-        : "";
+    const speciesName = formatProseValue(getSpeciesName(character));
+    const className = formatProseValue(character.className);
+    const ageRange = formatProseValue(character.ageRange);
+    const height = formatProseValue(character.height);
+    const build = formatProseValue(character.build);
+    const eyeColour = formatProseValue(character.eyeColour);
+
+    const ageSpeciesClass = [
+        ageRange,
+        speciesName,
+        className
+    ].filter(Boolean).join(" ");
+
+    const frameDescription = [
+        height,
+        build
+    ].filter(Boolean).join(", ");
+
+    const frameText = frameDescription
+        ? `with ${getArticleFor(frameDescription)} ${frameDescription} frame`
+        : "with an unspecified frame";
 
     const hairDescription = getHairDescription(character);
     const skinOrScaleDescription = getSkinOrScaleDescription(character);
     const notableFeatureDescription = getNotableFeatureDescription(character);
+    const portraitPresentation = getPortraitPresentationDescription(character);
 
-    const appearance = `${character.name} is a ${character.ageRange} ${speciesName} ${character.className} ${getGenderDescription(character)}, with a ${character.height}, ${character.build} frame, ${character.eyeColour} eyes, ${hairDescription} and ${skinOrScaleDescription}. ${notableFeatureDescription}${portraitPresentation}`;
+    const appearance = `${character.name} is ${getArticleFor(ageSpeciesClass)} ${ageSpeciesClass} ${getGenderDescription(character)}, ${frameText}, ${eyeColour || "unspecified"} eyes, ${hairDescription} and ${skinOrScaleDescription}. ${notableFeatureDescription}${portraitPresentation}`;
 
     const traitText = traits.length > 0
-        ? `They appear most strongly defined by ${traits.join(", ")}.`
+        ? `They appear most strongly defined by ${joinProseList(traits)}.`
         : "Their strongest traits are still emerging.";
 
-    return `${appearance} ${traitText} Their choices suggest a ${alignment} outlook.`;
+    return `${appearance} ${traitText} Their choices suggest a ${formatProseValue(alignment)} outlook.`;
 }
 
 export function getSpeciesProfileText(character = state.character) {
@@ -579,6 +768,7 @@ export function createGeneratedProfile(character = state.character) {
     }
 
     const traits = getTopTraits();
+    const titleTrait = getProfileTitleTrait();
     const alignment = getAlignment();
     const faithProfile = getFaithProfile();
     const weakness = getWeakness();
@@ -587,6 +777,7 @@ export function createGeneratedProfile(character = state.character) {
     const speciesProfileText = getSpeciesProfileText(character);
 
     return {
+        titleTrait,
         traits,
         alignment,
         faithProfile,

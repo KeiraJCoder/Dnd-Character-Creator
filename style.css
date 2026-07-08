@@ -1050,4 +1050,145 @@ button:active:not(:disabled) {
     .print-stat span {
         font-size: 0.78rem;
     }
+}/* =========================================================
+   16. Print Media
+   ========================================================= */
+
+@media print {
+    @page {
+        size: A4;
+        margin: 10mm;
+    }
+
+    html,
+    body {
+        width: 100%;
+        min-height: auto;
+        margin: 0;
+        padding: 0;
+        color: var(--colour-print-text);
+        background: #ffffff;
+    }
+
+    body {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    .app {
+        display: block !important;
+        width: 100% !important;
+        max-width: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    .app > :not(#printableCharacterSheet) {
+        display: none !important;
+    }
+
+    #printableCharacterSheet,
+    #printableCharacterSheet.hidden {
+        display: block !important;
+        position: static !important;
+        inset: auto !important;
+        width: 100% !important;
+        max-width: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        background: #ffffff !important;
+    }
+
+    .print-sheet {
+        width: 100% !important;
+        max-width: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        color: var(--colour-print-text);
+        background: #ffffff !important;
+        box-shadow: none !important;
+    }
+
+    .print-header {
+        display: grid;
+        grid-template-columns: 1fr 155px;
+        gap: 14px;
+        align-items: start;
+        padding-bottom: 12px;
+        margin-bottom: 10px;
+        border-bottom: 2px solid var(--colour-print-gold);
+        break-inside: avoid;
+        page-break-inside: avoid;
+    }
+
+    .print-eyebrow {
+        margin-bottom: 5px;
+        font-size: 0.66rem;
+    }
+
+    .print-header h1 {
+        font-size: 2rem;
+        line-height: 1;
+    }
+
+    .print-header p {
+        margin: 6px 0 0;
+        font-size: 0.9rem;
+    }
+
+    .print-portrait-frame {
+        width: 155px;
+        border-width: 2px;
+        border-radius: var(--radius-sm);
+    }
+
+    .print-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+        margin-top: 8px;
+    }
+
+    .print-panel {
+        margin-top: 8px;
+        padding: 9px;
+        border-width: 1px;
+        border-radius: var(--radius-sm);
+        background: #ffffff;
+        break-inside: auto;
+        page-break-inside: auto;
+    }
+
+    .print-panel h2 {
+        margin-bottom: 6px;
+        padding-bottom: 4px;
+        font-size: 0.98rem;
+    }
+
+    .print-panel p {
+        margin: 4px 0;
+        font-size: 0.78rem;
+        line-height: 1.3;
+    }
+
+    .print-stats-grid {
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+        gap: 5px;
+    }
+
+    .print-stat {
+        padding: 5px;
+        border-radius: 8px;
+        break-inside: avoid;
+        page-break-inside: avoid;
+    }
+
+    .print-stat strong {
+        margin-bottom: 2px;
+        font-size: 0.78rem;
+    }
+
+    .print-stat span {
+        font-size: 0.68rem;
+    }
 }

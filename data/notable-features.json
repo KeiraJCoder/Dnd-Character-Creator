@@ -6,17 +6,23 @@
             "allowedSpecies": "all",
             "category": "none",
             "visibility": "none",
-            "promptInstruction": "Do not add any unusual scar, tattoo, piercing, missing body part, glowing feature or distinctive mark.",
-            "visibilityInstruction": "Keep the face, head and upper body clear, but do not invent a notable feature.",
+            "promptInstruction": "Do not add any unusual scar, tattoo, piercing, missing body part, glowing feature, damaged horn, unusual eye, birthmark, ritual mark or distinctive injury.",
+            "visibilityInstruction": "Keep the face, head, hands and upper body natural for the selected species. Do not invent a notable feature.",
             "negativePrompt": [
                 "scar",
                 "tattoo",
                 "face mark",
+                "ritual mark",
+                "birthmark",
                 "missing eye",
+                "clouded eye",
                 "missing finger",
                 "piercing",
                 "glowing eyes",
-                "broken horn"
+                "broken horn",
+                "damaged horn",
+                "gold tooth",
+                "ink-stained fingers"
             ]
         },
         {
@@ -24,13 +30,19 @@
             "allowedSpecies": "all",
             "category": "scar",
             "visibility": "face",
-            "promptInstruction": "Show one small realistic healed scar on the face. It should look like healed skin damage, not a tattoo, face paint, dirt or shadow.",
-            "visibilityInstruction": "The face must be close, clear and well lit so the small facial scar is visible.",
+            "promptInstruction": "Show one small but clearly visible healed scar on the face. It should be a short pale or darker line of healed skin damage, not a tattoo, face paint, dirt, wrinkle or shadow.",
+            "visibilityInstruction": "The face must be close, clear and well lit. Place the small scar on a visible cheek, brow, temple, nose or jaw area so it can be noticed in a bust portrait.",
             "negativePrompt": [
+                "no scar",
+                "scar hidden",
                 "tattoo instead of scar",
                 "face paint",
+                "dirt",
+                "shadow only",
                 "blood",
-                "open wound"
+                "open wound",
+                "fresh wound",
+                "smooth unmarked face"
             ]
         },
         {
@@ -38,13 +50,19 @@
             "allowedSpecies": "all",
             "category": "scar",
             "visibility": "face",
-            "promptInstruction": "Show one large realistic healed scar across part of the face. It should look like old healed skin damage, not a tattoo, face paint, dirt or shadow.",
-            "visibilityInstruction": "The face must be close, clear and unobstructed so the large scar is immediately noticeable.",
+            "promptInstruction": "Show one large clearly visible healed scar across part of the face. The scar should be immediately noticeable as old healed skin damage, not decoration, paint, dirt or shadow.",
+            "visibilityInstruction": "The face must be close, clear and unobstructed. The scar should cross a visible cheek, brow, nose, jaw or one side of the face without being hidden by hair, hood, helmet, shadow or pose.",
             "negativePrompt": [
+                "no scar",
+                "tiny scar",
+                "scar hidden",
                 "tattoo instead of scar",
                 "face paint",
+                "dirt",
+                "shadow only",
                 "blood",
-                "fresh wound"
+                "fresh wound",
+                "smooth unmarked face"
             ]
         },
         {
@@ -52,13 +70,18 @@
             "allowedSpecies": "all",
             "category": "scar",
             "visibility": "face",
-            "promptInstruction": "Show a realistic healed scar cutting through one eyebrow. The scar should interrupt the eyebrow clearly.",
-            "visibilityInstruction": "The eyes and eyebrows must be visible and unobstructed.",
+            "promptInstruction": "Show one healed scar cutting clearly through one eyebrow. The scar must visibly interrupt the eyebrow hair and continue slightly above or below the brow.",
+            "visibilityInstruction": "Both eyes and eyebrows must be visible. Do not cover the eyebrow area with hair, hood, helmet, shadow, mask or pose.",
             "negativePrompt": [
+                "no eyebrow scar",
+                "covered eyebrows",
+                "hair covering eyes",
+                "helmet",
+                "hood",
+                "mask",
                 "tattoo instead of scar",
                 "face paint",
-                "covered eyebrows",
-                "hair covering eyes"
+                "smooth eyebrow"
             ]
         },
         {
@@ -76,13 +99,18 @@
             ],
             "category": "scar",
             "visibility": "face",
-            "promptInstruction": "Show a realistic healed scar crossing the bridge or side of the nose. The scar should follow the shape of the nose.",
-            "visibilityInstruction": "The nose must be visible from a clear front or three-quarter angle.",
+            "promptInstruction": "Show a healed scar crossing the bridge, ridge or side of the nose. The scar must follow the shape of the nose and be visibly separate from normal nose shading.",
+            "visibilityInstruction": "Use a clear front or three-quarter face angle. The nose must be unobstructed and well lit so the scar across the nose is easy to see.",
             "negativePrompt": [
+                "no nose scar",
                 "perfect nose",
                 "covered nose",
                 "mask",
-                "tattoo instead of scar"
+                "helmet",
+                "hood",
+                "shadow hiding nose",
+                "tattoo instead of scar",
+                "face paint"
             ]
         },
         {
@@ -90,12 +118,17 @@
             "allowedSpecies": "all",
             "category": "scar",
             "visibility": "face",
-            "promptInstruction": "Show a realistic healed scar across one cheek. It should look like old skin damage, not paint, dirt or decorative makeup.",
-            "visibilityInstruction": "At least one cheek must be clearly visible and well lit.",
+            "promptInstruction": "Show one realistic healed scar across one cheek. It should be a clear line or jagged mark of old skin damage, not paint, dirt, makeup or decorative tattoo.",
+            "visibilityInstruction": "At least one cheek must be clearly visible, close and well lit. Do not hide the cheek with hair, hand, collar, weapon, shadow, helmet, hood or pose.",
             "negativePrompt": [
+                "no cheek scar",
+                "scar hidden",
+                "covered cheek",
+                "hair covering cheeks",
                 "tattoo instead of scar",
                 "face paint",
-                "hair covering cheeks"
+                "dirt",
+                "smooth unmarked cheek"
             ]
         },
         {
@@ -103,12 +136,16 @@
             "allowedSpecies": "all",
             "category": "scar",
             "visibility": "face",
-            "promptInstruction": "Show a jagged realistic healed scar following the jawline. It should be uneven and visibly healed.",
-            "visibilityInstruction": "The jawline must be visible; do not hide it with a high collar, beard, scarf, hand or shadow.",
+            "promptInstruction": "Show a jagged healed scar following the jawline. It should be uneven, old and visibly healed, with an irregular shape along the lower face.",
+            "visibilityInstruction": "The jawline must be visible. Do not hide it with a high collar, beard, scarf, hand, weapon, helmet, hood or deep shadow.",
             "negativePrompt": [
+                "no jaw scar",
                 "smooth perfect jaw",
                 "beard hiding jaw",
                 "scarf covering jaw",
+                "high collar",
+                "hand covering jaw",
+                "shadow hiding jaw",
                 "tattoo instead of scar"
             ]
         },
@@ -117,13 +154,18 @@
             "allowedSpecies": "all",
             "category": "scar",
             "visibility": "face",
-            "promptInstruction": "Show a visible healed burn scar on part of the face, with uneven texture and old damaged skin. It should not look like paint or a fresh injury.",
-            "visibilityInstruction": "The affected part of the face must be clear and not hidden by hair, helmet, hood or shadow.",
+            "promptInstruction": "Show a visible healed burn scar on part of the face, with uneven old scar texture and changed skin surface. It must look healed and non-graphic, not like fresh injury, paint, dirt or lighting.",
+            "visibilityInstruction": "The affected part of the face must be clear, close and not hidden by hair, helmet, hood, mask, hand or shadow.",
             "negativePrompt": [
+                "no burn scar",
                 "fresh burn",
                 "blood",
+                "open wound",
                 "face paint",
-                "smooth perfect skin"
+                "dirt",
+                "smooth perfect skin",
+                "scar hidden",
+                "covered face"
             ]
         },
         {
@@ -131,14 +173,17 @@
             "allowedSpecies": "all",
             "category": "scar",
             "visibility": "hand",
-            "promptInstruction": "Show one hand with a visible healed burn scar, with uneven old scar texture across the hand.",
-            "visibilityInstruction": "Show one hand clearly near the chest or shoulder so the burn scar is visible in the portrait.",
+            "promptInstruction": "Show one visible bare hand with a healed burn scar. The hand should show old uneven scar texture across the fingers, back of the hand or wrist area, without gore.",
+            "visibilityInstruction": "One bare hand must be clearly shown near the chest, shoulder, face or weapon grip. The scarred hand must not be hidden by gloves, sleeves, weapon, cloak, cropping or shadow.",
             "negativePrompt": [
                 "hands hidden",
+                "hand cropped out",
                 "gloves",
+                "long sleeves covering hands",
+                "smooth unmarked hands",
                 "fresh burn",
                 "blood",
-                "smooth unmarked hands"
+                "graphic injury"
             ]
         },
         {
@@ -146,12 +191,19 @@
             "allowedSpecies": "all",
             "category": "eye",
             "visibility": "face",
-            "promptInstruction": "Show one eye visibly clouded, pale, milky or blind-looking while the other eye remains normal.",
-            "visibilityInstruction": "Both eyes must be clearly visible and close enough to see that only one eye is clouded.",
+            "promptInstruction": "Show exactly one eye clearly clouded, pale, milky, cataract-like or blind-looking. The other eye must remain normal and keep the selected eye colour.",
+            "visibilityInstruction": "Both eyes must be open, sharp, close and visible. The viewer must be able to tell that only one eye is clouded and the other eye is normal.",
             "negativePrompt": [
+                "both eyes normal",
+                "matching eyes",
+                "two clear eyes",
+                "both eyes same colour",
                 "both eyes clouded",
                 "closed eyes",
+                "covered eyes",
                 "hair covering eyes",
+                "eye patch",
+                "missing eye",
                 "glowing eyes instead of clouded eye"
             ]
         },
@@ -160,13 +212,16 @@
             "allowedSpecies": "all",
             "category": "eye",
             "visibility": "face",
-            "promptInstruction": "Show one eye missing or covered by a simple eyepatch. The other eye should remain visible.",
-            "visibilityInstruction": "The face must be clear and frontal enough that the missing eye or eyepatch is obvious.",
+            "promptInstruction": "Show one eye missing, empty, scarred over or covered by a simple eyepatch. The other eye must remain visible and normal for the selected species.",
+            "visibilityInstruction": "The face must be clear and frontal or three-quarter view. The missing eye or eyepatch must be obvious, not hidden by hair, shadow, helmet, hood or pose.",
             "negativePrompt": [
                 "two normal eyes",
+                "both eyes visible and normal",
                 "two missing eyes",
                 "closed eyes",
-                "hair covering eyes"
+                "hair covering eyes",
+                "shadow hiding eye",
+                "decorative makeup instead of missing eye"
             ]
         },
         {
@@ -174,13 +229,18 @@
             "allowedSpecies": "all",
             "category": "eye",
             "visibility": "face",
-            "promptInstruction": "Show one eye visibly blind, pale or unfocused, while the other eye looks normal and alert.",
-            "visibilityInstruction": "Both eyes must be visible and not hidden by hair, shadow, helmet or pose.",
+            "promptInstruction": "Show exactly one eye visibly blind, pale, unfocused or cloudy, while the other eye remains normal, alert and the selected eye colour.",
+            "visibilityInstruction": "Both eyes must be visible and open. Do not hide either eye with hair, shadow, helmet, hood, mask or pose.",
             "negativePrompt": [
                 "both eyes blind",
+                "both eyes normal",
+                "matching eyes",
                 "closed eyes",
                 "covered eyes",
-                "glowing eyes"
+                "hair covering eyes",
+                "glowing eyes",
+                "missing eye",
+                "eye patch"
             ]
         },
         {
@@ -198,13 +258,17 @@
             ],
             "category": "skin mark",
             "visibility": "face",
-            "promptInstruction": "Show a distinctive natural birthmark on the face. It should look like natural skin pigmentation, not a tattoo, scar, dirt or paint.",
-            "visibilityInstruction": "The birthmark must be visible on the face in the portrait.",
+            "promptInstruction": "Show one distinctive natural birthmark on the face. It should be an obvious patch, spot or irregular area of natural skin pigmentation, not a tattoo, scar, dirt, bruise or face paint.",
+            "visibilityInstruction": "Place the birthmark on a visible cheek, forehead, temple, nose area or jaw. The face must be close, clear and unobstructed.",
             "negativePrompt": [
+                "no birthmark",
+                "birthmark hidden",
                 "tattoo",
                 "scar",
+                "bruise",
                 "face paint",
-                "dirt mark"
+                "dirt mark",
+                "smooth unmarked face"
             ]
         },
         {
@@ -222,13 +286,18 @@
             ],
             "category": "skin mark",
             "visibility": "neck",
-            "promptInstruction": "Show a distinctive natural birthmark on the neck. It should look like natural skin pigmentation, not a tattoo, scar, dirt or paint.",
-            "visibilityInstruction": "The neck must be visible; do not hide it with a scarf, high collar, beard, armour or shadow.",
+            "promptInstruction": "Show one distinctive natural birthmark on the neck. It should look like natural skin pigmentation on visible skin, not a tattoo, scar, dirt, bruise or paint.",
+            "visibilityInstruction": "The neck must be visible. Do not hide the birthmark with a scarf, high collar, beard, hair, armour, cloak, hand or shadow.",
             "negativePrompt": [
+                "no neck birthmark",
+                "birthmark hidden",
                 "tattoo",
                 "scar",
                 "covered neck",
-                "high collar"
+                "high collar",
+                "scarf covering neck",
+                "beard covering neck",
+                "shadow hiding neck"
             ]
         },
         {
@@ -246,12 +315,16 @@
             ],
             "category": "skin mark",
             "visibility": "face",
-            "promptInstruction": "Show visible freckles scattered across the nose and cheeks. The freckles should look natural and subtle but clearly present.",
-            "visibilityInstruction": "The nose and cheeks must be clear and well lit.",
+            "promptInstruction": "Show many small natural freckles scattered across the nose and both cheeks. They should be clearly present as natural skin spots, not dirt, paint, scars or shadow.",
+            "visibilityInstruction": "The nose and cheeks must be close, clear, well lit and unobstructed so the freckles are visible.",
             "negativePrompt": [
+                "no freckles",
                 "smooth unmarked face",
+                "freckles hidden",
                 "face paint",
-                "tattoo"
+                "tattoo",
+                "dirt",
+                "shadow only"
             ]
         },
         {
@@ -259,13 +332,16 @@
             "allowedSpecies": "all",
             "category": "tattoo",
             "visibility": "face",
-            "promptInstruction": "Show a small intentional face tattoo. It should look like ink under the skin, not a scar, dirt, shadow or war paint.",
-            "visibilityInstruction": "Place the tattoo on a visible part of the face, such as cheek, temple or below one eye.",
+            "promptInstruction": "Show one small intentional face tattoo. It must look like deliberate ink under the skin or on scales, not a scar, dirt, shadow, bruise or accidental mark.",
+            "visibilityInstruction": "Place the tattoo on a visible cheek, temple, forehead, chin or below one eye. The face must be close and unobstructed.",
             "negativePrompt": [
+                "no tattoo",
+                "hidden tattoo",
                 "scar instead of tattoo",
-                "face paint",
+                "face paint only",
                 "dirt",
-                "hidden tattoo"
+                "shadow mark",
+                "covered face"
             ]
         },
         {
@@ -273,13 +349,18 @@
             "allowedSpecies": "all",
             "category": "tattoo",
             "visibility": "face",
-            "promptInstruction": "Show a large full-face tattoo covering much of the face with deliberate ink patterns.",
-            "visibilityInstruction": "The face must be unobstructed so the full-face tattoo is visible.",
+            "promptInstruction": "Show a large deliberate full-face tattoo covering much of the face with clear ink patterns. It should be unmistakable as tattooed design, not scars, dirt, shadow or face paint.",
+            "visibilityInstruction": "The face must be close, frontal or three-quarter, and unobstructed so the full-face tattoo is immediately visible.",
             "negativePrompt": [
+                "no tattoo",
+                "small tattoo only",
+                "hidden tattoo",
                 "scar instead of tattoo",
                 "face paint only",
                 "hair covering face",
-                "mask"
+                "mask",
+                "hood",
+                "shadow hiding face"
             ]
         },
         {
@@ -287,13 +368,17 @@
             "allowedSpecies": "all",
             "category": "tattoo",
             "visibility": "face",
-            "promptInstruction": "Show a visible tattoo encircling or framing one eye. It should be deliberate ink, not bruising, shadow or a scar.",
-            "visibilityInstruction": "Both eyes and the tattooed eye area must be visible.",
+            "promptInstruction": "Show a deliberate tattoo encircling, framing or radiating around one eye. It should look like clear ink design, not bruising, shadow, scar tissue or makeup.",
+            "visibilityInstruction": "Both eyes and the tattooed eye area must be visible, close and unobstructed. Do not cover the tattoo with hair, hood, helmet, shadow or pose.",
             "negativePrompt": [
+                "no eye tattoo",
+                "tattoo hidden",
                 "scar around eye",
                 "bruise",
+                "makeup only",
                 "covered eye",
-                "hair over eyes"
+                "hair over eyes",
+                "closed eyes"
             ]
         },
         {
@@ -301,12 +386,17 @@
             "allowedSpecies": "all",
             "category": "ritual mark",
             "visibility": "face",
-            "promptInstruction": "Show a deliberate ritual mark or symbol on the forehead. It may look painted, inked or branded, but must be clearly intentional.",
-            "visibilityInstruction": "The forehead must be visible; do not cover it with hair, helmet, hood or shadow.",
+            "promptInstruction": "Show one deliberate ritual mark, rune or symbol clearly placed on the forehead. It may look painted, inked, branded or magically marked, but it must be intentional and readable as a mark.",
+            "visibilityInstruction": "The forehead must be visible and unobstructed. Do not cover it with hair, fringe, helmet, hood, crown, shadow or pose.",
             "negativePrompt": [
+                "no forehead mark",
                 "covered forehead",
+                "hair covering forehead",
+                "helmet",
+                "hood",
                 "random dirt",
-                "accidental smudge"
+                "accidental smudge",
+                "shadow only"
             ]
         },
         {
@@ -314,12 +404,17 @@
             "allowedSpecies": "all",
             "category": "ritual mark",
             "visibility": "face",
-            "promptInstruction": "Show a deliberate ritual mark or symbol on one cheek. It may look painted, inked or branded, but must be clearly intentional.",
-            "visibilityInstruction": "At least one cheek must be visible and unobstructed.",
+            "promptInstruction": "Show one deliberate ritual mark, rune or symbol clearly placed on one cheek. It may look painted, inked, branded or magically marked, but it must be intentional and visibly distinct from a scar or dirt smudge.",
+            "visibilityInstruction": "At least one cheek must be visible, close and unobstructed. Do not hide the cheek with hair, hand, weapon, hood, helmet, shadow, collar or pose.",
             "negativePrompt": [
+                "no cheek mark",
+                "covered cheek",
                 "random dirt",
                 "scar instead of mark",
-                "covered cheek"
+                "tattoo hidden",
+                "hair covering cheek",
+                "hand covering cheek",
+                "shadow hiding cheek"
             ]
         },
         {
@@ -327,13 +422,18 @@
             "allowedSpecies": "all",
             "category": "ritual mark",
             "visibility": "hand",
-            "promptInstruction": "Show a deliberate ritual mark or symbol on one wrist.",
-            "visibilityInstruction": "Show one wrist or forearm clearly near the chest so the ritual mark is visible.",
+            "promptInstruction": "Show one deliberate ritual mark, rune or symbol clearly placed on a visible wrist or lower forearm. It should be intentional and distinct from dirt, shadow or sleeve detail.",
+            "visibilityInstruction": "Show one bare wrist or forearm near the chest, face or weapon hand so the mark is visible. Do not hide it with gloves, sleeves, bracers, cloak, weapon grip, cropping or shadow.",
             "negativePrompt": [
-                "hands hidden",
+                "wrist hidden",
                 "wrists hidden",
+                "hands hidden",
                 "gloves",
-                "long sleeves covering wrists"
+                "long sleeves covering wrists",
+                "bracer covering wrist",
+                "random dirt",
+                "shadow only",
+                "mark hidden"
             ]
         },
         {
@@ -351,12 +451,17 @@
             ],
             "category": "facial structure",
             "visibility": "face",
-            "promptInstruction": "Show a visibly broken nose that healed slightly crooked or uneven. The nose should not look perfectly straight.",
-            "visibilityInstruction": "Use a clear front or three-quarter face angle so the nose shape is visible.",
+            "promptInstruction": "Show a visibly broken nose that healed crooked, uneven, flattened or asymmetrical. The nose must not look perfectly straight or idealised.",
+            "visibilityInstruction": "Use a clear front or three-quarter face angle so the nose shape is easy to see. The nose must be unobstructed and well lit.",
             "negativePrompt": [
                 "perfect straight nose",
+                "idealised nose",
+                "symmetrical nose",
                 "covered nose",
-                "mask"
+                "mask",
+                "helmet",
+                "hood",
+                "shadow hiding nose"
             ]
         },
         {
@@ -374,12 +479,17 @@
             ],
             "category": "facial structure",
             "visibility": "face",
-            "promptInstruction": "Show a visibly crooked or slightly bent nose. The nose should look naturally asymmetrical, not perfectly straight.",
-            "visibilityInstruction": "The face must be angled so the nose shape is easy to see.",
+            "promptInstruction": "Show a visibly crooked, bent or asymmetrical nose. It should look naturally uneven and recognisable from the portrait, not perfectly straight.",
+            "visibilityInstruction": "Use a clear front or three-quarter face angle so the crooked nose shape is visible. Do not hide the nose with shadow, mask, hand, hood or pose.",
             "negativePrompt": [
                 "perfect straight nose",
+                "idealised nose",
+                "symmetrical nose",
                 "covered nose",
-                "mask"
+                "mask",
+                "helmet",
+                "hood",
+                "shadow hiding nose"
             ]
         },
         {
@@ -397,13 +507,17 @@
             ],
             "category": "scar",
             "visibility": "face",
-            "promptInstruction": "Show a small healed split-lip scar on the upper or lower lip.",
-            "visibilityInstruction": "The mouth and lips must be visible and unobstructed.",
+            "promptInstruction": "Show a small healed split-lip scar on the upper or lower lip. The lip should have a visible old scar line or notch, not fresh blood.",
+            "visibilityInstruction": "The mouth and lips must be visible, close and unobstructed. Do not cover them with a mask, beard, hand, scarf, weapon, shadow or pose.",
             "negativePrompt": [
+                "no lip scar",
+                "perfect lips",
                 "covered mouth",
                 "mask",
+                "beard covering mouth",
+                "hand covering mouth",
                 "fresh blood",
-                "perfect lips"
+                "open wound"
             ]
         },
         {
@@ -411,14 +525,18 @@
             "allowedSpecies": "all",
             "category": "missing body part",
             "visibility": "hand",
-            "promptInstruction": "Show one fingertip missing from one visible hand. The missing fingertip should be clearly visible but not graphic.",
-            "visibilityInstruction": "Show one bare hand clearly near the chest with fingers visible. Do not use gloves.",
+            "promptInstruction": "Show one fingertip missing from one visible bare hand. The missing fingertip should be clearly visible, healed and non-graphic.",
+            "visibilityInstruction": "One bare hand must be shown near the chest, face, shoulder or weapon grip with fingers clearly visible. Do not use gloves. Do not crop out the fingers.",
             "negativePrompt": [
                 "hands hidden",
+                "hand cropped out",
+                "fingers hidden",
                 "gloves",
+                "all fingertips intact",
                 "all fingers intact",
                 "graphic injury",
-                "blood"
+                "blood",
+                "weapon hiding fingers"
             ]
         },
         {
@@ -426,14 +544,19 @@
             "allowedSpecies": "all",
             "category": "missing body part",
             "visibility": "hand",
-            "promptInstruction": "Show one missing finger on one visible hand. The missing finger should be clear but not graphic.",
-            "visibilityInstruction": "Show one bare hand clearly near the chest with fingers visible. Do not use gloves.",
+            "promptInstruction": "Show one full finger missing from one visible bare hand. The hand should clearly have fewer fingers than normal, healed and non-graphic.",
+            "visibilityInstruction": "One bare hand must be shown near the chest, face, shoulder or weapon grip with all remaining fingers visible. Do not use gloves. Do not hide the hand behind a cloak, weapon, sleeve, cropping or shadow.",
             "negativePrompt": [
                 "hands hidden",
+                "hand cropped out",
+                "fingers hidden",
                 "gloves",
                 "all fingers intact",
+                "normal hand",
                 "graphic injury",
-                "blood"
+                "blood",
+                "weapon hiding fingers",
+                "sleeves covering hand"
             ]
         },
         {
@@ -451,14 +574,18 @@
             ],
             "category": "ear",
             "visibility": "head",
-            "promptInstruction": "Show the tip of one ear missing or shortened. It should look like an old healed injury, not a different species trait.",
-            "visibilityInstruction": "At least one ear must be visible and not covered by hair, helmet, hood or shadow.",
+            "promptInstruction": "Show the tip of one ear missing or shortened as an old healed injury. It must look like damage to the selected species' ear shape, not a different species trait.",
+            "visibilityInstruction": "At least one ear must be visible and close enough to see the missing tip. Do not cover the ears with hair, helmet, hood, shadow, pose or cropping.",
             "negativePrompt": [
                 "ears hidden",
+                "hair covering ears",
                 "helmet",
                 "hood",
-                "hair covering ears",
-                "blood"
+                "ear cropped out",
+                "normal intact ears",
+                "blood",
+                "fresh wound",
+                "earring instead of missing tip"
             ]
         },
         {
@@ -476,14 +603,17 @@
             ],
             "category": "ear",
             "visibility": "head",
-            "promptInstruction": "Show one ear with a visible notch cut into the edge. It should look like an old healed notch, not jewellery.",
-            "visibilityInstruction": "At least one ear must be visible and not covered by hair, helmet, hood or shadow.",
+            "promptInstruction": "Show one ear with a clear notch cut into the outer edge. It should look like an old healed notch in the ear, not jewellery or species anatomy.",
+            "visibilityInstruction": "At least one ear must be visible and close enough to see the notch. Do not hide the ears with hair, helmet, hood, shadow, pose or cropping.",
             "negativePrompt": [
                 "ears hidden",
+                "hair covering ears",
                 "helmet",
                 "hood",
-                "hair covering ears",
-                "earring instead of notch"
+                "ear cropped out",
+                "normal intact ears",
+                "earring instead of notch",
+                "piercing instead of notch"
             ]
         },
         {
@@ -501,12 +631,17 @@
             ],
             "category": "piercing",
             "visibility": "face",
-            "promptInstruction": "Show a small metal eyebrow piercing on one eyebrow.",
-            "visibilityInstruction": "The eyebrow area must be close, clear and not hidden by hair.",
+            "promptInstruction": "Show a small visible metal eyebrow piercing on one eyebrow. It should be clearly metallic jewellery, not a scar, eyebrow gap or skin mark.",
+            "visibilityInstruction": "The eyebrow area must be close, clear and not hidden by hair, hood, helmet, shadow or pose.",
             "negativePrompt": [
+                "no eyebrow piercing",
                 "covered eyebrows",
                 "hair over eyes",
-                "scar instead of piercing"
+                "helmet",
+                "hood",
+                "scar instead of piercing",
+                "eyebrow scar",
+                "piercing hidden"
             ]
         },
         {
@@ -524,12 +659,16 @@
             ],
             "category": "piercing",
             "visibility": "face",
-            "promptInstruction": "Show a small metal nose piercing, such as a nose ring or nostril stud.",
-            "visibilityInstruction": "The nose must be visible and close enough for the piercing to be seen.",
+            "promptInstruction": "Show a small visible metal nose piercing, such as a nostril stud, nose ring or small hoop. It should be clearly jewellery on the nose, not a scar or shine.",
+            "visibilityInstruction": "The nose must be close, clear and unobstructed so the piercing is visible. Do not hide it with mask, hand, shadow, hood or pose.",
             "negativePrompt": [
+                "no nose piercing",
+                "piercing hidden",
                 "covered nose",
                 "mask",
-                "scar instead of piercing"
+                "scar instead of piercing",
+                "nose shine only",
+                "shadow hiding nose"
             ]
         },
         {
@@ -547,12 +686,16 @@
             ],
             "category": "piercing",
             "visibility": "face",
-            "promptInstruction": "Show a small metal lip piercing on the upper or lower lip.",
-            "visibilityInstruction": "The mouth and lips must be visible and unobstructed.",
+            "promptInstruction": "Show a small visible metal lip piercing on the upper or lower lip. It should be clearly jewellery, not a scar, tooth or shine.",
+            "visibilityInstruction": "The mouth and lips must be close, clear and unobstructed. Do not cover them with mask, beard, hand, scarf, weapon, shadow or pose.",
             "negativePrompt": [
+                "no lip piercing",
+                "piercing hidden",
                 "covered mouth",
                 "mask",
-                "scar instead of piercing"
+                "beard covering mouth",
+                "scar instead of piercing",
+                "tooth instead of piercing"
             ]
         },
         {
@@ -570,13 +713,17 @@
             ],
             "category": "piercing",
             "visibility": "head",
-            "promptInstruction": "Show several visible metal piercings along one or both ears.",
-            "visibilityInstruction": "At least one ear must be visible and not hidden by hair, helmet, hood or shadow.",
+            "promptInstruction": "Show several visible metal piercings along one or both ears. There should be multiple small rings, studs or hoops clearly attached to the ear.",
+            "visibilityInstruction": "At least one ear must be visible and close enough to see multiple piercings. Do not hide the ears with hair, helmet, hood, shadow or cropping.",
             "negativePrompt": [
+                "no ear piercings",
+                "single piercing only",
                 "ears hidden",
                 "helmet",
                 "hood",
-                "hair covering ears"
+                "hair covering ears",
+                "piercings hidden",
+                "ear cropped out"
             ]
         },
         {
@@ -594,13 +741,17 @@
             ],
             "category": "hair",
             "visibility": "head",
-            "promptInstruction": "Show a distinct silver streak running through the character's hair. It should be a visible section of silver hair, not grey lighting.",
-            "visibilityInstruction": "The hair must be visible and not hidden by a helmet, hood or heavy shadow.",
+            "promptInstruction": "Show one distinct silver streak running through the character's hair. It should be a visible section of silver hair contrasting with the selected hair colour, not grey lighting.",
+            "visibilityInstruction": "The hair must be visible and not hidden by helmet, hood, heavy shadow or cropping. The silver streak should be near the face or crown where it is easy to see.",
             "negativePrompt": [
+                "no silver streak",
+                "hair hidden",
                 "helmet",
                 "hood",
-                "hair hidden",
-                "all hair same colour"
+                "all hair same colour",
+                "grey lighting only",
+                "white streak instead of silver",
+                "streak hidden"
             ]
         },
         {
@@ -618,13 +769,17 @@
             ],
             "category": "hair",
             "visibility": "head",
-            "promptInstruction": "Show a distinct white streak running through the character's hair. It should be a visible section of white hair, not a lighting effect.",
-            "visibilityInstruction": "The hair must be visible and not hidden by a helmet, hood or heavy shadow.",
+            "promptInstruction": "Show one distinct white streak running through the character's hair. It should be a visible section of white hair contrasting with the selected hair colour, not a lighting effect.",
+            "visibilityInstruction": "The hair must be visible and not hidden by helmet, hood, heavy shadow or cropping. The white streak should be near the face or crown where it is easy to see.",
             "negativePrompt": [
+                "no white streak",
+                "hair hidden",
                 "helmet",
                 "hood",
-                "hair hidden",
-                "all hair same colour"
+                "all hair same colour",
+                "lighting effect only",
+                "silver streak instead of white",
+                "streak hidden"
             ]
         },
         {
@@ -632,13 +787,17 @@
             "allowedSpecies": "all",
             "category": "eye",
             "visibility": "face",
-            "promptInstruction": "Show both eyes with a controlled supernatural glow. The glow should come from the eyes, not from the whole face or background.",
-            "visibilityInstruction": "The eyes must be visible, sharp and unobstructed.",
+            "promptInstruction": "Show both eyes with a controlled supernatural glow. The glow must clearly come from the eyes while preserving the selected eye colour as much as possible.",
+            "visibilityInstruction": "Both eyes must be visible, open, sharp and unobstructed. The whole face should not glow; only the eyes should have the supernatural effect.",
             "negativePrompt": [
+                "no glowing eyes",
                 "closed eyes",
                 "covered eyes",
+                "hair covering eyes",
                 "whole face glowing",
-                "background glow only"
+                "background glow only",
+                "glowing skin instead of eyes",
+                "eyes hidden"
             ]
         },
         {
@@ -646,13 +805,17 @@
             "allowedSpecies": "all",
             "category": "eye",
             "visibility": "face",
-            "promptInstruction": "Show unusually bright, vivid eyes that stand out clearly without making the entire face glow.",
-            "visibilityInstruction": "The eyes must be visible, sharp and close enough to see their colour clearly.",
+            "promptInstruction": "Show unusually bright, vivid eyes that stand out clearly while still looking like eyes. They should be more intense than normal but not turn the whole face or background into a glow.",
+            "visibilityInstruction": "Both eyes must be visible, open, sharp and close enough to see their colour clearly.",
             "negativePrompt": [
                 "dull eyes",
+                "normal dull eyes",
                 "closed eyes",
                 "covered eyes",
-                "whole face glowing"
+                "hair covering eyes",
+                "whole face glowing",
+                "background glow only",
+                "eyes hidden"
             ]
         },
         {
@@ -664,11 +827,15 @@
             ],
             "category": "teeth",
             "visibility": "face",
-            "promptInstruction": "Show small visible sharp fangs or tusk-like teeth appropriate to the character's species. The fangs should be visible without turning the character into a monster unless their species supports it.",
-            "visibilityInstruction": "The mouth must be slightly open or shaped so the fangs are visible.",
+            "promptInstruction": "Show visible sharp fangs, lower fangs or tusk-like teeth appropriate to the selected species. The fangs must be visible in the mouth without turning the character into an unrelated monster.",
+            "visibilityInstruction": "The mouth must be slightly open, speaking, grimacing or posed so the fangs are visible. Do not keep the mouth fully closed.",
             "negativePrompt": [
                 "normal human teeth",
+                "no fangs",
                 "closed mouth",
+                "mouth hidden",
+                "mask",
+                "covered mouth",
                 "animal muzzle unless species requires it",
                 "vampire transformation"
             ]
@@ -681,14 +848,19 @@
             ],
             "category": "horn",
             "visibility": "head",
-            "promptInstruction": "Show one horn visibly broken with a blunt damaged end. The other horn or horn structure should make the damage clear.",
-            "visibilityInstruction": "The horns must be visible and not hidden by hair, helmet, hood or cropping.",
+            "promptInstruction": "Show one horn visibly broken with a blunt damaged end. The horn damage must be obvious, with the other horn or surrounding horn structure making the break clear.",
+            "visibilityInstruction": "The horns must be visible, close and not hidden by hair, helmet, hood, cropping, angle or shadow. If needed, show both horns so one broken horn is clearly different.",
             "negativePrompt": [
                 "horns hidden",
+                "no horns",
                 "helmet",
                 "hood",
+                "hair covering horns",
                 "perfect symmetrical horns",
-                "blood"
+                "undamaged horns",
+                "cropped horns",
+                "blood",
+                "graphic injury"
             ]
         },
         {
@@ -699,13 +871,18 @@
             ],
             "category": "horn",
             "visibility": "head",
-            "promptInstruction": "Show one horn with a visible chip or damaged notch. The horn should remain mostly intact.",
-            "visibilityInstruction": "The horns must be visible and close enough to see the chipped area.",
+            "promptInstruction": "Show one horn with a visible chip, nick or damaged notch. The horn should remain mostly intact, but the chipped area must be clear.",
+            "visibilityInstruction": "The horns must be visible, close and well lit. Do not hide the chipped horn with hair, helmet, hood, cropping, angle or shadow.",
             "negativePrompt": [
                 "horns hidden",
+                "no horns",
                 "helmet",
                 "hood",
-                "perfect horns"
+                "hair covering horns",
+                "perfect horns",
+                "undamaged horns",
+                "cropped horns",
+                "broken off horn"
             ]
         },
         {
@@ -716,13 +893,17 @@
             ],
             "category": "horn",
             "visibility": "head",
-            "promptInstruction": "Show one horn visibly shorter than the other. The asymmetry must be clear.",
-            "visibilityInstruction": "Show both horns clearly so the difference in length is obvious.",
+            "promptInstruction": "Show one horn visibly shorter than the other. The asymmetry in horn length must be clear and immediately noticeable.",
+            "visibilityInstruction": "Show both horns clearly so the difference in length is obvious. Do not hide either horn with hair, helmet, hood, cropping or angle.",
             "negativePrompt": [
                 "symmetrical horns",
+                "same length horns",
                 "horns hidden",
+                "no horns",
                 "helmet",
-                "hood"
+                "hood",
+                "hair covering horns",
+                "cropped horns"
             ]
         },
         {
@@ -733,13 +914,17 @@
             ],
             "category": "horn",
             "visibility": "head",
-            "promptInstruction": "Show a visible crack running through one horn. The horn should remain attached and recognisable.",
-            "visibilityInstruction": "The cracked horn must be visible and not hidden by hair, helmet, hood or cropping.",
+            "promptInstruction": "Show a visible crack running through one horn. The horn should remain attached and recognisable, with the crack clearly visible on its surface.",
+            "visibilityInstruction": "The cracked horn must be visible, close and well lit. Do not hide it with hair, helmet, hood, cropping, angle or shadow.",
             "negativePrompt": [
                 "perfect horns",
+                "undamaged horns",
                 "horns hidden",
+                "no horns",
                 "helmet",
                 "hood",
+                "hair covering horns",
+                "cropped horns",
                 "broken off horn"
             ]
         },
@@ -758,13 +943,17 @@
             ],
             "category": "teeth",
             "visibility": "face",
-            "promptInstruction": "Show one visible gold tooth. The mouth should be slightly open or smiling enough to reveal it.",
-            "visibilityInstruction": "The mouth and teeth must be close and visible enough for the gold tooth to be seen.",
+            "promptInstruction": "Show one visible gold tooth among otherwise normal visible teeth. The gold tooth should catch the light and be clearly distinct from the other teeth.",
+            "visibilityInstruction": "The mouth must be slightly open, smiling, speaking or grimacing enough to reveal the teeth. The gold tooth must not be hidden by lips, beard, mask, shadow or pose.",
             "negativePrompt": [
+                "no gold tooth",
                 "closed mouth",
                 "normal teeth only",
                 "covered mouth",
-                "mask"
+                "mask",
+                "beard covering mouth",
+                "mouth hidden",
+                "gold jewellery instead of tooth"
             ]
         },
         {
@@ -772,13 +961,18 @@
             "allowedSpecies": "all",
             "category": "hand",
             "visibility": "hand",
-            "promptInstruction": "Show visible dark ink stains on the fingertips and fingers of one hand.",
-            "visibilityInstruction": "Show one bare hand clearly near the chest or face so the ink-stained fingers are visible.",
+            "promptInstruction": "Show dark ink stains clearly on the fingertips and fingers of one visible bare hand. The stains should look like ink on skin or scales, not black claws, gloves or dirt.",
+            "visibilityInstruction": "One bare hand must be shown near the chest, face, shoulder, book, scroll or weapon grip with fingers visible. Do not hide the fingers with gloves, sleeves, weapon, cropping or shadow.",
             "negativePrompt": [
                 "hands hidden",
+                "hand cropped out",
+                "fingers hidden",
                 "gloves",
                 "clean fingers",
-                "black claws instead of ink"
+                "black claws instead of ink",
+                "dirt instead of ink",
+                "weapon hiding fingers",
+                "sleeves covering hand"
             ]
         },
         {
@@ -786,12 +980,16 @@
             "allowedSpecies": "all",
             "category": "hand",
             "visibility": "hand",
-            "promptInstruction": "Show rough, calloused hands with worn skin from labour, weapons or travel.",
-            "visibilityInstruction": "Show one or both bare hands clearly near the chest or weapon grip.",
+            "promptInstruction": "Show rough, calloused bare hands with worn skin from labour, weapons, crafting or travel. The hands should look visibly tough and weathered, not smooth or delicate.",
+            "visibilityInstruction": "Show one or both bare hands clearly near the chest, face, shoulder or weapon grip. The palms, knuckles or fingers must be visible enough to show callouses.",
             "negativePrompt": [
                 "hands hidden",
+                "hand cropped out",
                 "gloves",
-                "smooth delicate hands"
+                "smooth delicate hands",
+                "perfect soft hands",
+                "sleeves covering hands",
+                "weapon hiding hands"
             ]
         }
     ]
